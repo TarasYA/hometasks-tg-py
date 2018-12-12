@@ -2,8 +2,9 @@
 DZshnik...
 """
 import telebot
+import os
 
-bot = "785437577:AAG8e8aHRwd0toeTAqNExtIkaXmbtS5UZWs"
+bot = os.getenv("TOKEN")
 token = telebot.TeleBot(bot)
 
 #token.send_message(402702337,"test")
