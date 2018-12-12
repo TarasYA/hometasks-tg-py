@@ -14,7 +14,7 @@ token = telebot.TeleBot(bot)
 #message_from_user = last_upd.message
 #print(message_from_user)
 
-print(token.get_me())
+#print(token.get_me())
 """
 def log(message, answer):
     from datetime import datetime
