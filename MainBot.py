@@ -40,7 +40,7 @@ def handle_text(message):
 
 @token.message_handler(commands=["week1"])
 def handle_text(message):
-    token.send_chat_action(message.chat.id, action=token.ChatAction.TYPING)
+    token.send_chat_action(message.chat.id, action=telebot.ChatAction.TYPING)
     token.send_message(message.chat.id,"""
     Домашнее задание на неделю для 1 группы:\n
     """)
