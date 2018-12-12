@@ -84,7 +84,7 @@ def handle_text(message):
     token.send_message(message.chat.id,"""
     Расписание:\n 
     """)
-    token.send_photo(chat_id=message.chat.id, photo=open('C:\\Users\\x\\PycharmProjects\\Python_telegabot\\8v.png', 'rb'))
+    token.send_photo(chat_id=message.chat.id, photo=open('8v.png', 'rb'))
 @token.message_handler(commands=["add"])
 def handle_text(message):
     user_markup = telebot.types.ReplyKeyboardMarkup()
