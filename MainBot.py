@@ -95,7 +95,7 @@ def handle_text(message):
     token.send_message(message.from_user.id,"Клавиатура была включена.Что бы её выключить, используйте команду /stop",reply_markup=user_markup)
 @token.message_handler(commands=["stop"])
 def handle_text(message):
-    hide_markup = telebot.types.ReplyKeyboardRemove()
+    hide_markup = telebot.types.ReplyKeyboardHide()
     token.send_message(message.from_user.id,"Клавиатура была убранна.Что бы её включить, используйте команду /add",reply_markup=hide_markup)
 
 
