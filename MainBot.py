@@ -1,10 +1,10 @@
 """
 DZshnik...
 """
-import telebot
+import telePot
 
 bot = "785437577:AAG8e8aHRwd0toeTAqNExtIkaXmbtS5UZWs"
-token = telebot.TeleBot(bot)
+token = telePot.TeleBot(bot)
 
 #token.send_message(402702337,"test")
 #upd = token.get_updates()
@@ -28,7 +28,7 @@ def handle_text(message):
     """)
 @token.message_handler(commands=["start"])
 def handle_text(message):
-    user_markup = telebot.types.ReplyKeyboardMarkup()
+    user_markup = telePot.types.ReplyKeyboardMarkup()
     user_markup.row("/info","/help")
     user_markup.row("/week1", "/week2")
     user_markup.row("/tomor1", "/tomor2")
@@ -87,7 +87,7 @@ def handle_text(message):
     token.send_photo(chat_id=message.chat.id, photo=open('C:\\Users\\x\\PycharmProjects\\Python_telegabot\\8v.png', 'rb'))
 @token.message_handler(commands=["add"])
 def handle_text(message):
-    user_markup = telebot.types.ReplyKeyboardMarkup()
+    user_markup = telePot.types.ReplyKeyboardMarkup()
     user_markup.row("/info","/help")
     user_markup.row("/week1", "/week2")
     user_markup.row("/tomor1", "/tomor2")
@@ -95,7 +95,7 @@ def handle_text(message):
     token.send_message(message.from_user.id,"Клавиатура была включена.Что бы её выключить, используйте команду /stop",reply_markup=user_markup)
 @token.message_handler(commands=["stop"])
 def handle_text(message):
-    hide_markup = telebot.types.ReplyKeyboardRemove()
+    hide_markup = telePot.types.ReplyKeyboardRemove()
     token.send_message(message.from_user.id,"Клавиатура была убранна.Что бы её включить, используйте команду /add",reply_markup=hide_markup)
 
 
