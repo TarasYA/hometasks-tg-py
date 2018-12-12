@@ -44,28 +44,28 @@ def handle_text(message):
     token.send_message(message.chat.id,"""
     Домашнее задание на неделю для 1 группы:\n
     """)
-    token.send_chat_action(message.chat.id, 'upload_document')
+    token.send_chat_action(message.chat.id, 'typing')
 @token.message_handler(commands=["week2"])
 def handle_text(message):
-    token.send_chat_action(message.chat.id, 'upload_document')
+    token.send_chat_action(message.chat.id, 'typing')
     token.send_message(message.chat.id,"""
     Домашнее задание на неделю для 2 группы:\n
     """)
-    token.send_chat_action(message.chat.id, 'upload_document')
+    token.send_chat_action(message.chat.id, 'typing')
 @token.message_handler(commands=["tomor1"])
 def handle_text(message):
-    token.send_chat_action(message.chat.id,'upload_document')
+    token.send_chat_action(message.chat.id,'typing')
     token.send_message(message.chat.id,"""
     Домашнее задание на завтра для 1 группы:\n
     """)
-    token.send_chat_action(message.chat.id, 'upload_document')
+    token.send_chat_action(message.chat.id, 'typing')
 @token.message_handler(commands=["tomor2"])
 def handle_text(message):
-    token.send_chat_action(message.chat.id, 'upload_document')
+    token.send_chat_action(message.chat.id, 'typing')
     token.send_message(message.chat.id,"""
     Домашнее задание на завтра для 2 группы:\n
     """)
-    token.send_chat_action(message.chat.id, 'upload_document')
+    token.send_chat_action(message.chat.id, 'typing')
 @token.message_handler(commands=["help"])
 def handle_text(message):
     token.send_message(message.chat.id,"""
@@ -82,6 +82,7 @@ def handle_text(message):
     """)
 @token.message_handler(commands=["rz"])
 def handle_text(message):
+    token.send_chat_action(message.chat.id, 'upload_photo')
     token.send_message(message.chat.id,"""
     Расписание:\n 
     """)
