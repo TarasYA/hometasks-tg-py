@@ -30,12 +30,21 @@ def handle_text(message):
 @token.message_handler(commands=["start"])
 def handle_text(message):
     user_markup = telebot.types.ReplyKeyboardMarkup()
-    user_markup.row("/info","/help")
+    user_markup.row("/author","/help")
     user_markup.row("/list")
     user_markup.row("/rz","/stop")
     token.send_message(message.chat.id, """
         Добро пожаловать!
         """,reply_markup=user_markup)
+    token.send_message(message.chat.id, """
+        start - начать взаимодействие  
+        author - о боте 
+        list - домашнее задание 
+        rz - расписание 
+        help - список команд
+        stop - убрать внутреннюю клавиатуру
+        add - показать клавиатуру
+        """)
 """
 @token.message_handler(commands=["week1"])
 def handle_text(message):
@@ -79,7 +88,7 @@ def handle_text(message):
 def handle_text(message):
     token.send_message(message.chat.id,"""
     start - начать взаимодействие  
-    info - о боте 
+    author - о боте 
     list - домашнее задание 
     rz - расписание 
     help - список команд
@@ -96,7 +105,7 @@ def handle_text(message):
 @token.message_handler(commands=["add"])
 def handle_text(message):
     user_markup = telebot.types.ReplyKeyboardMarkup()
-    user_markup.row("/info","/help")
+    user_markup.row("/author","/help")
     user_markup.row("/list")
     user_markup.row("/rz","/stop")
     token.send_message(message.from_user.id,"Клавиатура была включена.Что бы её выключить, используйте команду /stop",reply_markup=user_markup)
@@ -107,7 +116,7 @@ def handle_text(message):
 @token.message_handler(commands=["back"])
 def handle_text(message):
     user_markup = telebot.types.ReplyKeyboardMarkup()
-    user_markup.row("/info", "/help")
+    user_markup.row("/author", "/help")
     user_markup.row("/list")
     user_markup.row("/rz", "/stop")
     token.send_message(message.from_user.id,"Назад",reply_markup=user_markup)
@@ -116,8 +125,14 @@ def handle_text(message):
 def handle_text(message):
     text = message.text
     id = message.chat.id
+
     if(text == "Дурак"):
         token.send_message(id,"<b>Сам такой!</b>",parse_mode="HTML")
 
+    file = open("week1.txt","rb")
+    for s in file.readline():
+        if(s.startswith(text)):
+            print(s)
+    file.close()
 
 token.polling(none_stop=True, interval=0)
