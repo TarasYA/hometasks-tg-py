@@ -60,8 +60,6 @@ author - о боте
 list - домашнее задание 
 rz - расписание 
 help - список команд
-stop - убрать внутреннюю клавиатуру
-add - показать клавиатуру
     """)
 @token.message_handler(commands=["rz"])
 def handle_text(message):
