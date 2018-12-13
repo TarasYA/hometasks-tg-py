@@ -131,9 +131,8 @@ def handle_text(message):
 
     file = open("week.txt","r+")
     for s in file:
-        print(s)
         if(s.startswith(text)):
-            print(s)
+            token.send_message(message.from_user.id, text,)
     file.close()
 
 token.polling(none_stop=True, interval=0)
