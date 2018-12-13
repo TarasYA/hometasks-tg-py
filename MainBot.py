@@ -74,6 +74,7 @@ def handle_text(message):
     user_markup.row("math", "physics", "informatics")
     user_markup.row("chemistry", "geography", "history")
     user_markup.row("art", "bio", "/back")
+    token.send_message(message.from_user.id, "Список предметов",reply_markup=user_markup)
 @token.message_handler(commands=["help"])
 def handle_text(message):
     token.send_message(message.chat.id,"""
@@ -118,4 +119,4 @@ def handle_text(message):
         token.send_message(id,"<b>Сам такой!</b>",parse_mode="HTML")
 
 
-token.polling(none_stop=True, interval=0)
+token.polling(none_stop=Tru
