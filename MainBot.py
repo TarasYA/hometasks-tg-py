@@ -120,4 +120,4 @@ def handle_text(message):
         token.send_message(id,"<b>Сам такой!</b>",parse_mode="HTML")
 
 
-token.polling(none_stop=True, in
+token.polling(none_stop=True, interval=0)
