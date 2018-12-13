@@ -21,7 +21,7 @@ def log(message, answer):
     print("Log-message: ", message.text,"\nLog-datetime: ", datetime.now, "\nLog-user: ",message.from_user.first_name)
 """
 
-@token.message_handler(commands=["author"])
+@token.message_handler(commands=["info"])
 def handle_text(message):
     token.send_message(message.chat.id,"""
     Бот был создан учеником ЛИТа 8-В класса Яицким Тарасом.
@@ -129,8 +129,8 @@ def handle_text(message):
     if(text == "Дурак"):
         token.send_message(id,"<b>Сам такой!</b>",parse_mode="HTML")
 
-    file = open("week1.txt","rb")
-    for s in file.readline():
+    file = open("week1.txt","r+")
+    for s in file:
         print(s)
         if(s.startswith(text)):
             print(s)
