@@ -110,7 +110,7 @@ def handle_text(message):
     user_markup.row("/info", "/help")
     user_markup.row("/list")
     user_markup.row("/rz", "/stop")
-    token.send_message(message.from_user.id,"",reply_markup=user_markup)
+    token.send_message(message.from_user.id,"Назад",reply_markup=user_markup)
 
 @token.message_handler(content_types=["text"])
 def handle_text(message):
