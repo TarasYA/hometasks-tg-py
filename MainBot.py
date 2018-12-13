@@ -31,50 +31,58 @@ def handle_text(message):
 def handle_text(message):
     user_markup = telebot.types.ReplyKeyboardMarkup()
     user_markup.row("/info","/help")
-    user_markup.row("/week1", "/week2")
-    user_markup.row("/tomor1", "/tomor2")
+    user_markup.row("/list")
     user_markup.row("/rz","/stop")
     token.send_message(message.chat.id, """
         Добро пожаловать!
         """,reply_markup=user_markup)
-
+"""
 @token.message_handler(commands=["week1"])
 def handle_text(message):
     token.send_chat_action(message.chat.id,"typing")
-    token.send_message(message.chat.id,"""
+    token.send_message(message.chat.id,"
     Домашнее задание на неделю для 1 группы:\n
-    """)
+    ")
     token.send_chat_action(message.chat.id, 'typing')
 @token.message_handler(commands=["week2"])
 def handle_text(message):
     token.send_chat_action(message.chat.id, 'typing')
-    token.send_message(message.chat.id,"""
+    token.send_message(message.chat.id,"
     Домашнее задание на неделю для 2 группы:\n
-    """)
+    ")
     token.send_chat_action(message.chat.id, 'typing')
 @token.message_handler(commands=["tomor1"])
 def handle_text(message):
     token.send_chat_action(message.chat.id,'typing')
-    token.send_message(message.chat.id,"""
+    token.send_message(message.chat.id,"
     Домашнее задание на завтра для 1 группы:\n
-    """)
+    ")
     token.send_chat_action(message.chat.id, 'typing')
 @token.message_handler(commands=["tomor2"])
 def handle_text(message):
     token.send_chat_action(message.chat.id, 'typing')
-    token.send_message(message.chat.id,"""
+    token.send_message(message.chat.id,"
     Домашнее задание на завтра для 2 группы:\n
-    """)
+    )
     token.send_chat_action(message.chat.id, 'typing')
+"""
+@token.message_handler(commands=["list"])
+def handle_text(message):
+    user_markup = telebot.types.ReplyKeyboardMarkup()
+    user_markup.row("ukr.lit", "for.lit")
+    user_markup.row("urk.m","rus.m","en.m")
+    user_markup.row("math", "physics", "informatics")
+    user_markup.row("chemistry", "geography", "history")
+    user_markup.row("art", "bio", "back")
+    token.send_message(message.chat.id, """
+            Добро пожаловать!
+            """, reply_markup=user_markup)
 @token.message_handler(commands=["help"])
 def handle_text(message):
     token.send_message(message.chat.id,"""
     start - начать взаимодействие  
     info - о боте 
-    week1 - домашнее задание на неделю(первая группа)
-    tomor1 - домашнее задание на завтра(первая группа)
-    week2 - домашнее задание на неделю(вторая группа)
-    tomor2 - домашнее задание на завтра(вторая группа)
+    list - домашнее задание 
     rz - расписание 
     help - список команд
     stop - убрать внутреннюю клавиатуру
@@ -91,8 +99,7 @@ def handle_text(message):
 def handle_text(message):
     user_markup = telebot.types.ReplyKeyboardMarkup()
     user_markup.row("/info","/help")
-    user_markup.row("/week1", "/week2")
-    user_markup.row("/tomor1", "/tomor2")
+    user_markup.row("/list")
     user_markup.row("/rz","/stop")
     token.send_message(message.from_user.id,"Клавиатура была включена.Что бы её выключить, используйте команду /stop",reply_markup=user_markup)
 @token.message_handler(commands=["stop"])
