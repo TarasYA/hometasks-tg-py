@@ -73,10 +73,7 @@ def handle_text(message):
     user_markup.row("urk.m","rus.m","en.m")
     user_markup.row("math", "physics", "informatics")
     user_markup.row("chemistry", "geography", "history")
-    user_markup.row("art", "bio", "back")
-    token.send_message(message.chat.id, """
-            Добро пожаловать!
-            """, reply_markup=user_markup)
+    user_markup.row("art", "bio", "/back")
 @token.message_handler(commands=["help"])
 def handle_text(message):
     token.send_message(message.chat.id,"""
@@ -106,7 +103,12 @@ def handle_text(message):
 def handle_text(message):
     hide_markup = telebot.types.ReplyKeyboardHide()
     token.send_message(message.from_user.id,"Клавиатура была убранна.Что бы её включить, используйте команду /add",reply_markup=hide_markup)
-
+@token.message_handler(commands=["back"])
+def handle_text(message):
+    user_markup = telebot.types.ReplyKeyboardMarkup()
+    user_markup.row("/info", "/help")
+    user_markup.row("/list")
+    user_markup.row("/rz", "/stop")
 
 @token.message_handler(content_types=["text"])
 def handle_text(message):
