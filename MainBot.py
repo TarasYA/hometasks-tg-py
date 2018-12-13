@@ -45,36 +45,7 @@ def handle_text(message):
         stop - убрать внутреннюю клавиатуру
         add - показать клавиатуру
         """)
-"""
-@token.message_handler(commands=["week1"])
-def handle_text(message):
-    token.send_chat_action(message.chat.id,"typing")
-    token.send_message(message.chat.id,"
-    Домашнее задание на неделю для 1 группы:\n
-    ")
-    token.send_chat_action(message.chat.id, 'typing')
-@token.message_handler(commands=["week2"])
-def handle_text(message):
-    token.send_chat_action(message.chat.id, 'typing')
-    token.send_message(message.chat.id,"
-    Домашнее задание на неделю для 2 группы:\n
-    ")
-    token.send_chat_action(message.chat.id, 'typing')
-@token.message_handler(commands=["tomor1"])
-def handle_text(message):
-    token.send_chat_action(message.chat.id,'typing')
-    token.send_message(message.chat.id,"
-    Домашнее задание на завтра для 1 группы:\n
-    ")
-    token.send_chat_action(message.chat.id, 'typing')
-@token.message_handler(commands=["tomor2"])
-def handle_text(message):
-    token.send_chat_action(message.chat.id, 'typing')
-    token.send_message(message.chat.id,"
-    Домашнее задание на завтра для 2 группы:\n
-    )
-    token.send_chat_action(message.chat.id, 'typing')
-"""
+    
 @token.message_handler(commands=["list"])
 def handle_text(message):
     user_markup = telebot.types.ReplyKeyboardMarkup()
@@ -109,10 +80,12 @@ def handle_text(message):
     user_markup.row("/list")
     user_markup.row("/rz","/stop")
     token.send_message(message.from_user.id,"Клавиатура была включена.Что бы её выключить, используйте команду /stop",reply_markup=user_markup)
+"""
 @token.message_handler(commands=["stop"])
 def handle_text(message):
     hide_markup = telebot.types.ReplyKeyboardHide()
     token.send_message(message.from_user.id,"Клавиатура была убранна.Что бы её включить, используйте команду /add",reply_markup=hide_markup)
+"""
 @token.message_handler(commands=["back"])
 def handle_text(message):
     user_markup = telebot.types.ReplyKeyboardMarkup()
@@ -123,6 +96,7 @@ def handle_text(message):
 
 @token.message_handler(content_types=["text"])
 def handle_text(message):
+    token.send_chat_action(message.chat.id, "typing")
     text = message.text
     id = message.chat.id
 
