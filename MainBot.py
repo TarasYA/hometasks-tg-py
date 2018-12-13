@@ -129,7 +129,7 @@ def handle_text(message):
     if(text == "Дурак"):
         token.send_message(id,"<b>Сам такой!</b>",parse_mode="HTML")
 
-    file = open("week1.txt","r+")
+    file = open("week.txt","r+")
     for s in file:
         print(s)
         if(s.startswith(text)):
