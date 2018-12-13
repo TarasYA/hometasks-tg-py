@@ -21,7 +21,7 @@ def log(message, answer):
     print("Log-message: ", message.text,"\nLog-datetime: ", datetime.now, "\nLog-user: ",message.from_user.first_name)
 """
 
-@token.message_handler(commands=["info"])
+@token.message_handler(commands=["author"])
 def handle_text(message):
     token.send_message(message.chat.id,"""
     Бот был создан учеником ЛИТа 8-В класса Яицким Тарасом.
