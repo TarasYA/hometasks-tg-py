@@ -32,7 +32,7 @@ def handle_text(message):
     user_markup = telebot.types.ReplyKeyboardMarkup()
     user_markup.row("/author","/help")
     user_markup.row("/list")
-    user_markup.row("/rz","/stop")
+    user_markup.row("/rz")
     token.send_message(message.chat.id, """
         Добро пожаловать!
         """,reply_markup=user_markup)
@@ -77,7 +77,7 @@ def handle_text(message):
     user_markup = telebot.types.ReplyKeyboardMarkup()
     user_markup.row("/author","/help")
     user_markup.row("/list")
-    user_markup.row("/rz","/stop")
+    user_markup.row("/rz")
     token.send_message(message.from_user.id,"Клавиатура была включена.Что бы её выключить, используйте команду /stop",reply_markup=user_markup)
 """
 @token.message_handler(commands=["stop"])
@@ -90,7 +90,7 @@ def handle_text(message):
     user_markup = telebot.types.ReplyKeyboardMarkup()
     user_markup.row("/author", "/help")
     user_markup.row("/list")
-    user_markup.row("/rz", "/stop")
+    user_markup.row("/rz")
     token.send_message(message.from_user.id,"Назад",reply_markup=user_markup)
 
 
