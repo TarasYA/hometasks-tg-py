@@ -25,7 +25,7 @@ def log(message, answer):
 def handle_text(message):
     token.send_message(message.chat.id,"""
     Бот был создан учеником ЛИТа 8-В класса Яицким Тарасом.
-    Вопросы? taras2005dn@gmail.com
+Вопросы? taras2005dn@gmail.com
     """)
 @token.message_handler(commands=["start"])
 def handle_text(message):
@@ -37,15 +37,14 @@ def handle_text(message):
         Добро пожаловать!
         """,reply_markup=user_markup)
     token.send_message(message.chat.id, """
-        start - начать взаимодействие  
-        author - о боте 
-        list - домашнее задание 
-        rz - расписание 
-        help - список команд
-        stop - убрать внутреннюю клавиатуру
-        add - показать клавиатуру
+start - начать взаимодействие  
+author - о боте 
+list - домашнее задание 
+rz - расписание 
+help - список команд
+stop - убрать внутреннюю клавиатуру
+add - показать клавиатуру
         """)
-    
 @token.message_handler(commands=["list"])
 def handle_text(message):
     user_markup = telebot.types.ReplyKeyboardMarkup()
@@ -58,13 +57,13 @@ def handle_text(message):
 @token.message_handler(commands=["help"])
 def handle_text(message):
     token.send_message(message.chat.id,"""
-    start - начать взаимодействие  
-    author - о боте 
-    list - домашнее задание 
-    rz - расписание 
-    help - список команд
-    stop - убрать внутреннюю клавиатуру
-    add - показать клавиатуру
+start - начать взаимодействие  
+author - о боте 
+list - домашнее задание 
+rz - расписание 
+help - список команд
+stop - убрать внутреннюю клавиатуру
+add - показать клавиатуру
     """)
 @token.message_handler(commands=["rz"])
 def handle_text(message):
@@ -93,6 +92,7 @@ def handle_text(message):
     user_markup.row("/list")
     user_markup.row("/rz", "/stop")
     token.send_message(message.from_user.id,"Назад",reply_markup=user_markup)
+
 
 @token.message_handler(content_types=["text"])
 def handle_text(message):
