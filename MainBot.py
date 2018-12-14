@@ -117,10 +117,12 @@ def handle_text(message):
     elif (text == pas_1):
         log("password 1", text)
         token.send_message(id, "<i>Введите домашнее задание для 1 группы.</i>", parse_mode="HTML")
+        print(text)
         get_1 = True
     elif (text == pas_2):
         log("password 2", text)
         token.send_message(id, "<i>Введите домашнее задание для 2 группы.</i>", parse_mode="HTML")
+        print(text)
         get_2 = True
     elif(text == "Дурак"):
         token.send_message(id,"<b>Сам такой!</b>",parse_mode="HTML")
