@@ -124,8 +124,7 @@ def handle_text(message):
         get_2 = True
     elif(text == "Дурак"):
         token.send_message(id,"<b>Сам такой!</b>",parse_mode="HTML")
-
-
+    print("getting")
     for s in file_1:
         print(s)
         if (s.startswith(text)):
