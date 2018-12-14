@@ -109,7 +109,7 @@ def handle_text(message):
     if(get_1 == True):
         token.send_message(id,str_add,parse_mode="HTML")
         file_1.write(text)
-        get_2 = False
+        get_1 = False
     elif (get_2 == True):
         file_2.write(text)
         token.send_message(id, str_add, parse_mode="HTML")
