@@ -17,11 +17,11 @@ token = telebot.TeleBot(bot)
 #print(message_from_user)
 
 print(token.get_me())
-"""
+
 def log(message, answer):
     from datetime import datetime
     print("Log-message: ", message.text,"\nLog-datetime: ", datetime.now, "\nLog-user: ",message.from_user.first_name)
-"""
+
 
 @token.message_handler(commands=["author"])
 def handle_text(message):
@@ -104,6 +104,7 @@ def handle_text(message):
     if(text == "Дурак"):
         token.send_message(id,"<b>Сам такой!</b>",parse_mode="HTML")
     elif(text == pas_1):
+        log("password",text)
         token.send_message(id,"<i>Введите домашнее задание для 1 группы.</i>",parse_mode="HTML")
         text = message.text
         id = message.chat.id
@@ -117,8 +118,8 @@ def handle_text(message):
         token.send_message(id,str_add,parse_mode="HTML")
 
     for s in file_1:
-        if(s.startswith(text)):
-                token.send_message(message.from_user.id, s)
+        if (s.startswith(text)):
+            token.send_message(message.from_user.id, s)
         for s2 in file_2:
             if(s2.startswith(text)):
                 token.send_message(message.from_user.id, s2)
