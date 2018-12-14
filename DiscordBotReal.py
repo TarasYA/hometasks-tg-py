@@ -2,9 +2,10 @@
 Personal by me.
 """
 import discord
+import os
 from discord.ext import commands
 
-token = "NTAwMDAxODIxNDk1MDAxMDkw.Dt7mYw.AFZDfvORwXzEZCBS0BEkgOm3noA"
+token = os.getenv("distok")
 client = commands.Bot(command_prefix="m!")
 
 file = open("DiscordServerNames.txt", "r+")
