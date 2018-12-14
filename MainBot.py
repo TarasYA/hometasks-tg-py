@@ -117,9 +117,9 @@ def handle_text(message):
         token.send_message(id,str_add,parse_mode="HTML")
 
     for s in file_1:
-        for s2 in file_2:
-            if(s.startswith(text)):
+        if(s.startswith(text)):
                 token.send_message(message.from_user.id, s)
+        for s2 in file_2:
             if(s2.startswith(text)):
                 token.send_message(message.from_user.id, s2)
 
