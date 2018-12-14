@@ -100,7 +100,9 @@ def handle_text(message):
     str_add = "<b>Домашнее задание было добавлено!</b>"
     file_1 = open("week1.txt","r+")
     file_2 = open("week2.txt","r+")
-
+    log(pas_1,"password 1")
+    log(pas_2,"password 2")
+    
     if(text == "Дурак"):
         token.send_message(id,"<b>Сам такой!</b>",parse_mode="HTML")
     elif(text == pas_1):
