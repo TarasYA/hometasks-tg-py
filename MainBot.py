@@ -20,7 +20,7 @@ print(token.get_me())
 
 def log(message, answer):
     from datetime import datetime
-    print("Log-message: ", message.text,"\nLog-datetime: ", datetime.now, "\nLog-user: ",message.from_user.first_name)
+    print("Log-message: ", message.text,"\nLog-datetime: ", datetime.now, "\nLog-user: ",message)
 
 
 @token.message_handler(commands=["author"])
