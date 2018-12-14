@@ -101,8 +101,8 @@ def handle_text(message):
     text = message.text
     id = message.chat.id
     str_add = "<b>Домашнее задание было добавлено!</b>"
-    file_1 = open("week1.txt","w+")
-    file_2 = open("week2.txt","w+")
+    file_1 = open("week1.txt","r+")
+    file_2 = open("week2.txt","r+")
     #log(pas_1,"password 1 is")
     #log(pas_2,"password 2 is")
 
