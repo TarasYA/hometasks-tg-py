@@ -5,6 +5,8 @@ import telebot
 import os
 
 bot = os.getenv("TOKEN")
+pas_1 = os.getenv("PASSWORD")
+pas_2 = os.getenv("PASSWORD")
 token = telebot.TeleBot(bot)
 
 #token.send_message(402702337,"test")
@@ -96,14 +98,33 @@ def handle_text(message):
     token.send_chat_action(message.chat.id, "typing")
     text = message.text
     id = message.chat.id
-
+    str_add = "<b>Домашнее задание было добавлено!</b>"
+    file_1 = open("week1.txt","r+")
+    file_2 = open("week2.txt","r+")
+    
     if(text == "Дурак"):
         token.send_message(id,"<b>Сам такой!</b>",parse_mode="HTML")
-
-    file = open("week.txt","r+")
-    for s in file:
-        if(s.startswith(text)):
-            token.send_message(message.from_user.id, s)
-    file.close()
+    elif(text == pas_1):
+        token.send_message(id,"<i>Введите домашнее задание для 1 группы.</i>",parse_mode="HTML")
+        text = message.text
+        id = message.chat.id
+        file_1.write(text)
+        token.send_message(id,str_add,parse_mode="HTML")
+     elif(text == pas_2):
+        token.send_message(id,"<i>Введите домашнее задание для 2 группы.</i>",parse_mode="HTML")
+        text = message.text
+        id = message.chat.id
+        file_2.write(text)
+        token.send_message(id,str_add,parse_mode="HTML") 
+    
+    for s in file_1:
+        for s2 in file_2:
+            if(s.startswith(text)):
+                token.send_message(message.from_user.id, s)
+            if(s2.startswith(text)):
+                token.send_message(message.from_user.id, s2)
+                 
+    file_1.close()
+    file_2.close()
 
 token.polling(none_stop=True, interval=0)
