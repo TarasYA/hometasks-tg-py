@@ -109,7 +109,7 @@ def handle_text(message):
         id = message.chat.id
         file_1.write(text)
         token.send_message(id,str_add,parse_mode="HTML")
-     elif(text == pas_2):
+    elif(text == pas_2):
         token.send_message(id,"<i>Введите домашнее задание для 2 группы.</i>",parse_mode="HTML")
         text = message.text
         id = message.chat.id
