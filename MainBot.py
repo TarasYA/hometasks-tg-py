@@ -22,7 +22,7 @@ print(token.get_me())
 
 def log(message, answer):
     from datetime import datetime
-    print("Log-message: ", message,"\nLog-datetime: ", datetime.now, "\nLog-user: ",answer)
+    print("Log-message: ", message.text,"\nLog-datetime: ", datetime.now, "\nLog-user: ",message.from_user.first_name)
 
 
 @token.message_handler(commands=["author"])
@@ -103,8 +103,8 @@ def handle_text(message):
     str_add = "<b>Домашнее задание было добавлено!</b>"
     file_1 = open("week1.txt","r+")
     file_2 = open("week2.txt","r+")
-    log(pas_1,"password 1 is")
-    log(pas_2,"password 2 is")
+    #log(pas_1,"password 1 is")
+    #log(pas_2,"password 2 is")
 
     if(get_1 == True):
         token.send_message(id,str_add,parse_mode="HTML")
