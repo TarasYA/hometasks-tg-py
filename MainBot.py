@@ -103,30 +103,36 @@ def handle_text(message):
     str_add = "<b>Домашнее задание было добавлено!</b>"
     file_1 = open("week1.txt","r+")
     file_2 = open("week2.txt","r+")
+
     #log(pas_1,"password 1 is")
     #log(pas_2,"password 2 is")
 
     if(get_1 == True):
         token.send_message(id,str_add,parse_mode="HTML")
         file_1.write(text)
+        print(text)
         get_1 = False
     elif (get_2 == True):
-        file_2.write(text)
         token.send_message(id, str_add, parse_mode="HTML")
-        get_2 = False   
+        file_2.write(text)
+        print(text)
+        get_2 = False
     elif (text == pas_1):
         log("password 1", text)
         token.send_message(id, "<i>Введите домашнее задание для 1 группы.</i>", parse_mode="HTML")
-        print(text)
         get_1 = True
     elif (text == pas_2):
         log("password 2", text)
         token.send_message(id, "<i>Введите домашнее задание для 2 группы.</i>", parse_mode="HTML")
-        print(text)
         get_2 = True
     elif(text == "Дурак"):
         token.send_message(id,"<b>Сам такой!</b>",parse_mode="HTML")
-    print("getting")
+
+    file_1.close()
+    file_2.close()
+    file_1 = open("week1.txt", "r+")
+    file_2 = open("week2.txt", "r+")
+
     for s in file_1:
         print(s)
         if (s.startswith(text)):
