@@ -6,7 +6,7 @@ import os
 
 bot = os.getenv("TOKEN")
 pas_1 = os.getenv("PASSWORD")
-pas_2 = os.getenv("PASSWORD1")
+pas_2 = os.getenv("PASSWORD2")
 token = telebot.TeleBot(bot)
 get_1 = False
 get_2 = False
