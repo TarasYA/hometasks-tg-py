@@ -1,2 +1,2 @@
-worker: python MainBot.py
-worker: python DiscordBotReal.py
+worker1: python MainBot.py
+worker2: python DiscordBotReal.py
