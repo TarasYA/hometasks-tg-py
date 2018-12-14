@@ -6,10 +6,9 @@ import os
 
 bot = os.getenv("TOKEN")
 pas_1 = os.getenv("PASSWORD")
-pas_2 = os.getenv("PASSWORD")
+pas_2 = os.getenv("PASSWORD2")
 token = telebot.TeleBot(bot)
 
-#token.send_message(402702337,"test")
 #upd = token.get_updates()
 #print(upd)
 #last_upd = upd[-1]
