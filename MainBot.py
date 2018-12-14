@@ -5,10 +5,11 @@ import telebot
 import os
 
 bot = os.getenv("TOKEN")
-pas_1 = os.getenv("PASSWORD")
-pas_2 = os.getenv("PASSWORD2")
+pas_1 = os.getenv("PASSWORD1")
+pas_2 = os.getenv("PASSWORD1")
 token = telebot.TeleBot(bot)
 
+#token.send_message(402702337,"test")
 #upd = token.get_updates()
 #print(upd)
 #last_upd = upd[-1]
@@ -77,7 +78,6 @@ def handle_text(message):
     user_markup.row("/list")
     user_markup.row("/rz")
     token.send_message(message.from_user.id,"Клавиатура была включена.Что бы её выключить, используйте команду /stop",reply_markup=user_markup)
-
 @token.message_handler(commands=["stop"])
 def handle_text(message):
     hide_markup = telebot.types.ReplyKeyboardHide()
@@ -100,7 +100,7 @@ def handle_text(message):
     str_add = "<b>Домашнее задание было добавлено!</b>"
     file_1 = open("week1.txt","r+")
     file_2 = open("week2.txt","r+")
-    
+
     if(text == "Дурак"):
         token.send_message(id,"<b>Сам такой!</b>",parse_mode="HTML")
     elif(text == pas_1):
@@ -114,15 +114,15 @@ def handle_text(message):
         text = message.text
         id = message.chat.id
         file_2.write(text)
-        token.send_message(id,str_add,parse_mode="HTML") 
-    
+        token.send_message(id,str_add,parse_mode="HTML")
+
     for s in file_1:
         for s2 in file_2:
             if(s.startswith(text)):
                 token.send_message(message.from_user.id, s)
             if(s2.startswith(text)):
                 token.send_message(message.from_user.id, s2)
-                 
+
     file_1.close()
     file_2.close()
 
