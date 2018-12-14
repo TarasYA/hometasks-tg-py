@@ -134,7 +134,6 @@ def handle_text(message):
     file_2 = open("week2.txt", "r+")
 
     for s in file_1:
-        print(s)
         if (s.startswith(text)):
             token.send_message(message.from_user.id, s)
         for s2 in file_2:
