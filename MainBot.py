@@ -101,8 +101,8 @@ def handle_text(message):
     text = message.text
     id = message.chat.id
     str_add = "<b>Домашнее задание было добавлено!</b>"
-    file_1 = open("week1.txt","r+")
-    file_2 = open("week2.txt","r+")
+    file_1 = open("week1.txt","w+")
+    file_2 = open("week2.txt","w+")
     #log(pas_1,"password 1 is")
     #log(pas_2,"password 2 is")
 
@@ -110,12 +110,10 @@ def handle_text(message):
         token.send_message(id,str_add,parse_mode="HTML")
         file_1.write(text)
         get_1 = False
-        file_1.close()
     elif (get_2 == True):
         file_2.write(text)
         token.send_message(id, str_add, parse_mode="HTML")
-        get_2 = False
-        file_2.close()    
+        get_2 = False   
     elif (text == pas_1):
         log("password 1", text)
         token.send_message(id, "<i>Введите домашнее задание для 1 группы.</i>", parse_mode="HTML")
