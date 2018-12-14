@@ -6,8 +6,10 @@ import os
 
 bot = os.getenv("TOKEN")
 pas_1 = os.getenv("PASSWORD")
-pas_2 = os.getenv("PASSWORD2")
+pas_2 = os.getenv("PASSWORD1")
 token = telebot.TeleBot(bot)
+get_1 = False
+get_2 = False
 
 #token.send_message(402702337,"test")
 #upd = token.get_updates()
@@ -20,7 +22,7 @@ print(token.get_me())
 
 def log(message, answer):
     from datetime import datetime
-    print("Log-message: ", message,"\nLog-datetime: ", datetime.now, "\nLog-user/tag-pr: ",answer)
+    print("Log-message: ", message.text,"\nLog-datetime: ", datetime.now, "\nLog-user: ",message.from_user.first_name)
 
 
 @token.message_handler(commands=["author"])
@@ -94,30 +96,35 @@ def handle_text(message):
 
 @token.message_handler(content_types=["text"])
 def handle_text(message):
+    global get_1,get_2
     token.send_chat_action(message.chat.id, "typing")
     text = message.text
     id = message.chat.id
     str_add = "<b>Домашнее задание было добавлено!</b>"
     file_1 = open("week1.txt","r+")
     file_2 = open("week2.txt","r+")
-    log(pas_1,"password 1")
-    log(pas_2,"password 2")
-    
-    if(text == "Дурак"):
-        token.send_message(id,"<b>Сам такой!</b>",parse_mode="HTML")
-    elif(text == pas_1):
-        log("password",text)
-        token.send_message(id,"<i>Введите домашнее задание для 1 группы.</i>",parse_mode="HTML")
-        text = message.text
-        id = message.chat.id
+    log(pas_1,"password 1 is")
+    log(pas_2,"password 2 is")
+
+    if(get_1 == True):
+        token.send_message(id,str_add,parse_mode="HTML")
         file_1.write(text)
-        token.send_message(id,str_add,parse_mode="HTML")
-    elif(text == pas_2):
-        token.send_message(id,"<i>Введите домашнее задание для 2 группы.</i>",parse_mode="HTML")
-        text = message.text
-        id = message.chat.id
+        get_2 = False
+    elif (get_2 == True):
         file_2.write(text)
-        token.send_message(id,str_add,parse_mode="HTML")
+        token.send_message(id, str_add, parse_mode="HTML")
+        get_2 = False
+    elif (text == pas_1):
+        log("password 1", text)
+        token.send_message(id, "<i>Введите домашнее задание для 1 группы.</i>", parse_mode="HTML")
+        get_1 = True
+    elif (text == pas_2):
+        log("password 2", text)
+        token.send_message(id, "<i>Введите домашнее задание для 2 группы.</i>", parse_mode="HTML")
+        get_2 = True
+    elif(text == "Дурак"):
+        token.send_message(id,"<b>Сам такой!</b>",parse_mode="HTML")
+
 
     for s in file_1:
         if (s.startswith(text)):
