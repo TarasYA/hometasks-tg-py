@@ -32,8 +32,11 @@ def log(message, answer):
 @token.message_handler(commands=["author"])
 def handle_text(message):
     token.send_message(message.chat.id,"""
-    Бот был создан учеником ЛИТа 8-В класса Яицким Тарасом.
-Вопросы? taras2005dn@gmail.com
+    Бот был создан учениками ЛИТа 8-В класса Яицким Тарасом, Антоном Мордаком, Хорсуном Дмитрием.
+Вопросы? 
+taras2005dn@gmail.com
+frieddimka@gmail.com
+antongimnasium@gmail.com
     """)
 @token.message_handler(commands=["start"])
 def handle_text(message):
@@ -152,4 +155,3 @@ def handle_text(message):
     file_2.close()
 
 token.polling(none_stop=True, interval=0)
-
