@@ -106,17 +106,7 @@ def handle_text(message):
 
     #log(pas_1,"password 1 is")
     #log(pas_2,"password 2 is")
-
-    if(get_1 == True):
-        token.send_message(id,str_add,parse_mode="HTML")
-        file_1.write(text)
-        print(text)
-        get_1 = False
-    elif (get_2 == True):
-        token.send_message(id, str_add, parse_mode="HTML")
-        file_2.write(text)
-        print(text)
-        get_2 = False
+    
     elif (text == pas_1):
         log("password 1", text)
         token.send_message(id, "<i>Введите домашнее задание для 1 группы.</i>", parse_mode="HTML")
