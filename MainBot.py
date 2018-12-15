@@ -96,8 +96,8 @@ def handle_text(message):
     token.send_message(message.from_user.id,"Назад",reply_markup=user_markup)
     send_1 = False
     send_2 = False
-    get_1 = True
-    get_2 = True
+    get_1 = False
+    get_2 = False
 
 
 @token.message_handler(content_types=["text"])
