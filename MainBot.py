@@ -10,7 +10,8 @@ pas_2 = os.getenv("PASSWORD2")
 token = telebot.TeleBot(bot)
 get_1 = False
 get_2 = False
-
+send_1 = False
+send_2 = False
 #token.send_message(402702337,"test")
 #upd = token.get_updates()
 #print(upd)
@@ -96,7 +97,7 @@ def handle_text(message):
 
 @token.message_handler(content_types=["text"])
 def handle_text(message):
-    global get_1,get_2
+    global get_1,get_2,send_1,send_2
     token.send_chat_action(message.chat.id, "typing")
     text = message.text
     id = message.chat.id
@@ -106,13 +107,37 @@ def handle_text(message):
 
     #log(pas_1,"password 1 is")
     #log(pas_2,"password 2 is")
-    if (get_1 == True):
+    if (send_1 == True):
         file_1.write(text)
-        get_1 = False
-    if (get_2 == True):
+        print(text)
+        send_1 = False
+    elif (send_2 == True):
         file_2.write(text)
+        print(text)
+        send_2 = False
+    elif(get_1 == True):
+        user_markup = telebot.types.ReplyKeyboardMarkup()
+        user_markup.row("ukr.lit", "for.lit")
+        user_markup.row("urk.m", "rus.m", "en.m")
+        user_markup.row("math", "physics", "informatics")
+        user_markup.row("chemistry", "geography", "history")
+        user_markup.row("art", "bio", "/back")
+        token.send_message(message.from_user.id, "Выбери предмет", reply_markup=user_markup)
+        print(text)
+        get_1 = False
+        send_1 = True
+    elif (get_2 == True):
+        user_markup = telebot.types.ReplyKeyboardMarkup()
+        user_markup.row("ukr.lita", "for.lita")
+        user_markup.row("urk.m", "rus.m", "en.m")
+        user_markup.row("math", "physics", "informatics")
+        user_markup.row("chemistry", "geography", "history")
+        user_markup.row("art", "bio", "/back")
+        token.send_message(message.from_user.id, "Выбери предмет", reply_markup=user_markup)
+        print(text)
         get_2 = False
-    if (text == pas_1):
+        send_2 = True
+    elif (text == pas_1):
         log("password 1", text)
         token.send_message(id, "<i>Введите домашнее задание для 1 группы.</i>", parse_mode="HTML")
         get_1 = True
@@ -129,11 +154,13 @@ def handle_text(message):
     file_2 = open("week2.txt", "r+")
 
     for s in file_1:
-        if (s.startswith(text)):
-            token.send_message(message.from_user.id, s)
+        if(get_1 != True):
+            if (s.startswith(text)):
+                token.send_message(message.from_user.id, s)
         for s2 in file_2:
-            if(s2.startswith(text)):
-                token.send_message(message.from_user.id, s2)
+            if(get_2 != True):
+                if(s2.startswith(text)):
+                    token.send_message(message.from_user.id, s2)
 
     file_1.close()
     file_2.close()
