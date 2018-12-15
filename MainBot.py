@@ -88,11 +88,14 @@ def handle_text(message):
 """
 @token.message_handler(commands=["back"])
 def handle_text(message):
+    global send_1,send_2
     user_markup = telebot.types.ReplyKeyboardMarkup()
     user_markup.row("/author", "/help")
     user_markup.row("/list")
     user_markup.row("/rz")
     token.send_message(message.from_user.id,"Назад",reply_markup=user_markup)
+    send_1 = False
+    send_2 = False
 
 
 @token.message_handler(content_types=["text"])
@@ -101,12 +104,10 @@ def handle_text(message):
     token.send_chat_action(message.chat.id, "typing")
     text = message.text
     id = message.chat.id
-    str_add = "<b>Домашнее задание было добавлено!</b>"
+    #str_add = "<b>Домашнее задание было добавлено!</b>"
     file_1 = open("week1.txt","r+")
     file_2 = open("week2.txt","r+")
 
-    #log(pas_1,"password 1 is")
-    #log(pas_2,"password 2 is")
     if (send_1 == True):
         file_1.write(text)
         print(text)
@@ -115,7 +116,9 @@ def handle_text(message):
         file_2.write(text)
         print(text)
         send_2 = False
-    elif(get_1 == True):
+    elif (text == pas_1):
+        log("password 1", text)
+        token.send_message(id, "<i>Введите домашнее задание для 1 группы.</i>", parse_mode="HTML")
         user_markup = telebot.types.ReplyKeyboardMarkup()
         user_markup.row("ukr.lit", "for.lit")
         user_markup.row("urk.m", "rus.m", "en.m")
@@ -123,28 +126,18 @@ def handle_text(message):
         user_markup.row("chemistry", "geography", "history")
         user_markup.row("art", "bio", "/back")
         token.send_message(message.from_user.id, "Выбери предмет", reply_markup=user_markup)
-        print(text)
-        get_1 = False
         send_1 = True
-    elif (get_2 == True):
+    elif (text == pas_2):
+        log("password 2", text)
+        token.send_message(id, "<i>Введите домашнее задание для 2 группы.</i>", parse_mode="HTML")
         user_markup = telebot.types.ReplyKeyboardMarkup()
-        user_markup.row("ukr.lita", "for.lita")
+        user_markup.row("ukr.lit", "for.lit")
         user_markup.row("urk.m", "rus.m", "en.m")
         user_markup.row("math", "physics", "informatics")
         user_markup.row("chemistry", "geography", "history")
         user_markup.row("art", "bio", "/back")
         token.send_message(message.from_user.id, "Выбери предмет", reply_markup=user_markup)
-        print(text)
-        get_2 = False
         send_2 = True
-    elif (text == pas_1):
-        log("password 1", text)
-        token.send_message(id, "<i>Введите домашнее задание для 1 группы.</i>", parse_mode="HTML")
-        get_1 = True
-    elif (text == pas_2):
-        log("password 2", text)
-        token.send_message(id, "<i>Введите домашнее задание для 2 группы.</i>", parse_mode="HTML")
-        get_2 = True
     elif(text == "Дурак"):
         token.send_message(id,"<b>Сам такой!</b>",parse_mode="HTML")
 
@@ -166,3 +159,20 @@ def handle_text(message):
     file_2.close()
 
 token.polling(none_stop=True, interval=0)
+"""
+    elif(get_1 == True):
+        user_markup = telebot.types.ReplyKeyboardMarkup()
+        user_markup.row("ukr.lit", "for.lit")
+        user_markup.row("urk.m", "rus.m", "en.m")
+        user_markup.row("math", "physics", "informatics")
+        user_markup.row("chemistry", "geography", "history")
+        user_markup.row("art", "bio", "/back")
+        token.send_message(message.from_user.id, "Выбери предмет", reply_markup=user_markup)
+        print(text)
+        get_1 = False
+        send_1 = True
+    elif (get_2 == True):
+        print(text)
+        get_2 = False
+        send_2 = True
+   """
