@@ -88,7 +88,7 @@ def handle_text(message):
 """
 @token.message_handler(commands=["back"])
 def handle_text(message):
-    global send_1,send_2
+    global send_1,send_2,get_1,get_2
     user_markup = telebot.types.ReplyKeyboardMarkup()
     user_markup.row("/author", "/help")
     user_markup.row("/list")
@@ -96,6 +96,8 @@ def handle_text(message):
     token.send_message(message.from_user.id,"Назад",reply_markup=user_markup)
     send_1 = False
     send_2 = False
+    get_1 = True
+    get_2 = True
 
 
 @token.message_handler(content_types=["text"])
@@ -127,6 +129,7 @@ def handle_text(message):
         user_markup.row("art", "bio", "/back")
         token.send_message(message.from_user.id, "Выбери предмет", reply_markup=user_markup)
         send_1 = True
+        get_1 = True
     elif (text == pas_2):
         log("password 2", text)
         token.send_message(id, "<i>Введите домашнее задание для 2 группы.</i>", parse_mode="HTML")
@@ -138,6 +141,7 @@ def handle_text(message):
         user_markup.row("art", "bio", "/back")
         token.send_message(message.from_user.id, "Выбери предмет", reply_markup=user_markup)
         send_2 = True
+        get_1 = True
     elif(text == "Дурак"):
         token.send_message(id,"<b>Сам такой!</b>",parse_mode="HTML")
 
