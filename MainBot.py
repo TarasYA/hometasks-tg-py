@@ -41,9 +41,9 @@ antongimnasium@gmail.com
 @token.message_handler(commands=["start"])
 def handle_text(message):
     user_markup = telebot.types.ReplyKeyboardMarkup()
-    user_markup.row("/author","/help")
-    user_markup.row("/list")
-    user_markup.row("/rz")
+    user_markup.row("/author", "/help")
+    user_markup.row("/list", "/rz")
+    user_markup.row("/duty", "/rating")
     token.send_message(message.chat.id, """
         Добро пожаловать!
         """,reply_markup=user_markup)
@@ -53,6 +53,8 @@ author - о боте
 list - домашнее задание 
 rz - расписание 
 help - список команд
+duty - дежурство
+rating - рейтинг
         """)
 @token.message_handler(commands=["list"])
 def handle_text(message):
@@ -71,6 +73,8 @@ author - о боте
 list - домашнее задание 
 rz - расписание 
 help - список команд
+duty - дежурство
+rating - рейтинг
     """)
 @token.message_handler(commands=["rz"])
 def handle_text(message):
@@ -79,6 +83,17 @@ def handle_text(message):
     Расписание:\n 
     """)
     token.send_photo(chat_id=message.chat.id, photo=open('8v.png', 'rb'))
+@token.message_handler(commands=["rating"])
+def handle_text(message):
+    token.send_chat_action(message.chat.id, 'upload_photo')
+    token.send_message(message.from_user.id,"Рейтинг:\n")
+    token.send_photo(chat_id=message.chat.id, photo=open('media-share-0-02-04-13249eda0fb4da7090711a1abf81653171baa9ad34c602a824e77363d908888c-f12d5cea-2570-4c63-b527-959d0dac5d66.jpg', 'rb'))
+@token.message_handler(commands=["duty"])
+def handle_text(message):
+    token.send_chat_action(message.chat.id, 'upload_photo')
+    token.send_message(message.from_user.id,"Дежурство:\n")
+    token.send_photo(chat_id=message.chat.id, photo=open('Duty.jpg', 'rb'))
+
 """
 @token.message_handler(commands=["add"])
 def handle_text(message):
@@ -97,8 +112,8 @@ def handle_text(message):
     global send_1,send_2,get_1,get_2
     user_markup = telebot.types.ReplyKeyboardMarkup()
     user_markup.row("/author", "/help")
-    user_markup.row("/list")
-    user_markup.row("/rz")
+    user_markup.row("/list","/rz")
+    user_markup.row("/duty","/rating")
     token.send_message(message.from_user.id,"Назад",reply_markup=user_markup)
     send_1 = False
     send_2 = False
