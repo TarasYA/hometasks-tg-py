@@ -1,1 +1,13 @@
-text
+ukr.lit - 2 группа:  
+for.lit - 2 группа: 
+urk.m - 2 группа:
+rus.m - 2 группа: 
+en.m - 2 группа: 
+math - 2 группа:
+physics - 2 группа: 
+informatics - 2 группа: 
+chemistry - 2 группа: 
+bio - 2 группа:
+geography - 2 группа: 
+history - 2 группа: 
+art - 2 группа: 
