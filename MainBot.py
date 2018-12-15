@@ -116,11 +116,11 @@ def handle_text(message):
     if(send_1 == True):
         file_1.write(text)
         send_1 = False
-        get_1 = True
+        get_1 = False
     if (send_2 == True):
         file_2.write(text)
         send_2 = False
-        get_2 = True
+        get_2 = False
     elif (text == pas_1):
         log("password 1", text)
         token.send_message(id, "<i>Введите домашнее задание для 1 группы.</i>", parse_mode="HTML")
@@ -152,3 +152,4 @@ def handle_text(message):
     file_2.close()
 
 token.polling(none_stop=True, interval=0)
+
