@@ -90,12 +90,12 @@ def handle_text(message):
     file_path = "news"
     token.send_message(message.chat.id, """
     Новости:\n """)
-    token.send_photo(chat_id=message.chat.id, photo=open('news.png', 'rb'))
     if(os.path.exists(file_path + ".png")):
-        file = open(file_path + ".png", "r")
+        file = open("news.txt", "r")
         for s in file:
-            token.send_message(message.from_user.id, s)
+            token.send_message(message.chat.id, s)
         file.close()
+        token.send_photo(chat_id=message.chat.id, photo=open(file_path + ".png", 'rb'))
     elif(os.path.exists(file_path + ".jpg")):
         file = open(file_path + ".jpg", "r")
         for s in file:
