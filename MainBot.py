@@ -26,24 +26,25 @@ print(token.get_me())
 
 def log(message, answer):
     from datetime import datetime
-    print("Log-message: ", message,"\nLog-datetime: ", datetime.now, "\nLog-user: ",answer)
+    print("Log-message: ", message, "\nLog-datetime: ", datetime.now, "\nLog-user: ",answer)
 
 
 @token.message_handler(commands=["author"])
 def handle_text(message):
-    token.send_message(message.chat.id,"""
+    token.send_message(message.chat.id, """
     Бот был создан учениками ЛИТа 8-В класса Яицким Тарасом, Антоном Мордаком, Хорсуном Дмитрием.
 Вопросы? 
 taras2005dn@gmail.com
 frieddimka@gmail.com
 antongimnasium@gmail.com
-    """)
+""")
 @token.message_handler(commands=["start"])
 def handle_text(message):
     user_markup = telebot.types.ReplyKeyboardMarkup()
     user_markup.row("/author", "/help")
-    user_markup.row("/list", "/rz")
+    user_markup.row("/list")
     user_markup.row("/duty", "/rating")
+    user_markup.row("/rz", "/news")
     token.send_message(message.chat.id, """
         Добро пожаловать!
         """,reply_markup=user_markup)
@@ -55,7 +56,8 @@ rz - расписание
 help - список команд
 duty - дежурство
 rating - рейтинг
-        """)
+news - новости
+""")
 @token.message_handler(commands=["list"])
 def handle_text(message):
     user_markup = telebot.types.ReplyKeyboardMarkup()
@@ -67,7 +69,7 @@ def handle_text(message):
     token.send_message(message.from_user.id, "Список предметов",reply_markup=user_markup)
 @token.message_handler(commands=["help"])
 def handle_text(message):
-    token.send_message(message.chat.id,"""
+    token.send_message(message.chat.id, """
 start - начать взаимодействие  
 author - о боте 
 list - домашнее задание 
@@ -75,14 +77,32 @@ rz - расписание
 help - список команд
 duty - дежурство
 rating - рейтинг
-    """)
+""")
 @token.message_handler(commands=["rz"])
 def handle_text(message):
     token.send_chat_action(message.chat.id, 'upload_photo')
-    token.send_message(message.chat.id,"""
-    Расписание:\n 
-    """)
+    token.send_message(message.chat.id, """
+    Расписание:\n""")
     token.send_photo(chat_id=message.chat.id, photo=open('8v.png', 'rb'))
+@token.message_handler(commands=["news"])
+def handle_text(message):
+    token.send_chat_action(message.chat.id, 'upload_photo')
+    file_path = "news"
+    token.send_message(message.chat.id, """
+    Новости:\n """)
+    token.send_photo(chat_id=message.chat.id, photo=open('news.png', 'rb'))
+    if(os.path.exists(file_path + ".png")):
+        file = open(file_path + ".png", "r")
+        for s in file:
+            token.send_message(message.from_user.id, s)
+        file.close()
+    elif(os.path.exists(file_path + ".jpg")):
+        file = open(file_path + ".jpg", "r")
+        for s in file:
+            token.send_message(message.from_user.id, s)
+        file.close()
+    else:
+        token.send_message(message.from_user.id, "Новостей нет!")
 @token.message_handler(commands=["rating"])
 def handle_text(message):
     token.send_chat_action(message.chat.id, 'upload_photo')
@@ -94,7 +114,10 @@ def handle_text(message):
     token.send_message(message.from_user.id,"Дежурство:\n")
     token.send_photo(chat_id=message.chat.id, photo=open('Duty.jpg', 'rb'))
 
+
 """
+Adding \ disabling buttons code
+
 @token.message_handler(commands=["add"])
 def handle_text(message):
     user_markup = telebot.types.ReplyKeyboardMarkup()
@@ -107,21 +130,20 @@ def handle_text(message):
     hide_markup = telebot.types.ReplyKeyboardHide()
     token.send_message(message.from_user.id,"Клавиатура была убранна.Что бы её включить, используйте команду /add",reply_markup=hide_markup)
 """
+
 @token.message_handler(commands=["back"])
 def handle_text(message):
     global send_1,send_2,get_1,get_2
     user_markup = telebot.types.ReplyKeyboardMarkup()
     user_markup.row("/author", "/help")
-    user_markup.row("/list","/rz")
+    user_markup.row("/list")
     user_markup.row("/duty","/rating")
+    user_markup.row("/rz","/news")
     token.send_message(message.from_user.id,"Назад",reply_markup=user_markup)
     send_1 = False
     send_2 = False
     get_1 = False
     get_2 = False
-
-
-
 @token.message_handler(content_types=["text"])
 def handle_text(message):
     global get_1,get_2,send_1,send_2,get_text_1,get_text_2,str_add
