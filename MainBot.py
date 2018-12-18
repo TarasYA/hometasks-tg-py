@@ -97,7 +97,7 @@ def handle_text(message):
         file.close()
         token.send_photo(chat_id=message.chat.id, photo=open(file_path + ".png", 'rb'))
     elif(os.path.exists(file_path + ".jpg")):
-        file = open(file_path + ".jpg", "r")
+        file = open("news.txt", "r")
         for s in file:
             token.send_message(message.from_user.id, s)
         file.close()
