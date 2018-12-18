@@ -158,11 +158,13 @@ def handle_text(message):
         send_1 = False
         get_1 = False
         token.send_message(id, "<b>Домашнее задание было добавлено!</b>", parse_mode="HTML")
+        file_1.close()
     if (send_2 == True):
         file_2.write(text)
         send_2 = False
         get_2 = False
         token.send_message(id, "<b>Домашнее задание было добавлено!</b>", parse_mode="HTML")
+        file_2.close()
     elif (text == pas_1):
         log("password 1", text)
         token.send_message(id, "<i>Введите домашнее задание для 1 группы.</i>", parse_mode="HTML")
