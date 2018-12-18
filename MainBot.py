@@ -77,6 +77,7 @@ rz - расписание
 help - список команд
 duty - дежурство
 rating - рейтинг
+news - новости
 """)
 @token.message_handler(commands=["rz"])
 def handle_text(message):
