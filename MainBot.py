@@ -195,5 +195,5 @@ def handle_text(message):
 
     file_1.close()
     file_2.close()
-
-token.polling(none_stop=True, interval=0)
+    
+token.polling(none_stop=True, timeout=123)
