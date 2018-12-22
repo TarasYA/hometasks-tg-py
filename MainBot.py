@@ -17,14 +17,15 @@ get_text_2 = False
 str_add = ""
 string_help = """
 start - начать взаимодействие  
-author - о боте 
-list - домашнее задание
-all - всё домашнее задание 
-rz - расписание 
-help - список команд
-duty - дежурство
-rating - рейтинг
-news - новости
+Авторы - обратная связь 
+Список дз - домашнее задание
+Всё дз - всё домашнее задание 
+Расписание - расписание 
+Команды - список команд
+Дежурство - дежурство
+Рейтинг - рейтинг
+Новости - новости
+Назад - вернуться обратно
 """
 #token.send_message(402702337,"test")
 #upd = token.get_updates()
@@ -40,7 +41,7 @@ def log(message, answer):
     print("Log-message: ", message, "\nLog-datetime: ", datetime.now, "\nLog-user: ",answer)
 
 
-@token.message_handler(commands=["author"])
+@token.message_handler(commands=["Авторы"])
 def handle_text(message):
     token.send_message(message.chat.id, """
     Бот был создан учениками ЛИТа 8-В класса Яицким Тарасом, Антоном Мордаком, Хорсуном Дмитрием.
@@ -51,17 +52,17 @@ antongimnasium@gmail.com
 """)
 def menu(message, send):
     user_markup = telebot.types.ReplyKeyboardMarkup()
-    user_markup.row("/author", "/help")
-    user_markup.row("/list")
-    user_markup.row("/duty", "/rating")
-    user_markup.row("/rz", "/news")
+    user_markup.row("/Авторы", "/Команды")
+    user_markup.row("/Список дз","Всё дз")
+    user_markup.row("/Дежурство", "/Рейтинг")
+    user_markup.row("/Расписание", "/Новости")
     token.send_message(message.from_user.id, str(send), reply_markup=user_markup)
 @token.message_handler(commands=["start"])
 def handle_text(message):
     global string_help
     menu(message, "Добро пожаловать!")
     token.send_message(message.chat.id,string_help)
-@token.message_handler(commands=["list"])
+@token.message_handler(commands=["Список дз"])
 def handle_text(message):
     user_markup = telebot.types.ReplyKeyboardMarkup()
     user_markup.row("ukr.lit", "for.lit")
@@ -70,17 +71,17 @@ def handle_text(message):
     user_markup.row("chemistry", "geography", "history")
     user_markup.row("art", "bio", "/back")
     token.send_message(message.from_user.id, "Список предметов",reply_markup=user_markup)
-@token.message_handler(commands=["help"])
+@token.message_handler(commands=["Команды"])
 def handle_text(message):
     global string_help
     token.send_message(message.chat.id,string_help)
-@token.message_handler(commands=["rz"])
+@token.message_handler(commands=["Расписание"])
 def handle_text(message):
     token.send_chat_action(message.chat.id, 'upload_photo')
     token.send_message(message.chat.id, """
     Расписание:\n""")
     token.send_photo(chat_id=message.chat.id, photo=open('8v.png', 'rb'))
-@token.message_handler(commands=["news"])
+@token.message_handler(commands=["Новости"])
 def handle_text(message):
     token.send_chat_action(message.chat.id, 'upload_photo')
     file_path = "news"
@@ -105,12 +106,12 @@ def handle_text(message):
     else:
         token.send_message(message.from_user.id, "Новостей нет!")
 
-@token.message_handler(commands=["rating"])
+@token.message_handler(commands=["Рейтинг"])
 def handle_text(message):
     token.send_chat_action(message.chat.id, 'upload_photo')
     token.send_message(message.from_user.id,"Рейтинг:\n")
     token.send_photo(chat_id=message.chat.id, photo=open('media-share-0-02-04-13249eda0fb4da7090711a1abf81653171baa9ad34c602a824e77363d908888c-f12d5cea-2570-4c63-b527-959d0dac5d66.jpg', 'rb'))
-@token.message_handler(commands=["duty"])
+@token.message_handler(commands=["Дежурство"])
 def handle_text(message):
     token.send_chat_action(message.chat.id, 'upload_photo')
     token.send_message(message.from_user.id,"Дежурство:\n")
@@ -136,7 +137,7 @@ user_markup.row("/list")
 user_markup.row("/duty", "/rating")
 user_markup.row("/rz", "/news")
 """
-@token.message_handler(commands=["back"])
+@token.message_handler(commands=["Назад"])
 def handle_text(message):
     global send_1,send_2,get_1,get_2
     menu(message,"Назад")
@@ -144,7 +145,7 @@ def handle_text(message):
     send_2 = False
     get_1 = False
     get_2 = False
-def send_dz(message,text,all = False):
+def send_dz(message, text, all = False):
     global get_1,get_2
     file_1 = open("week1.txt", "r+")
     file_2 = open("week2.txt", "r+")
@@ -154,6 +155,7 @@ def send_dz(message,text,all = False):
     send4 = [token.send_message(message.from_user.id, s4) for s4 in file_2 if get_2 != True and all == True]
     file_1.close()
     file_2.close()
+    log(message.from_user.id, text)
 
 @token.message_handler(content_types=["text"])
 def handle_text(message):
