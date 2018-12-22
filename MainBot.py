@@ -224,6 +224,7 @@ def handle_text(message):
     send_dz(message, text, all=False)
     file_1.close()
     file_2.close()
+    file_3.close()
 
 #polling
 token.polling(none_stop=True)
