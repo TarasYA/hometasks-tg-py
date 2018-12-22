@@ -171,7 +171,7 @@ def send_dz(message, text, all = False):
         if(all):
             log(message.from_user.id, str(get_1) + str(get_2))
             for str1 in file_1:
-                log(message.from_user.id, str(get_1) + str(get_2))
+                log(message.from_user.id, str("WOW") + str(get_2))
                 print(str1)
                 token.send_message(message.from_user.id, str1)
                 for str2 in file_2:
@@ -180,7 +180,7 @@ def send_dz(message, text, all = False):
         else:
             log(message.from_user.id, str(get_1) + str(get_2))
             for str1 in file_1:
-                log(message.from_user.id, str(get_1) + str(get_2))
+                log(message.from_user.id, str("WOW2") + str(get_2))
                 if(str1.startswith(text)):
                     print(str1)
                     token.send_message(message.from_user.id, str1)
