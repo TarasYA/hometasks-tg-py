@@ -177,7 +177,8 @@ def handle_text(message):
     token.send_chat_action(message.chat.id, "typing")
     text = message.text
     id = message.chat.id
-
+    file_3 = open("news.txt", "w")
+    
     if(send_1 == True):
         with open('week1.txt', 'w') as file:
             file.write(text)
@@ -215,7 +216,6 @@ def handle_text(message):
 
     file_1 = open("week1.txt", "r")
     file_2 = open("week2.txt", "r")
-    file_3 = open("news.txt", "w")
     if (get_1 == False and get_2 == False and news_get == False):
         for str1 in file_1:
             if(str1.startswith(text)):
