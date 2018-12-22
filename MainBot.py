@@ -168,19 +168,23 @@ def send_dz(message, text, all = False):
     file_2 = open("week2.txt", "r+")
     if(get_1 == False and get_2 == False):
         if(all):
-            for str1,str2 in file_1,file_2:
+            for str1 in file_1:
                 print(str1)
                 token.send_message(message.from_user.id, str1)
-                print(str2)
-                token.send_message(message.from_user.id, str2)
+                for str2 in file_2:
+                    print(str2)
+                    token.send_message(message.from_user.id, str2)
         else:
-            for str1,str2 in file_1,file_2:
+            for str1 in file_1:
                 if(str1.startswith(text)):
                     print(str1)
                     token.send_message(message.from_user.id, str1)
-                if (str2.startswith(text)):
-                    print(str2)
-                    token.send_message(message.from_user.id, str2)
+                for str2 in file_2:
+                    if (str2.startswith(text)):
+                        print(str2)
+                        token.send_message(message.from_user.id, str2)
+                    
+                
     file_1.close()
     file_2.close()
     log(message.from_user.id, str(all))
