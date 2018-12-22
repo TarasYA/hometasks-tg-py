@@ -215,6 +215,7 @@ def handle_text(message):
         token.send_message(id, "<b>Сам такой!</b>", parse_mode="HTML")
 
     if (get_1 == False and get_2 == False and news_get == False):
+        log(message,"hello")
         for str1 in file_1:
             log(message,"hello")
             if(str1.startswith(text)):
