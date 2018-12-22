@@ -171,36 +171,30 @@ def handle_text(message):
     news_get = False
     news_send = False
 
-def send_dz(message, text, all = False):
-    global get_1, get_2
-    file_1 = open("week1.txt", "r+")
-    file_2 = open("week2.txt", "r+")
-
-    file_1.close()
-    file_2.close()
-    log(message.from_user.id, str(get_1) + str(get_2))
-    log(message.from_user.id, str(all))
-
 @token.message_handler(content_types=["text"])
 def handle_text(message):
     global send_1, send_2, get_1, get_2, news_get, news_send, str_add
     token.send_chat_action(message.chat.id, "typing")
     text = message.text
     id = message.chat.id
-    file_1 = open("week1.txt", "r+")
-    file_2 = open("week2.txt", "r+")
-    file_3 = open("news.txt", "r+")
+    file_1 = open("week1.txt", "w+")
+    file_2 = open("week2.txt", "w+")
+    file_3 = open("news.txt", "w+")
 
     if(send_1 == True):
+        file_1 = open("week1.txt", "w")
         file_1.write(text)
         send_1 = False
         get_1 = False
         token.send_message(id, "<b>Домашнее задание было добавлено!</b>", parse_mode="HTML")
+        file_1.close()
     if (send_2 == True):
+        file_2 = open("week2.txt", "w")
         file_2.write(text)
         send_2 = False
         get_2 = False
         token.send_message(id, "<b>Домашнее задание было добавлено!</b>", parse_mode="HTML")
+        file_2.close()
     if(news_send == True):
         file_3.write(text)
         news_get = False
