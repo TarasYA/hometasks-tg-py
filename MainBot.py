@@ -166,7 +166,7 @@ def send_dz(message, text, all = False):
     global get_1, get_2
     file_1 = open("week1.txt", "r+")
     file_2 = open("week2.txt", "r+")
-    if(get_1 and get_2):
+    if(get_1 == False and get_2 == False):
         if(all):
             for str1,str2 in file_1,file_2:
                 print(str1)
