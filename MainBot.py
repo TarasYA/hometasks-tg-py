@@ -38,20 +38,21 @@ taras2005dn@gmail.com
 frieddimka@gmail.com
 antongimnasium@gmail.com
 """)
-@token.message_handler(commands=["start"])
-def handle_text(message):
+def menu(message, send):
     user_markup = telebot.types.ReplyKeyboardMarkup()
     user_markup.row("/author", "/help")
     user_markup.row("/list")
     user_markup.row("/duty", "/rating")
     user_markup.row("/rz", "/news")
-    token.send_message(message.chat.id, """
-        Добро пожаловать!
-        """,reply_markup=user_markup)
+    token.send_message(message.from_user.id, str(send), reply_markup=user_markup)
+@token.message_handler(commands=["start"])
+def handle_text(message):
+    menu(message, "Добро пожаловать!")
     token.send_message(message.chat.id, """
 start - начать взаимодействие  
 author - о боте 
-list - домашнее задание 
+list - список домашнего задания 
+all - всё домашнее задание
 rz - расписание 
 help - список команд
 duty - дежурство
@@ -95,15 +96,21 @@ def handle_text(message):
         token.send_photo(chat_id=message.chat.id, photo=open(file_path + ".png", 'rb'))
         file = open("news.txt", "r")
         for s in file:
-            token.send_message(message.from_user.id,s)
+            token.send_message(message.from_user.id, s)
     elif(os.path.exists(file_path + ".jpg")):
         token.send_photo(chat_id=message.chat.id, photo=open(file_path + ".jpg", 'rb'))
         file = open("news.txt", "r")
         for s in file:
-            token.send_message(message.from_user.id,s)
+            token.send_message(message.from_user.id, s)
+        file.close()
+    elif(os.path.exists("news.txt")):
+        file = open("news.txt","r")
+        for s in file:
+            token.send_message(message.from_user.id, s)
         file.close()
     else:
         token.send_message(message.from_user.id, "Новостей нет!")
+
 @token.message_handler(commands=["rating"])
 def handle_text(message):
     token.send_chat_action(message.chat.id, 'upload_photo')
@@ -114,7 +121,6 @@ def handle_text(message):
     token.send_chat_action(message.chat.id, 'upload_photo')
     token.send_message(message.from_user.id,"Дежурство:\n")
     token.send_photo(chat_id=message.chat.id, photo=open('Duty.jpg', 'rb'))
-
 
 """
 Adding \ disabling buttons code
@@ -130,21 +136,31 @@ def handle_text(message):
 def handle_text(message):
     hide_markup = telebot.types.ReplyKeyboardHide()
     token.send_message(message.from_user.id,"Клавиатура была убранна.Что бы её включить, используйте команду /add",reply_markup=hide_markup)
+user_markup = telebot.types.ReplyKeyboardMarkup()
+user_markup.row("/author", "/help")
+user_markup.row("/list")
+user_markup.row("/duty", "/rating")
+user_markup.row("/rz", "/news")
 """
-
 @token.message_handler(commands=["back"])
 def handle_text(message):
     global send_1,send_2,get_1,get_2
-    user_markup = telebot.types.ReplyKeyboardMarkup()
-    user_markup.row("/author", "/help")
-    user_markup.row("/list")
-    user_markup.row("/duty","/rating")
-    user_markup.row("/rz","/news")
-    token.send_message(message.from_user.id,"Назад",reply_markup=user_markup)
+    menu(message,"Назад")
     send_1 = False
     send_2 = False
     get_1 = False
     get_2 = False
+def send_dz(message,text,all = False):
+    global get_1,get_2
+    file_1 = open("week1.txt", "r+")
+    file_2 = open("week2.txt", "r+")
+    send1 = [token.send_message(message.from_user.id, s1) for s1 in file_1 if get_1 != True and s1.startswith(text) and all == False]
+    send2 = [token.send_message(message.from_user.id, s2) for s2 in file_2 if get_2 != True and s2.startswith(text) and all == False]
+    send3 = [token.send_message(message.from_user.id, s3) for s3 in file_1 if get_1 != True and all == True]
+    send4 = [token.send_message(message.from_user.id, s4) for s4 in file_2 if get_2 != True and all == True]
+    file_1.close()
+    file_2.close()
+
 @token.message_handler(content_types=["text"])
 def handle_text(message):
     global get_1,get_2,send_1,send_2,get_text_1,get_text_2,str_add
@@ -159,13 +175,11 @@ def handle_text(message):
         send_1 = False
         get_1 = False
         token.send_message(id, "<b>Домашнее задание было добавлено!</b>", parse_mode="HTML")
-        file_1.close()
     if (send_2 == True):
         file_2.write(text)
         send_2 = False
         get_2 = False
         token.send_message(id, "<b>Домашнее задание было добавлено!</b>", parse_mode="HTML")
-        file_2.close()
     elif (text == pas_1):
         log("password 1", text)
         token.send_message(id, "<i>Введите домашнее задание для 1 группы.</i>", parse_mode="HTML")
@@ -181,19 +195,8 @@ def handle_text(message):
 
     file_1.close()
     file_2.close()
-    file_1 = open("week1.txt", "r+")
-    file_2 = open("week2.txt", "r+")
-
-    for s in file_1:
-        if(get_1 != True):
-            if (s.startswith(text)):
-                token.send_message(message.from_user.id, s)
-        for s2 in file_2:
-            if(get_2 != True):
-                if(s2.startswith(text)):
-                    token.send_message(message.from_user.id, s2)
-
+    send_dz(message,text,all = False)
     file_1.close()
     file_2.close()
-    
+
 token.polling(none_stop=True)
