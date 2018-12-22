@@ -166,12 +166,12 @@ def send_dz(message, text, all = False):
     global get_1, get_2
     file_1 = open("week1.txt", "r+")
     file_2 = open("week2.txt", "r+")
-    send1 = [token.send_message(message.from_user.id, s1) for s1 in file_1 if not get_2 and s1.startswith(text) and not all]
-    send2 = [token.send_message(message.from_user.id, s2) for s2 in file_2 if not get_2 and s2.startswith(text) and not all]
-    file_1.close()
-    file_2.close()
-    send3 = [token.send_message(message.from_user.id, s3) for s3 in file_1 if not get_1 and all is True]
-    send4 = [token.send_message(message.from_user.id, s4) for s4 in file_2 if not get_2 and all is True]
+    if(not all):
+        send1 = [token.send_message(message.from_user.id, s1) for s1 in file_1 if not get_1 and s1.startswith(text)]
+        send2 = [token.send_message(message.from_user.id, s2) for s2 in file_2 if not get_2 and s2.startswith(text)]
+    else:
+        send3 = [token.send_message(message.from_user.id, s3) for s3 in file_1 if not get_1]
+        send4 = [token.send_message(message.from_user.id, s4) for s4 in file_2 if not get_2]
     """
     if(all == False):
         send1 = [token.send_message(message.from_user.id, s1) for s1 in file_1 if not get_1 and s1.startswith(text)]
