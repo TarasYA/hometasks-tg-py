@@ -231,10 +231,7 @@ def handle_text(message):
         news_get = True
     elif(text == "Дурак"):
         token.send_message(id, "<b>Сам такой!</b>", parse_mode="HTML")
-
-    file_1.close()
-    file_2.close()
-    file_3.close()
+        
     send_dz(message, text, all=False)
     file_1.close()
     file_2.close()
