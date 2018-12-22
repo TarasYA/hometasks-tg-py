@@ -225,5 +225,5 @@ def handle_text(message):
     file_1.close()
     file_2.close()
 
-
+#polling
 token.polling(none_stop=True)
