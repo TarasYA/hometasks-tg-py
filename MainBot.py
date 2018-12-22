@@ -50,6 +50,7 @@ taras2005dn@gmail.com
 frieddimka@gmail.com
 antongimnasium@gmail.com
 """)
+
 def menu(message, send):
     user_markup = telebot.types.ReplyKeyboardMarkup()
     user_markup.row("/Авторы", "/Команды")
@@ -57,11 +58,18 @@ def menu(message, send):
     user_markup.row("/Дежурство", "/Рейтинг")
     user_markup.row("/Расписание", "/Новости")
     token.send_message(message.from_user.id, str(send), reply_markup=user_markup)
+
 @token.message_handler(commands=["start"])
 def handle_text(message):
     global string_help
     menu(message, "Добро пожаловать!")
     token.send_message(message.chat.id,string_help)
+
+@token.message_handler(commands=["Команды"])
+def handle_text(message):
+    global string_help
+    token.send_message(message.chat.id,string_help)
+
 @token.message_handler(commands=["Список_дз"])
 def handle_text(message):
     user_markup = telebot.types.ReplyKeyboardMarkup()
@@ -71,19 +79,18 @@ def handle_text(message):
     user_markup.row("chemistry", "geography", "history")
     user_markup.row("art", "bio", "/Назад")
     token.send_message(message.from_user.id, "Список предметов",reply_markup=user_markup)
+
 @token.message_handler(commands=["Всё_дз"])
 def handle_text(message):
-    send_dz(message.from_user.id,"Всё домашнее задание:\n",all = True)
-@token.message_handler(commands=["Команды"])
-def handle_text(message):
-    global string_help
-    token.send_message(message.chat.id,string_help)
+    send_dz(message,"Всё домашнее задание:\n",all = True)
+
 @token.message_handler(commands=["Расписание"])
 def handle_text(message):
     token.send_chat_action(message.chat.id, 'upload_photo')
     token.send_message(message.chat.id, """
     Расписание:\n""")
     token.send_photo(chat_id=message.chat.id, photo=open('8v.png', 'rb'))
+
 @token.message_handler(commands=["Новости"])
 def handle_text(message):
     token.send_chat_action(message.chat.id, 'upload_photo')
@@ -114,6 +121,7 @@ def handle_text(message):
     token.send_chat_action(message.chat.id, 'upload_photo')
     token.send_message(message.from_user.id,"Рейтинг:\n")
     token.send_photo(chat_id=message.chat.id, photo=open('media-share-0-02-04-13249eda0fb4da7090711a1abf81653171baa9ad34c602a824e77363d908888c-f12d5cea-2570-4c63-b527-959d0dac5d66.jpg', 'rb'))
+
 @token.message_handler(commands=["Дежурство"])
 def handle_text(message):
     token.send_chat_action(message.chat.id, 'upload_photo')
@@ -148,6 +156,8 @@ def handle_text(message):
     send_2 = False
     get_1 = False
     get_2 = False
+
+
 def send_dz(message, text, all = False):
     global get_1,get_2
     file_1 = open("week1.txt", "r+")
