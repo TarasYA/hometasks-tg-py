@@ -164,14 +164,16 @@ def handle_text(message):
 
 def send_dz(message, text, all = False):
     global get_1, get_2
-    file_1 = open("week1.txt", "r")
-    file_2 = open("week2.txt", "r")
-    if(all == False):
-        send1 = [token.send_message(message.from_user.id, s1) for s1 in file_1 if not get_1 and s1.startswith(text)]
-        send2 = [token.send_message(message.from_user.id, s2) for s2 in file_2 if not get_2 and s2.startswith(text)]
-    else:
-        send3 = [token.send_message(message.from_user.id, s3) for s3 in file_1 if not get_1]
-        send4 = [token.send_message(message.from_user.id, s4) for s4 in file_2 if not get_2]
+    file_1 = open("week1.txt", "r+")
+    file_2 = open("week2.txt", "r+")
+    if(get_1):
+        if(all):
+            send3 = [token.send_message(message.from_user.id, s3) for s3 in file_1]
+            send4 = [token.send_message(message.from_user.id, s4) for s4 in file_2 ]
+        else:
+            send1 = [token.send_message(message.from_user.id, s1) for s1 in file_1 if s1.startswith(text)]
+            send2 = [token.send_message(message.from_user.id, s2) for s2 in file_2 if s2.startswith(text)]
+
     """
     if(all == False):
         send1 = [token.send_message(message.from_user.id, s1) for s1 in file_1 if not get_1 and s1.startswith(text)]
@@ -184,6 +186,7 @@ def send_dz(message, text, all = False):
         del(send3)
         del(send4)
     """
+
     file_1.close()
     file_2.close()
     log(message.from_user.id, str(all))
@@ -233,6 +236,7 @@ def handle_text(message):
 
     file_1.close()
     file_2.close()
+    file_3.close()
     send_dz(message, text, all=False)
     file_1.close()
     file_2.close()
