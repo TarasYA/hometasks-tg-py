@@ -53,7 +53,7 @@ antongimnasium@gmail.com
 def menu(message, send):
     user_markup = telebot.types.ReplyKeyboardMarkup()
     user_markup.row("/Авторы", "/Команды")
-    user_markup.row("/Список дз","Всё дз")
+    user_markup.row("/Список_дз","/Всё_дз")
     user_markup.row("/Дежурство", "/Рейтинг")
     user_markup.row("/Расписание", "/Новости")
     token.send_message(message.from_user.id, str(send), reply_markup=user_markup)
@@ -62,7 +62,7 @@ def handle_text(message):
     global string_help
     menu(message, "Добро пожаловать!")
     token.send_message(message.chat.id,string_help)
-@token.message_handler(commands=["Список дз"])
+@token.message_handler(commands=["Список_дз"])
 def handle_text(message):
     user_markup = telebot.types.ReplyKeyboardMarkup()
     user_markup.row("ukr.lit", "for.lit")
