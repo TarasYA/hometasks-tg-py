@@ -86,6 +86,7 @@ def handle_text(message):
 
 @token.message_handler(commands=["Всё_дз"])
 def handle_text(message):
+    global get_1, get_2, news_get
     file_1 = open("week1.txt", "r+")
     file_2 = open("week2.txt", "r+")
     if(get_1 == False and get_2 == False and news_get == False):
@@ -186,9 +187,9 @@ def handle_text(message):
     token.send_chat_action(message.chat.id, "typing")
     text = message.text
     id = message.chat.id
-    file_1 = open("week1.txt", "w")
-    file_2 = open("week2.txt", "w")
-    file_3 = open("news.txt", "w")
+    file_1 = open("week1.txt", "r+")
+    file_2 = open("week2.txt", "r+")
+    file_3 = open("news.txt", "r+")
 
     if(send_1 == True):
         file_1.write(text)
