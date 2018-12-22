@@ -15,6 +15,17 @@ send_2 = False
 get_text_1 = False
 get_text_2 = False
 str_add = ""
+string_help = """
+start - начать взаимодействие  
+author - о боте 
+list - домашнее задание
+all - всё домашнее задание 
+rz - расписание 
+help - список команд
+duty - дежурство
+rating - рейтинг
+news - новости
+"""
 #token.send_message(402702337,"test")
 #upd = token.get_updates()
 #print(upd)
@@ -47,18 +58,9 @@ def menu(message, send):
     token.send_message(message.from_user.id, str(send), reply_markup=user_markup)
 @token.message_handler(commands=["start"])
 def handle_text(message):
+    global string_help
     menu(message, "Добро пожаловать!")
-    token.send_message(message.chat.id, """
-start - начать взаимодействие  
-author - о боте 
-list - список домашнего задания 
-all - всё домашнее задание
-rz - расписание 
-help - список команд
-duty - дежурство
-rating - рейтинг
-news - новости
-""")
+    token.send_message(message.chat.id,string_help)
 @token.message_handler(commands=["list"])
 def handle_text(message):
     user_markup = telebot.types.ReplyKeyboardMarkup()
@@ -70,16 +72,8 @@ def handle_text(message):
     token.send_message(message.from_user.id, "Список предметов",reply_markup=user_markup)
 @token.message_handler(commands=["help"])
 def handle_text(message):
-    token.send_message(message.chat.id, """
-start - начать взаимодействие  
-author - о боте 
-list - домашнее задание 
-rz - расписание 
-help - список команд
-duty - дежурство
-rating - рейтинг
-news - новости
-""")
+    global string_help
+    token.send_message(message.chat.id,string_help)
 @token.message_handler(commands=["rz"])
 def handle_text(message):
     token.send_chat_action(message.chat.id, 'upload_photo')
