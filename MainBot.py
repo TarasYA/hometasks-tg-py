@@ -82,7 +82,7 @@ def handle_text(message):
 
 @token.message_handler(commands=["Всё_дз"])
 def handle_text(message):
-    send_dz(message,"Всё домашнее задание:\n",all = True)
+    send_dz(message," ",all = True)
 
 @token.message_handler(commands=["Расписание"])
 def handle_text(message):
@@ -164,6 +164,8 @@ def send_dz(message, text, all = False):
     file_2 = open("week2.txt", "r+")
     send1 = [token.send_message(message.from_user.id, s1) for s1 in file_1 if get_1 != True and s1.startswith(text) and all == False]
     send2 = [token.send_message(message.from_user.id, s2) for s2 in file_2 if get_2 != True and s2.startswith(text) and all == False]
+    del(send1)
+    del(send2)
     send3 = [token.send_message(message.from_user.id, s3) for s3 in file_1 if get_1 != True and all == True]
     send4 = [token.send_message(message.from_user.id, s4) for s4 in file_2 if get_2 != True and all == True]
     file_1.close()
