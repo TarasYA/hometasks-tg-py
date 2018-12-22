@@ -69,7 +69,7 @@ def handle_text(message):
     user_markup.row("urk.m","rus.m","en.m")
     user_markup.row("math", "physics", "informatics")
     user_markup.row("chemistry", "geography", "history")
-    user_markup.row("art", "bio", "/back")
+    user_markup.row("art", "bio", "/Назад")
     token.send_message(message.from_user.id, "Список предметов",reply_markup=user_markup)
 @token.message_handler(commands=["Всё_дз"])
 def handle_text(message):
