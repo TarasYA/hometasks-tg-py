@@ -183,10 +183,11 @@ def send_dz(message, text, all = False):
                     if (str2.startswith(text)):
                         print(str2)
                         token.send_message(message.from_user.id, str2)
-                    
-                
+
+
     file_1.close()
     file_2.close()
+    log(message.from_user.id, str(get_1) + str(get_2))
     log(message.from_user.id, str(all))
 
 @token.message_handler(content_types=["text"])
