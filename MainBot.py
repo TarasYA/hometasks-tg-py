@@ -166,25 +166,21 @@ def send_dz(message, text, all = False):
     global get_1, get_2
     file_1 = open("week1.txt", "r+")
     file_2 = open("week2.txt", "r+")
-    send1 = [token.send_message(message.from_user.id, s1) for s1 in file_1 if get_1 != True and s1.startswith(text) and all == False]
-    send2 = [token.send_message(message.from_user.id, s2) for s2 in file_2 if get_2 != True and s2.startswith(text) and all == False]
-    del(send1)
-    del(send2)
-    send3 = [token.send_message(message.from_user.id, s3) for s3 in file_1 if get_1 != True and all == True]
-    send4 = [token.send_message(message.from_user.id, s4) for s4 in file_2 if get_2 != True and all == True]
-    """
-    if(all == False):
-        send1 = [token.send_message(message.from_user.id, s1) for s1 in file_1 if not get_1 and s1.startswith(text)]
-        send2 = [token.send_message(message.from_user.id, s2) for s2 in file_2 if not get_2 and s2.startswith(text)]
-        del(send1)
-        del(send2)
-    else:
-        send3 = [token.send_message(message.from_user.id, s3) for s3 in file_1 if get_1]
-        send4 = [token.send_message(message.from_user.id, s4) for s4 in file_2 if get_2]
-        del(send3)
-        del(send4)
-    """
-
+    if(get_1 and get_2):
+        if(all):
+            for str1,str2 in file_1,file_2:
+                print(str1)
+                token.send_message(message.from_user.id, str1)
+                print(str2)
+                token.send_message(message.from_user.id, str2)
+        else:
+            for str1,str2 in file_1,file_2:
+                if(str1.startswith(text)):
+                    print(str1)
+                    token.send_message(message.from_user.id, str1)
+                if (str2.startswith(text)):
+                    print(str2)
+                    token.send_message(message.from_user.id, str2)
     file_1.close()
     file_2.close()
     log(message.from_user.id, str(all))
@@ -231,7 +227,7 @@ def handle_text(message):
         news_get = True
     elif(text == "Дурак"):
         token.send_message(id, "<b>Сам такой!</b>", parse_mode="HTML")
-        
+
     send_dz(message, text, all=False)
     file_1.close()
     file_2.close()
