@@ -157,22 +157,19 @@ def handle_text(message):
     get_1 = False
     get_2 = False
 
-
 def send_dz(message, text, all = False):
     global get_1,get_2
     file_1 = open("week1.txt", "r+")
     file_2 = open("week2.txt", "r+")
-    send1 = [token.send_message(message.from_user.id, s1) for s1 in file_1 if get_1 != True and s1.startswith(text) and all == False]
-    send2 = [token.send_message(message.from_user.id, s2) for s2 in file_2 if get_2 != True and s2.startswith(text) and all == False]
-    del(send1)
-    del(send2)
-    send3 = [token.send_message(message.from_user.id, s3) for s3 in file_1 if get_1 != True and all == True]
-    send4 = [token.send_message(message.from_user.id, s4) for s4 in file_2 if get_2 != True and all == True]
+    if(all == False):
+        send1 = [token.send_message(message.from_user.id, s1) for s1 in file_1 if get_1 != True and s1.startswith(text)]
+        send2 = [token.send_message(message.from_user.id, s2) for s2 in file_2 if get_2 != True and s2.startswith(text)]
+    else:
+        send3 = [token.send_message(message.from_user.id, s3) for s3 in file_1 if get_1 != True]
+        send4 = [token.send_message(message.from_user.id, s4) for s4 in file_2 if get_2 != True]
     file_1.close()
     file_2.close()
     log(message.from_user.id, str(all))
-    log(message,send3)
-    log(message,send4)
 
 @token.message_handler(content_types=["text"])
 def handle_text(message):
@@ -213,4 +210,3 @@ def handle_text(message):
     file_2.close()
 
 token.polling(none_stop=True)
-
