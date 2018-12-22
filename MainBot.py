@@ -92,8 +92,8 @@ def handle_text(message):
     if(get_1 == False and get_2 == False and news_get == False):
         for str1 in file_1:
             token.send_message(message.from_user.id, str1)
-            for str2 in file_2:
-                token.send_message(message.from_user.id, str2)
+        for str2 in file_2:
+            token.send_message(message.from_user.id, str2)
     file_1.close()
     file_2.close()
 
