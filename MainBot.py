@@ -177,17 +177,16 @@ def handle_text(message):
     token.send_chat_action(message.chat.id, "typing")
     text = message.text
     id = message.chat.id
-    file_1 = open("week1.txt", "r+")
-    file_2 = open("week2.txt", "r+")
-    file_3 = open("news.txt", "r+")
 
     if(send_1 == True):
-        file_1.write(text)
+        with open('week1.txt', 'w') as file:
+            file.write(text)
         send_1 = False
         get_1 = False
         token.send_message(id, "<b>Домашнее задание было добавлено!</b>", parse_mode="HTML")
     if (send_2 == True):
-        file_2.write(text)
+        with open('week2.txt', 'w') as file:
+            file.write(text)
         send_2 = False
         get_2 = False
         token.send_message(id, "<b>Домашнее задание было добавлено!</b>", parse_mode="HTML")
@@ -214,10 +213,11 @@ def handle_text(message):
     elif(text == "Дурак"):
         token.send_message(id, "<b>Сам такой!</b>", parse_mode="HTML")
 
+    file_1 = open("week1.txt", "r")
+    file_2 = open("week2.txt", "r")
+    file_3 = open("news.txt", "w")
     if (get_1 == False and get_2 == False and news_get == False):
-        log(message,"hello")
         for str1 in file_1:
-            log(message,"hello")
             if(str1.startswith(text)):
                 token.send_message(message.from_user.id, str1)
             for str2 in file_2:
