@@ -53,7 +53,7 @@ antongimnasium@gmail.com
 def menu(message, send):
     user_markup = telebot.types.ReplyKeyboardMarkup()
     user_markup.row("/Авторы", "/Команды")
-    user_markup.row("/Список_дз","Всё_дз")
+    user_markup.row("/Список_дз","/Всё_дз")
     user_markup.row("/Дежурство", "/Рейтинг")
     user_markup.row("/Расписание", "/Новости")
     token.send_message(message.from_user.id, str(send), reply_markup=user_markup)
