@@ -169,9 +169,13 @@ def send_dz(message, text, all = False):
     if(all == False):
         send1 = [token.send_message(message.from_user.id, s1) for s1 in file_1 if not get_1 and s1.startswith(text)]
         send2 = [token.send_message(message.from_user.id, s2) for s2 in file_2 if not get_2 and s2.startswith(text)]
+        del(send1)
+        del(send2)
     else:
         send3 = [token.send_message(message.from_user.id, s3) for s3 in file_1 if get_1]
         send4 = [token.send_message(message.from_user.id, s4) for s4 in file_2 if get_2]
+        del(send3)
+        del(send4)
     file_1.close()
     file_2.close()
     log(message.from_user.id, str(all))
@@ -226,5 +230,5 @@ def handle_text(message):
     file_2.close()
     file_3.close()
 
-#polling
+
 token.polling(none_stop=True)
