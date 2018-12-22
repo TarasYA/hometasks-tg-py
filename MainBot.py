@@ -86,7 +86,15 @@ def handle_text(message):
 
 @token.message_handler(commands=["Всё_дз"])
 def handle_text(message):
-    send_dz(message, " ", all = True)
+    file_1 = open("week1.txt", "r+")
+    file_2 = open("week2.txt", "r+")
+    if(get_1 == False and get_2 == False and news_get == False):
+        for str1 in file_1:
+            token.send_message(message.from_user.id, str1)
+            for str2 in file_2:
+                token.send_message(message.from_user.id, str2)
+    file_1.close()
+    file_2.close()
 
 @token.message_handler(commands=["Расписание"])
 def handle_text(message):
@@ -166,35 +174,11 @@ def send_dz(message, text, all = False):
     global get_1, get_2
     file_1 = open("week1.txt", "r+")
     file_2 = open("week2.txt", "r+")
-    if(get_1 == False and get_2 == False):
-        log(message.from_user.id, str(get_1) + str(get_2))
-        if(all):
-            log(message.from_user.id, str(get_1) + str(get_2))
-            for str1 in file_1:
-                log(message.from_user.id, str("WOW") + str(get_2))
-                print(str1)
-                token.send_message(message.from_user.id, str1)
-                for str2 in file_2:
-                    print(str2)
-                    token.send_message(message.from_user.id, str2)
-        else:
-            log(message.from_user.id, str(get_1) + str(get_2))
-            for str1 in file_1:
-                log(message.from_user.id, str("WOW2") + str(get_2))
-                if(str1.startswith(text)):
-                    print(str1)
-                    token.send_message(message.from_user.id, str1)
-                for str2 in file_2:
-                    if (str2.startswith(text)):
-                        print(str2)
-                        token.send_message(message.from_user.id, str2)
-
 
     file_1.close()
     file_2.close()
     log(message.from_user.id, str(get_1) + str(get_2))
     log(message.from_user.id, str(all))
-
 
 @token.message_handler(content_types=["text"])
 def handle_text(message):
@@ -239,7 +223,13 @@ def handle_text(message):
     elif(text == "Дурак"):
         token.send_message(id, "<b>Сам такой!</b>", parse_mode="HTML")
 
-    send_dz(message, text, all=False)
+    if (get_1 == False and get_2 == False and news_get == False):
+        for str1 in file_1:
+            if(str1.startswith(text)):
+                token.send_message(message.from_user.id, str1)
+            for str2 in file_2:
+                if(str2.startswith(text)):
+                    token.send_message(message.from_user.id, str2)
     file_1.close()
     file_2.close()
     file_3.close()
