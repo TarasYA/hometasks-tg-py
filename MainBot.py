@@ -182,19 +182,15 @@ def handle_text(message):
     file_3 = open("news.txt", "w+")
 
     if(send_1 == True):
-        file_1 = open("week1.txt", "w")
         file_1.write(text)
         send_1 = False
         get_1 = False
         token.send_message(id, "<b>Домашнее задание было добавлено!</b>", parse_mode="HTML")
-        file_1.close()
     if (send_2 == True):
-        file_2 = open("week2.txt", "w")
         file_2.write(text)
         send_2 = False
         get_2 = False
         token.send_message(id, "<b>Домашнее задание было добавлено!</b>", parse_mode="HTML")
-        file_2.close()
     if(news_send == True):
         file_3.write(text)
         news_get = False
@@ -220,6 +216,7 @@ def handle_text(message):
 
     if (get_1 == False and get_2 == False and news_get == False):
         for str1 in file_1:
+            log(message,"hello")
             if(str1.startswith(text)):
                 token.send_message(message.from_user.id, str1)
             for str2 in file_2:
