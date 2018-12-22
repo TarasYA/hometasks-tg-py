@@ -1,4 +1,4 @@
-"""
+""
 DZshnik...
 """
 import telebot
@@ -171,6 +171,8 @@ def send_dz(message, text, all = False):
     file_1.close()
     file_2.close()
     log(message.from_user.id, str(all))
+    log(message,send3)
+    log(message,send4)
 
 @token.message_handler(content_types=["text"])
 def handle_text(message):
@@ -211,3 +213,4 @@ def handle_text(message):
     file_2.close()
 
 token.polling(none_stop=True)
+
