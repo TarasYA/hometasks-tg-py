@@ -170,7 +170,7 @@ def send_dz(message, text, all = False):
     send4 = [token.send_message(message.from_user.id, s4) for s4 in file_2 if get_2 != True and all == True]
     file_1.close()
     file_2.close()
-    log(message.from_user.id, text)
+    log(message.from_user.id, str(all))
 
 @token.message_handler(content_types=["text"])
 def handle_text(message):
