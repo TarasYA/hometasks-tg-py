@@ -87,13 +87,14 @@ def handle_text(message):
     id = message.chat.id
     file = open("fun.txt", "w")
 
+    if(send == True):
+        file.write(text)
+        token.send_message(id, "<b>Порция угара была добавлена!Упссс... Слишком много угара. Ахх, снова!11!1</b>",
+                           parse_mode="HTML")
     if(text == password):
         token.send_message(id, "<i>Введите угарную фразочку, иначе, воспользуйтесь командой /Назад</i>", parse_mode="HTML")
         send = True
         log("password", "sending = True")
-    if(send == True):
-        file.write(text)
-        token.send_message(id, "<b>Порция угара была добавлена!Упссс... Слишком много угара. Ахх, снова!11!1</b>", parse_mode="HTML")
 
     file.close()
 
