@@ -51,7 +51,10 @@ def log(message, answer):
 @token.message_handler(content_types=['photo'])
 def photo(message):
     global photo_get
+    file_path = "news"
     if(photo_get == True):
+        if(os.path.exists(file_path + ".jpg")):
+            os.remove("news.jpg")
         print('message.photo =', message.photo)
         fileID = message.photo[-1].file_id
         print('fileID =', fileID)
@@ -60,7 +63,7 @@ def photo(message):
         downloaded_file = token.download_file(file_info.file_path)
         with open("news.jpg", 'wb') as new_file:
             new_file.write(downloaded_file)
-        token.send_message(message.from_user.id, "<b>Картинка была добавлена!</b>")
+        token.send_message(message.from_user.id, "<b>Картинка была добавлена!</b>",parse_mode="HTML")
     photo_get = False
 
 # authors command
@@ -136,8 +139,6 @@ def handle_text(message):
     file_path = "news"
     token.send_message(message.chat.id, """
     Новости:\n """)
-    if(os.path.exists(file_path + ".png")):
-        token.send_photo(chat_id=message.chat.id, photo=open(file_path + ".png", 'rb'))
     if(os.path.exists(file_path + ".jpg")):
         token.send_photo(chat_id=message.chat.id, photo=open(file_path + ".jpg", 'rb'))
     if(os.path.exists("news.txt")):
