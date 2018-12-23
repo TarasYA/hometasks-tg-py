@@ -63,7 +63,7 @@ def download_file(message):
 @token.message_handler(commands=["Авторы"])
 def handle_text(message):
     token.send_message(message.chat.id, """
-    Бот был создан учениками ЛИТа 8-В класса Яицким Тарасом, Антоном Мордаком, Хорсуном Дмитрием.
+Бот был создан учениками ЛИТа 8-В класса Яицким Тарасом, Антоном Мордаком, Хорсуном Дмитрием.
 Вопросы? 
 taras2005dn@gmail.com
 frieddimka@gmail.com
@@ -218,6 +218,7 @@ def handle_text(message):
         get_2 = False
         token.send_message(id, "<b>Домашнее задание было добавлено!</b>", parse_mode="HTML")
     if(photo_get == True):
+        token.send_message(id, "<i>Пришлите соответствующую картинку.</i>", parse_mode="HTML")
         download_file(message)
         photo_get = False
     if(news_send == True):
