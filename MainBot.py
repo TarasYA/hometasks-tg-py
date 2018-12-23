@@ -200,7 +200,7 @@ def bool_comparision(token,id,text):
         send_1 = False
         get_1 = False
         token.send_message(id, "<b>Домашнее задание было добавлено!</b>", parse_mode="HTML")
-    if (send_2 is True):
+    if(send_2 is True):
         with open('week2.txt', 'w') as file:
             file.write(text)
         send_2 = False
@@ -218,12 +218,12 @@ def bool_comparision(token,id,text):
 """, parse_mode="HTML")
     if(photo_get is True and text == "delete"):
         os.remove("news.jpg")
-    elif (text == pas_1):
+    elif(text == pas_1):
         log("password 1", text)
         token.send_message(id, "<i>Введите домашнее задание для 1 группы.</i>", parse_mode="HTML")
         send_1 = True
         get_2 = True
-    elif (text == pas_2):
+    elif(text == pas_2):
         log("password 2", text)
         token.send_message(id, "<i>Введите домашнее задание для 2 группы.</i>", parse_mode="HTML")
         send_2 = True
