@@ -242,11 +242,11 @@ def handle_text(message):
     token.send_chat_action(message.chat.id, "typing")
     text = message.text
     id = message.chat.id
+    file_1 = open("week1.txt", "r")
+    file_2 = open("week2.txt", "r")
     file_3 = open("news.txt", "w")
 
     bool_comparision(token,id,text)
-    file_1 = open("week1.txt", "r")
-    file_2 = open("week2.txt", "r")
     if (get_1 == False and get_2 == False and news_get == False and photo_get == False):
         for str1 in file_1:
             if(str1.startswith(text)):
@@ -257,43 +257,6 @@ def handle_text(message):
     file_1.close()
     file_2.close()
     file_3.close()
-"""
-    if(send_1 == True):
-        with open('week1.txt', 'w') as file:
-            file.write(text)
-        send_1 = False
-        get_1 = False
-        token.send_message(id, "<b>Домашнее задание было добавлено!</b>", parse_mode="HTML")
-    if (send_2 == True):
-        with open('week2.txt', 'w') as file:
-            file.write(text)
-        send_2 = False
-        get_2 = False
-        token.send_message(id, "<b>Домашнее задание было добавлено!</b>", parse_mode="HTML")
-    if(news_send == True):
-        file_3.write(text)
-        news_get = False
-        news_send = False
-        photo_get = True
-        token.send_message(id, "<b>Новости былы добавлены!</b>", parse_mode="HTML")
-        token.send_message(id, "<i>Пришлите соответствующую картинку к тексту, иначе, воспользуйтесь командой Назад.</i>", parse_mode="HTML")
-    elif (text == pas_1):
-        log("password 1", text)
-        token.send_message(id, "<i>Введите домашнее задание для 1 группы.</i>", parse_mode="HTML")
-        send_1 = True
-        get_2 = True
-    elif (text == pas_2):
-        log("password 2", text)
-        token.send_message(id, "<i>Введите домашнее задание для 2 группы.</i>", parse_mode="HTML")
-        send_2 = True
-        get_2 = True
-    elif(text == pas_3):
-        log("password 3", text)
-        token.send_message(id, "<i>Введите новости лицея.</i>", parse_mode="HTML")
-        news_send = True
-        news_get = True
-    elif(text == "Дурак"):
-        token.send_message(id, "<b>Сам такой!</b>", parse_mode="HTML")
-"""
+
 
 token.polling(none_stop=True)
