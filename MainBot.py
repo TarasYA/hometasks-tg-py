@@ -51,6 +51,7 @@ def log(message, answer):
 @token.message_handler(content_types=['photo'])
 def photo(message):
     global photo_get
+    id = message.chat.id
     file_path = "news"
     if(photo_get == True):
         if(os.path.exists(file_path + ".jpg")):
@@ -63,13 +64,14 @@ def photo(message):
         downloaded_file = token.download_file(file_info.file_path)
         with open("news.jpg", 'wb') as new_file:
             new_file.write(downloaded_file)
-        token.send_message(message.from_user.id, "<b>Картинка была добавлена!</b>",parse_mode="HTML")
+        token.send_message(id, "<b>Картинка была добавлена!</b>", parse_mode="HTML")
     photo_get = False
 
 # authors command
 @token.message_handler(commands=["Авторы"])
 def handle_text(message):
-    token.send_message(message.chat.id, """
+    id = message.chat.id
+    token.send_message(id, """
 Бот был создан учениками ЛИТа 8-В класса Яицким Тарасом, Антоном Мордаком, Хорсуном Дмитрием.
 Вопросы? 
 taras2005dn@gmail.com
@@ -79,92 +81,102 @@ antongimnasium@gmail.com
 
 # menu creator
 def menu(message, send):
+    id = message.chat.id
     user_markup = telebot.types.ReplyKeyboardMarkup()
     user_markup.row("/Авторы", "/Команды")
     user_markup.row("/Список_дз", "/Всё_дз")
     user_markup.row("/Дежурство", "/Рейтинг")
     user_markup.row("/Расписание", "/Новости")
-    token.send_message(message.from_user.id, str(send), reply_markup=user_markup)
+    token.send_message(id, str(send), reply_markup=user_markup)
 
 # start function
 @token.message_handler(commands=["start"])
 def handle_text(message):
     global string_help
+    id = message.chat.id
     menu(message, "Добро пожаловать!")
-    token.send_message(message.chat.id, string_help)
+    token.send_message(id, string_help)
 
 # commands info
 @token.message_handler(commands=["Команды"])
 def handle_text(message):
     global string_help
-    token.send_message(message.chat.id,string_help)
+    id = message.chat.id
+    token.send_message(id,string_help)
 
 # list of homework
 @token.message_handler(commands=["Список_дз"])
 def handle_text(message):
+    id = message.chat.id
     user_markup = telebot.types.ReplyKeyboardMarkup()
     user_markup.row("ukr.lit", "for.lit")
     user_markup.row("urk.m", "rus.m", "en.m")
     user_markup.row("math", "physics", "informatics")
     user_markup.row("chemistry", "geography", "history")
     user_markup.row("art", "bio", "/Назад")
-    token.send_message(message.from_user.id, "Список предметов", reply_markup=user_markup)
+    token.send_message(id, "Список предметов", reply_markup=user_markup)
 
 # all homework
 @token.message_handler(commands=["Всё_дз"])
 def handle_text(message):
     global get_1, get_2, news_get
+    id = message.chat.id
     file_1 = open("week1.txt", "r+")
     file_2 = open("week2.txt", "r+")
     str_default = "|!=--------\---*---#----@--{0} группа--@---#---*---/--------=!|"
     if(get_1 == False and get_2 == False and news_get == False):
-        token.send_message(message.from_user.id, str_default.format(1))
+        token.send_message(id, str_default.format(1))
         for str1 in file_1:
-            token.send_message(message.from_user.id, str1)
-        token.send_message(message.from_user.id, str_default.format(2))
+            token.send_message(id, str1)
+        token.send_message(id, str_default.format(2))
         for str2 in file_2:
-            token.send_message(message.from_user.id, str2)
+            token.send_message(id, str2)
     file_1.close()
     file_2.close()
 
 # subject list
 @token.message_handler(commands=["Расписание"])
 def handle_text(message):
-    token.send_chat_action(message.chat.id, 'upload_photo')
-    token.send_message(message.chat.id, """
+    id = message.chat.id
+    token.send_chat_action(id, 'upload_photo')
+    token.send_message(id, """
     Расписание:\n""")
-    token.send_photo(chat_id=message.chat.id, photo=open('8v.png', 'rb'))
+    token.send_photo(chat_id=id, photo=open('8v.png', 'rb'))
 
 # lyceum news
 @token.message_handler(commands=["Новости"])
 def handle_text(message):
-    token.send_chat_action(message.chat.id, 'upload_photo')
+    id = message.chat.id
+    token.send_chat_action(id, 'upload_photo')
     file_path = "news"
-    token.send_message(message.chat.id, """
+    token.send_message(id, """
     Новости:\n """)
     if(os.path.exists(file_path + ".jpg")):
-        token.send_photo(chat_id=message.chat.id, photo=open(file_path + ".jpg", 'rb'))
+        token.send_photo(chat_id=id, photo=open(file_path + ".jpg", 'rb'))
     if(os.path.exists("news.txt")):
         file = open("news.txt", "r")
         for s in file:
-            token.send_message(message.from_user.id, s)
+            token.send_message(id, s)
         file.close()
     else:
-        token.send_message(message.from_user.id, "Новостей нет!")
+        token.send_message(id, "Новостей нет!")
 
 # rating
 @token.message_handler(commands=["Рейтинг"])
 def handle_text(message):
-    token.send_chat_action(message.chat.id, 'upload_photo')
-    token.send_message(message.from_user.id, "Рейтинг:\n")
-    token.send_photo(chat_id=message.chat.id, photo=open('Rating.jpg', 'rb'))
+    id = message.chat.id
+    token.send_chat_action(id, 'upload_photo')
+    token.send_message(id, "Рейтинг:\n")
+    token.send_photo(chat_id=id, photo=open('Rating.jpg', 'rb'))
 
 # duty
 @token.message_handler(commands=["Дежурство"])
 def handle_text(message):
-    token.send_chat_action(message.chat.id, 'upload_photo')
-    token.send_message(message.from_user.id, "Дежурство:\n")
-    token.send_photo(chat_id=message.chat.id, photo=open('Duty.jpg', 'rb'))
+    id = message.chat.id
+    token.send_chat_action(id, 'upload_photo')
+    token.send_message(id, "Дежурство:\n")
+    token.send_photo(chat_id=id, photo=open('Duty.jpg', 'rb'))
+
 
 """
 Adding \ disabling buttons code
@@ -218,7 +230,9 @@ def bool_comparision(token,id,text):
         news_send = False
         photo_get = True
         token.send_message(id, "<b>Новости былы добавлены!</b>", parse_mode="HTML")
-        token.send_message(id, "<i>Пришлите соответствующую картинку к тексту, иначе, воспользуйтесь командой Назад.</i>", parse_mode="HTML")
+        token.send_message(id, """
+<i>Пришлите соответствующую картинку к тексту, иначе, воспользуйтесь командой Назад.</i>
+""", parse_mode="HTML")
     elif (text == pas_1):
         log("password 1", text)
         token.send_message(id, "<i>Введите домашнее задание для 1 группы.</i>", parse_mode="HTML")
@@ -235,8 +249,7 @@ def bool_comparision(token,id,text):
         news_send = True
         news_get = True
     elif(text == "Дурак"):
-        token.send_message\
-            (id, "<b>Сам такой!</b>", parse_mode="HTML")
+        token.send_message(id, "<b>Сам такой!</b>", parse_mode="HTML")
 # another text
 @token.message_handler(content_types=["text"])
 def handle_text(message):
@@ -252,10 +265,10 @@ def handle_text(message):
     if (get_1 == False and get_2 == False and news_get == False and photo_get == False):
         for str1 in file_1:
             if(str1.startswith(text)):
-                token.send_message(message.from_user.id, str1)
+                token.send_message(id, str1)
         for str2 in file_2:
             if(str2.startswith(text)):
-                    token.send_message(message.from_user.id, str2)
+                    token.send_message(id, str2)
     file_1.close()
     file_2.close()
     file_3.close()
