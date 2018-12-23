@@ -59,3 +59,6 @@ def handle_text(message):
     global string_help
     id = message.chat.id
     token.send_message(id,"Список угара:")
+
+   
+token.polling(none_stop=True)
