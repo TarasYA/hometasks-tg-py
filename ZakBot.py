@@ -14,6 +14,7 @@ string_help = """
 /Автор - автор бота
 /Угар - логично?
 """
+send = False
 
 # log Heroku messaging
 def log(message, answer):
@@ -52,16 +53,39 @@ orbidol@yandex.ru
 def handle_text(message):
     global string_help
     id = message.chat.id
-    token.send_message(id,string_help)
+    token.send_message(id, string_help)
 
 @token.message_handler(commands=["Угар"])
 def handle_text(message):
-    global string_help
     id = message.chat.id
-    token.send_message(id,"Список фраз:")
-    file = open("fun.txt")
+    token.send_message(id, "Список фраз:")
+    file = open("fun.txt", "r")
     for s in file:
-        token.send_message(id,s)
-        
+        token.send_message(id, s)
+
+@token.message_handler(commands=["Назад"])
+def handle_text(message):
+    global send
+    id = message.chat.id
+    token.send_message(id, "Назад")
+    send = False
+
+@token.message_handler(content_types=["text"])
+def handle_text(message):
+    global send
+    token.send_chat_action(message.chat.id, "typing")
+    text = message.text
+    id = message.chat.id
+    file = open("fun.txt", "w")
+
+    if(text == password):
+        token.send_message(id, "<i>Введите угарную фразочку, иначе, воспользуйтесь командой /Назад</i>", parse_mode="HTML")
+        send = True
+        log("password", "sending = True")
+    if(send == True):
+        file.write(text)
+
+    file.close()
+
 
 token.polling(none_stop=True)
