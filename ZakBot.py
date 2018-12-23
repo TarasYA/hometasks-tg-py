@@ -89,7 +89,7 @@ def handle_text(message):
     if(send == True):
         with open('fun.txt', 'w') as file:
             file.write(text)
-        token.send_message(id, "<b>Порция угара была добавлена!Упссс... Слишком много угара. Ахх, снова!11!1</b>",
+        token.send_message(id, "<b>Порция угара была добавлена!Упссс... Слишком много слова угар. Ахх, снова!11!1</b>",
                            parse_mode="HTML")
     if(text == password):
         token.send_message(id, "<i>Введите угарную фразочку, иначе, воспользуйтесь командой /Назад</i>", parse_mode="HTML")
