@@ -3,6 +3,7 @@ DZshnik...
 """
 import telebot
 import os
+
 # environment variables
 bot = os.getenv("TOKEN")
 pas_1 = os.getenv("PASSWORD")
@@ -18,6 +19,7 @@ get_text_1 = False
 get_text_2 = False
 news_get = False
 news_send = False
+photo_get = False
 str_add = ""
 string_help = """
 start - начать взаимодействие  
@@ -31,20 +33,33 @@ start - начать взаимодействие
 Новости - новости
 Назад - вернуться обратно
 """
-#token.send_message(402702337,"test")
-#upd = token.get_updates()
-#print(upd)
-#last_upd = upd[-1]
-#message_from_user = last_upd.message
-#print(message_from_user)
+# token.send_message(402702337,"test")
+# upd = token.get_updates()
+# print(upd)
+# last_upd = upd[-1]
+# message_from_user = last_upd.message
+# print(message_from_user)
 
 print(token.get_me())
 
+# log Heroku messaging
 def log(message, answer):
     from datetime import datetime
     print("Log-message: ", message, "\nLog-datetime: ", datetime.now, "\nLog-user: ", answer)
 
+# https://api.telegram.org/file/bot<token>/<file_path>
+def download_file(message):
+    raw = message.photo[2].file_id
+    log("download",raw)
+    path = "news" + ".jpg"
+    log("download",path)
+    file_info = token.get_file(raw)
+    log("download",file_info)
+    downloaded_file = token.download_file(file_info.file_path)
+    with open(path, 'wb') as new_file:
+        new_file.write(downloaded_file)
 
+# authors command
 @token.message_handler(commands=["Авторы"])
 def handle_text(message):
     token.send_message(message.chat.id, """
@@ -55,6 +70,7 @@ frieddimka@gmail.com
 antongimnasium@gmail.com
 """)
 
+# menu creator
 def menu(message, send):
     user_markup = telebot.types.ReplyKeyboardMarkup()
     user_markup.row("/Авторы", "/Команды")
@@ -63,17 +79,20 @@ def menu(message, send):
     user_markup.row("/Расписание", "/Новости")
     token.send_message(message.from_user.id, str(send), reply_markup=user_markup)
 
+# start function
 @token.message_handler(commands=["start"])
 def handle_text(message):
     global string_help
     menu(message, "Добро пожаловать!")
     token.send_message(message.chat.id, string_help)
 
+# commands info
 @token.message_handler(commands=["Команды"])
 def handle_text(message):
     global string_help
     token.send_message(message.chat.id,string_help)
 
+# list of homework
 @token.message_handler(commands=["Список_дз"])
 def handle_text(message):
     user_markup = telebot.types.ReplyKeyboardMarkup()
@@ -84,6 +103,7 @@ def handle_text(message):
     user_markup.row("art", "bio", "/Назад")
     token.send_message(message.from_user.id, "Список предметов", reply_markup=user_markup)
 
+# all homework
 @token.message_handler(commands=["Всё_дз"])
 def handle_text(message):
     global get_1, get_2, news_get
@@ -97,6 +117,7 @@ def handle_text(message):
     file_1.close()
     file_2.close()
 
+# subject list
 @token.message_handler(commands=["Расписание"])
 def handle_text(message):
     token.send_chat_action(message.chat.id, 'upload_photo')
@@ -104,6 +125,7 @@ def handle_text(message):
     Расписание:\n""")
     token.send_photo(chat_id=message.chat.id, photo=open('8v.png', 'rb'))
 
+# lyceum news
 @token.message_handler(commands=["Новости"])
 def handle_text(message):
     token.send_chat_action(message.chat.id, 'upload_photo')
@@ -129,12 +151,14 @@ def handle_text(message):
     else:
         token.send_message(message.from_user.id, "Новостей нет!")
 
+# rating
 @token.message_handler(commands=["Рейтинг"])
 def handle_text(message):
     token.send_chat_action(message.chat.id, 'upload_photo')
     token.send_message(message.from_user.id, "Рейтинг:\n")
     token.send_photo(chat_id=message.chat.id, photo=open('Rating.jpg', 'rb'))
 
+# duty
 @token.message_handler(commands=["Дежурство"])
 def handle_text(message):
     token.send_chat_action(message.chat.id, 'upload_photo')
@@ -143,7 +167,6 @@ def handle_text(message):
 
 """
 Adding \ disabling buttons code
-
 @token.message_handler(commands=["add"])
 def handle_text(message):
     user_markup = telebot.types.ReplyKeyboardMarkup()
@@ -161,24 +184,27 @@ user_markup.row("/list")
 user_markup.row("/duty", "/rating")
 user_markup.row("/rz", "/news")
 """
-
+# back<-
 @token.message_handler(commands=["Назад"])
 def handle_text(message):
-    global send_1, send_2, get_1, get_2, news_get, news_send
+    global send_1, send_2, get_1, get_2, news_get, news_send, photo_get
     menu(message, "Назад")
+    # closing all add\deleting actions
     send_1 = False
     send_2 = False
     news_get = False
     news_send = False
+    photo_get = False
 
+# another text
 @token.message_handler(content_types=["text"])
 def handle_text(message):
-    global send_1, send_2, get_1, get_2, news_get, news_send, str_add
+    global send_1, send_2, get_1, get_2, news_get, news_send, str_add, photo_get
     token.send_chat_action(message.chat.id, "typing")
     text = message.text
     id = message.chat.id
     file_3 = open("news.txt", "w")
-    
+
     if(send_1 == True):
         with open('week1.txt', 'w') as file:
             file.write(text)
@@ -191,10 +217,14 @@ def handle_text(message):
         send_2 = False
         get_2 = False
         token.send_message(id, "<b>Домашнее задание было добавлено!</b>", parse_mode="HTML")
+    if(photo_get == True):
+        download_file(message)
+        photo_get = False
     if(news_send == True):
         file_3.write(text)
         news_get = False
         news_send = False
+        photo_get = True
         token.send_message(id, "<b>Новости былы добавлены!</b>", parse_mode="HTML")
     elif (text == pas_1):
         log("password 1", text)
