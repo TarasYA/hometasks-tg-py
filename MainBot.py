@@ -231,8 +231,10 @@ def bool_comparision(token,id,text):
         photo_get = True
         token.send_message(id, "<b>Новости былы добавлены!</b>", parse_mode="HTML")
         token.send_message(id, """
-<i>Пришлите соответствующую картинку к тексту, иначе, воспользуйтесь командой Назад.</i>
+<i>Пришлите соответствующую картинку к тексту, иначе, напишите delete, после чего воспользуйтесь командой Назад.</i>
 """, parse_mode="HTML")
+    if(photo_get == True and text == "delete"):
+        os.remove("news.jpg")
     elif (text == pas_1):
         log("password 1", text)
         token.send_message(id, "<i>Введите домашнее задание для 1 группы.</i>", parse_mode="HTML")
@@ -259,7 +261,6 @@ def handle_text(message):
     id = message.chat.id
     file_1 = open("week1.txt", "r")
     file_2 = open("week2.txt", "r")
-    file_3 = open("news.txt", "w")
 
     bool_comparision(token,id,text)
     if (get_1 == False and get_2 == False and news_get == False and photo_get == False):
@@ -271,7 +272,6 @@ def handle_text(message):
                     token.send_message(id, str2)
     file_1.close()
     file_2.close()
-    file_3.close()
 
 
 token.polling(none_stop=True)
