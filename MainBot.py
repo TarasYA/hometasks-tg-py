@@ -105,7 +105,7 @@ def handle_text(message):
     file_1 = open("week1.txt", "r+")
     file_2 = open("week2.txt", "r+")
     str_default = "|!=--------\---*---#----@--{0} группа--@---#---*---/--------=!|"
-    if(get_1 == False and get_2 == False and news_get == False):
+    if(get_1 is False and get_2 is False and news_get is False):
         token.send_message(id, str_default.format(1))
         for str1 in file_1:
             token.send_message(id, str1)
@@ -167,11 +167,13 @@ def handle_text(message):
     user_markup.row("/author","/help")
     user_markup.row("/list")
     user_markup.row("/rz")
-    token.send_message(message.from_user.id,"Клавиатура была включена.Что бы её выключить, используйте команду /stop",reply_markup=user_markup)
+    token.send_message(message.from_user.id,"Клавиатура была включена.Что бы её выключить, используйте команду /stop"
+    ,reply_markup=user_markup)
 @token.message_handler(commands=["stop"])
 def handle_text(message):
     hide_markup = telebot.types.ReplyKeyboardHide()
-    token.send_message(message.from_user.id,"Клавиатура была убранна.Что бы её включить, используйте команду /add",reply_markup=hide_markup)
+    token.send_message(message.from_user.id,"Клавиатура была убранна.Что бы её включить, используйте команду /add"
+    ,reply_markup=hide_markup)
 user_markup = telebot.types.ReplyKeyboardMarkup()
 user_markup.row("/author", "/help")
 user_markup.row("/list")
@@ -246,7 +248,7 @@ def handle_text(message):
     file_2 = open("week2.txt", "r")
 
     bool_comparision(token,id,text)
-    if (get_1 is False and get_2 is False and news_get is False and photo_get is False):
+    if(get_1 is False and get_2 is False and news_get is False and photo_get is False):
         for str1 in file_1:
             if(str1.startswith(text)):
                 token.send_message(id, str1)
