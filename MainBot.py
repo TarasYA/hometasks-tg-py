@@ -140,13 +140,13 @@ def handle_text(message):
         file = open("news.txt", "r")
         for s in file:
             token.send_message(message.from_user.id, s)
-    elif(os.path.exists(file_path + ".jpg")):
+    if(os.path.exists(file_path + ".jpg")):
         token.send_photo(chat_id=message.chat.id, photo=open(file_path + ".jpg", 'rb'))
         file = open("news.txt", "r")
         for s in file:
             token.send_message(message.from_user.id, s)
         file.close()
-    elif(os.path.exists("news.txt")):
+    if(os.path.exists("news.txt")):
         file = open("news.txt", "r")
         for s in file:
             token.send_message(message.from_user.id, s)
