@@ -21,6 +21,7 @@ news_get = False
 news_send = False
 photo_get = False
 str_add = ""
+# command list
 string_help = """
 start - начать взаимодействие  
 Авторы - обратная связь 
@@ -47,38 +48,6 @@ def log(message, answer):
     from datetime import datetime
     print("Log-message: ", message, "\nLog-datetime: ", datetime.now, "\nLog-user: ", answer)
 
-# https://api.telegram.org/file/bot<token>/<file_path>
-@token.message_handler(content_types=['photo'])
-def photo(message):
-    global photo_get
-    id = message.chat.id
-    file_path = "news"
-    if(photo_get == True):
-        if(os.path.exists(file_path + ".jpg")):
-            os.remove("news.jpg")
-        print('message.photo =', message.photo)
-        fileID = message.photo[-1].file_id
-        print('fileID =', fileID)
-        file_info = token.get_file(fileID)
-        print('file.file_path =', file_info.file_path)
-        downloaded_file = token.download_file(file_info.file_path)
-        with open("news.jpg", 'wb') as new_file:
-            new_file.write(downloaded_file)
-        token.send_message(id, "<b>Картинка была добавлена!</b>", parse_mode="HTML")
-    photo_get = False
-
-# authors command
-@token.message_handler(commands=["Авторы"])
-def handle_text(message):
-    id = message.chat.id
-    token.send_message(id, """
-Бот был создан учениками ЛИТа 8-В класса Яицким Тарасом, Антоном Мордаком, Хорсуном Дмитрием.
-Вопросы? 
-taras2005dn@gmail.com
-frieddimka@gmail.com
-antongimnasium@gmail.com
-""")
-
 # menu creator
 def menu(message, send):
     id = message.chat.id
@@ -96,6 +65,18 @@ def handle_text(message):
     id = message.chat.id
     menu(message, "Добро пожаловать!")
     token.send_message(id, string_help)
+
+# authors command
+@token.message_handler(commands=["Авторы"])
+def handle_text(message):
+    id = message.chat.id
+    token.send_message(id, """
+Бот был создан учениками ЛИТа 8-В класса Яицким Тарасом, Антоном Мордаком, Хорсуном Дмитрием.
+Вопросы? 
+taras2005dn@gmail.com
+frieddimka@gmail.com
+antongimnasium@gmail.com
+""")
 
 # commands info
 @token.message_handler(commands=["Команды"])
@@ -211,19 +192,19 @@ def handle_text(message):
 
 def bool_comparision(token,id,text):
     global send_1, send_2, get_1, get_2, news_get, news_send, str_add, photo_get
-    if(send_1 == True):
+    if(send_1 is True):
         with open('week1.txt', 'w') as file:
             file.write(text)
         send_1 = False
         get_1 = False
         token.send_message(id, "<b>Домашнее задание было добавлено!</b>", parse_mode="HTML")
-    if (send_2 == True):
+    if (send_2 is True):
         with open('week2.txt', 'w') as file:
             file.write(text)
         send_2 = False
         get_2 = False
         token.send_message(id, "<b>Домашнее задание было добавлено!</b>", parse_mode="HTML")
-    if(news_send == True):
+    if(news_send is True):
         with open('news.txt', 'w') as file:
             file.write(text)
         news_get = False
@@ -231,9 +212,9 @@ def bool_comparision(token,id,text):
         photo_get = True
         token.send_message(id, "<b>Новости былы добавлены!</b>", parse_mode="HTML")
         token.send_message(id, """
-<i>Пришлите соответствующую картинку к тексту, иначе, напишите delete, после чего воспользуйтесь командой Назад.</i>
+<i>Пришлите соответствующую картинку к тексту, иначе, напишите delete, после чего воспользуйтесь командой /Назад.</i>
 """, parse_mode="HTML")
-    if(photo_get == True and text == "delete"):
+    if(photo_get is True and text == "delete"):
         os.remove("news.jpg")
     elif (text == pas_1):
         log("password 1", text)
@@ -252,6 +233,8 @@ def bool_comparision(token,id,text):
         news_get = True
     elif(text == "Дурак"):
         token.send_message(id, "<b>Сам такой!</b>", parse_mode="HTML")
+
+
 # another text
 @token.message_handler(content_types=["text"])
 def handle_text(message):
@@ -263,7 +246,7 @@ def handle_text(message):
     file_2 = open("week2.txt", "r")
 
     bool_comparision(token,id,text)
-    if (get_1 == False and get_2 == False and news_get == False and photo_get == False):
+    if (get_1 is False and get_2 is False and news_get is False and photo_get is False):
         for str1 in file_1:
             if(str1.startswith(text)):
                 token.send_message(id, str1)
@@ -272,6 +255,27 @@ def handle_text(message):
                     token.send_message(id, str2)
     file_1.close()
     file_2.close()
+
+
+# https://api.telegram.org/file/bot<token>/<file_path>
+@token.message_handler(content_types=['photo'])
+def photo(message):
+    global photo_get
+    id = message.chat.id
+    file_path = "news"
+    if(photo_get == True):
+        if(os.path.exists(file_path + ".jpg")):
+            os.remove("news.jpg")
+        print('message.photo =', message.photo)
+        fileID = message.photo[-1].file_id
+        print('fileID =', fileID)
+        file_info = token.get_file(fileID)
+        print('file.file_path =', file_info.file_path)
+        downloaded_file = token.download_file(file_info.file_path)
+        with open("news.jpg", 'wb') as new_file:
+            new_file.write(downloaded_file)
+        token.send_message(id, "<b>Картинка была добавлена!</b>", parse_mode="HTML")
+    photo_get = False
 
 
 token.polling(none_stop=True)
