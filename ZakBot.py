@@ -46,7 +46,7 @@ def menu(message, text):
 def handle_text(message):
     id = message.chat.id
     token.send_message(id, """
-Бот был создан каким-то ноунеймом,ну лан, я короч Лев Вакуленко(@superninjalguy).Ну и юзер-нейм, конечно.
+Бот был создан каким-то ноунеймом,ну лан, я короч Лев Вакуленко(@superninjalguy).Ну и юзер-нейм странный, конечно.
 Почта: 
 2281337@gmail.com
 lolkekcheburek@yandex.ua
