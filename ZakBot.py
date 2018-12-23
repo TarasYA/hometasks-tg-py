@@ -16,10 +16,12 @@ string_help = """
 """
 send = False
 
+
 # log Heroku messaging
 def log(message, answer):
     from datetime import datetime
     print("Log-message: ", message, "\nLog-datetime: ", datetime.now, "\nLog-user: ", answer)
+
 
 # start function
 @token.message_handler(commands=["start"])
@@ -29,13 +31,15 @@ def handle_text(message):
     menu(message, "Даров")
     token.send_message(id, string_help)
 
+
 # menu creator
-def menu(message, send):
+def menu(message, text):
     id = message.chat.id
     user_markup = telebot.types.ReplyKeyboardMarkup()
     user_markup.row("/Автор", "/Команды")
     user_markup.row("/Угар")
-    token.send_message(id, str(send), reply_markup=user_markup)
+    token.send_message(id, str(text), reply_markup=user_markup)
+
 
 # authors command
 @token.message_handler(commands=["Автор"])
@@ -48,12 +52,15 @@ def handle_text(message):
 lolkekcheburek@yandex.ua
 orbidol@yandex.ru
 """)
+
+
 # commands info
 @token.message_handler(commands=["Команды"])
 def handle_text(message):
     global string_help
     id = message.chat.id
     token.send_message(id, string_help)
+
 
 @token.message_handler(commands=["Угар"])
 def handle_text(message):
@@ -63,12 +70,14 @@ def handle_text(message):
     for s in file:
         token.send_message(id, s)
 
+
 @token.message_handler(commands=["Назад"])
 def handle_text(message):
     global send
     id = message.chat.id
     token.send_message(id, "Назад")
     send = False
+
 
 @token.message_handler(content_types=["text"])
 def handle_text(message):
@@ -84,6 +93,7 @@ def handle_text(message):
         log("password", "sending = True")
     if(send == True):
         file.write(text)
+        token.send_message(id, "<b>Порция угара была добавлена!Упссс... Слишком много угара. Ахх, снова!11!1</b>", parse_mode="HTML")
 
     file.close()
 
