@@ -48,7 +48,7 @@ def log(message, answer):
     print("Log-message: ", message, "\nLog-datetime: ", datetime.now, "\nLog-user: ", answer)
 
 # https://api.telegram.org/file/bot<token>/<file_path>
-@bot.message_handler(content_types=['photo'])
+@token.message_handler(content_types=['photo'])
 def photo(message):
     global photo_get
     if(photo_get == True):
