@@ -196,7 +196,6 @@ def handle_text(message):
 
 def bool_comparision(token,id,text):
     global send_1, send_2, get_1, get_2, news_get, news_send, str_add, photo_get
-    file_3 = open("news.txt", "w")
     if(send_1 == True):
         with open('week1.txt', 'w') as file:
             file.write(text)
@@ -210,7 +209,8 @@ def bool_comparision(token,id,text):
         get_2 = False
         token.send_message(id, "<b>Домашнее задание было добавлено!</b>", parse_mode="HTML")
     if(news_send == True):
-        file_3.write(text)
+        with open('news.txt', 'w') as file:
+            file.write(text)
         news_get = False
         news_send = False
         photo_get = True
@@ -234,7 +234,6 @@ def bool_comparision(token,id,text):
     elif(text == "Дурак"):
         token.send_message\
             (id, "<b>Сам такой!</b>", parse_mode="HTML")
-    file_3.close()
 # another text
 @token.message_handler(content_types=["text"])
 def handle_text(message):
