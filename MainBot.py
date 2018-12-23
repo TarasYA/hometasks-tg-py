@@ -55,11 +55,12 @@ def photo(message):
         print('message.photo =', message.photo)
         fileID = message.photo[-1].file_id
         print('fileID =', fileID)
-        file_info = bot.get_file(fileID)
+        file_info = token.get_file(fileID)
         print('file.file_path =', file_info.file_path)
-        downloaded_file = bot.download_file(file_info.file_path)
+        downloaded_file = token.download_file(file_info.file_path)
         with open("news.jpg", 'wb') as new_file:
             new_file.write(downloaded_file)
+        token.send_message(message.from_user.id, "<b>Картинка была добавлена!</b>")
     photo_get = False
 
 # authors command
@@ -137,15 +138,8 @@ def handle_text(message):
     Новости:\n """)
     if(os.path.exists(file_path + ".png")):
         token.send_photo(chat_id=message.chat.id, photo=open(file_path + ".png", 'rb'))
-        file = open("news.txt", "r")
-        for s in file:
-            token.send_message(message.from_user.id, s)
     if(os.path.exists(file_path + ".jpg")):
         token.send_photo(chat_id=message.chat.id, photo=open(file_path + ".jpg", 'rb'))
-        file = open("news.txt", "r")
-        for s in file:
-            token.send_message(message.from_user.id, s)
-        file.close()
     if(os.path.exists("news.txt")):
         file = open("news.txt", "r")
         for s in file:
