@@ -194,15 +194,70 @@ def handle_text(message):
     news_send = False
     photo_get = False
 
+def bool_comparision(token,id,text):
+    global send_1, send_2, get_1, get_2, news_get, news_send, str_add, photo_get
+    file_3 = open("news.txt", "w")
+    if(send_1 == True):
+        with open('week1.txt', 'w') as file:
+            file.write(text)
+        send_1 = False
+        get_1 = False
+        token.send_message(id, "<b>Домашнее задание было добавлено!</b>", parse_mode="HTML")
+    if (send_2 == True):
+        with open('week2.txt', 'w') as file:
+            file.write(text)
+        send_2 = False
+        get_2 = False
+        token.send_message(id, "<b>Домашнее задание было добавлено!</b>", parse_mode="HTML")
+    if(news_send == True):
+        file_3.write(text)
+        news_get = False
+        news_send = False
+        photo_get = True
+        token.send_message(id, "<b>Новости былы добавлены!</b>", parse_mode="HTML")
+        token.send_message(id, "<i>Пришлите соответствующую картинку к тексту, иначе, воспользуйтесь командой Назад.</i>", parse_mode="HTML")
+    elif (text == pas_1):
+        log("password 1", text)
+        token.send_message(id, "<i>Введите домашнее задание для 1 группы.</i>", parse_mode="HTML")
+        send_1 = True
+        get_2 = True
+    elif (text == pas_2):
+        log("password 2", text)
+        token.send_message(id, "<i>Введите домашнее задание для 2 группы.</i>", parse_mode="HTML")
+        send_2 = True
+        get_2 = True
+    elif(text == pas_3):
+        log("password 3", text)
+        token.send_message(id, "<i>Введите новости лицея.</i>", parse_mode="HTML")
+        news_send = True
+        news_get = True
+    elif(text == "Дурак"):
+        token.send_message\
+            (id, "<b>Сам такой!</b>", parse_mode="HTML")
+    file_3.close()
 # another text
 @token.message_handler(content_types=["text"])
 def handle_text(message):
-    global send_1, send_2, get_1, get_2, news_get, news_send, str_add, photo_get
+    global get_1, get_2, news_get, photo_get
     token.send_chat_action(message.chat.id, "typing")
     text = message.text
     id = message.chat.id
     file_3 = open("news.txt", "w")
 
+    bool_comparision(token,id,text)
+    file_1 = open("week1.txt", "r")
+    file_2 = open("week2.txt", "r")
+    if (get_1 == False and get_2 == False and news_get == False and photo_get == False):
+        for str1 in file_1:
+            if(str1.startswith(text)):
+                token.send_message(message.from_user.id, str1)
+            for str2 in file_2:
+                if(str2.startswith(text)):
+                    token.send_message(message.from_user.id, str2)
+    file_1.close()
+    file_2.close()
+    file_3.close()
+"""
     if(send_1 == True):
         with open('week1.txt', 'w') as file:
             file.write(text)
@@ -239,19 +294,6 @@ def handle_text(message):
         news_get = True
     elif(text == "Дурак"):
         token.send_message(id, "<b>Сам такой!</b>", parse_mode="HTML")
-
-    file_1 = open("week1.txt", "r")
-    file_2 = open("week2.txt", "r")
-    if (get_1 == False and get_2 == False and news_get == False):
-        for str1 in file_1:
-            if(str1.startswith(text)):
-                token.send_message(message.from_user.id, str1)
-            for str2 in file_2:
-                if(str2.startswith(text)):
-                    token.send_message(message.from_user.id, str2)
-    file_1.close()
-    file_2.close()
-    file_3.close()
-
+"""
 
 token.polling(none_stop=True)
