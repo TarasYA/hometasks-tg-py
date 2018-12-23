@@ -48,16 +48,19 @@ def log(message, answer):
     print("Log-message: ", message, "\nLog-datetime: ", datetime.now, "\nLog-user: ", answer)
 
 # https://api.telegram.org/file/bot<token>/<file_path>
-def download_file(message):
-    raw = message.photo[2].file_id
-    log("download",raw)
-    path = "news" + ".jpg"
-    log("download",path)
-    file_info = token.get_file(raw)
-    log("download",file_info)
-    downloaded_file = token.download_file(file_info.file_path)
-    with open(path, 'wb') as new_file:
-        new_file.write(downloaded_file)
+@bot.message_handler(content_types=['photo'])
+def photo(message):
+    global photo_get
+    if(photo_get == True):
+        print('message.photo =', message.photo)
+        fileID = message.photo[-1].file_id
+        print('fileID =', fileID)
+        file_info = bot.get_file(fileID)
+        print('file.file_path =', file_info.file_path)
+        downloaded_file = bot.download_file(file_info.file_path)
+        with open("news.jpg", 'wb') as new_file:
+            new_file.write(downloaded_file)
+    photo_get = False
 
 # authors command
 @token.message_handler(commands=["Авторы"])
@@ -217,16 +220,13 @@ def handle_text(message):
         send_2 = False
         get_2 = False
         token.send_message(id, "<b>Домашнее задание было добавлено!</b>", parse_mode="HTML")
-    if(photo_get == True):
-        token.send_message(id, "<i>Пришлите соответствующую картинку.</i>", parse_mode="HTML")
-        download_file(message)
-        photo_get = False
     if(news_send == True):
         file_3.write(text)
         news_get = False
         news_send = False
         photo_get = True
         token.send_message(id, "<b>Новости былы добавлены!</b>", parse_mode="HTML")
+        token.send_message(id, "<i>Пришлите соответствующую картинку к тексту, иначе, воспользуйтесь командой Назад.</i>", parse_mode="HTML")
     elif (text == pas_1):
         log("password 1", text)
         token.send_message(id, "<i>Введите домашнее задание для 1 группы.</i>", parse_mode="HTML")
