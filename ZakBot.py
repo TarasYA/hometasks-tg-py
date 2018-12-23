@@ -59,6 +59,9 @@ def handle_text(message):
     global string_help
     id = message.chat.id
     token.send_message(id,"Список угара:")
+    file = open("fun.txt")
+    for s in file:
+        token.send_message(id,s)
+        
 
-   
 token.polling(none_stop=True)
