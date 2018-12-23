@@ -116,9 +116,12 @@ def handle_text(message):
     global get_1, get_2, news_get
     file_1 = open("week1.txt", "r+")
     file_2 = open("week2.txt", "r+")
+    str_default = "|!=--------\---*---#----@--{0} группа--@---#---*---/--------=!|"
     if(get_1 == False and get_2 == False and news_get == False):
+        token.send_message(message.from_user.id, str_default.format(1))
         for str1 in file_1:
             token.send_message(message.from_user.id, str1)
+        token.send_message(message.from_user.id, str_default.format(2))
         for str2 in file_2:
             token.send_message(message.from_user.id, str2)
     file_1.close()
@@ -250,8 +253,8 @@ def handle_text(message):
         for str1 in file_1:
             if(str1.startswith(text)):
                 token.send_message(message.from_user.id, str1)
-            for str2 in file_2:
-                if(str2.startswith(text)):
+        for str2 in file_2:
+            if(str2.startswith(text)):
                     token.send_message(message.from_user.id, str2)
     file_1.close()
     file_2.close()
