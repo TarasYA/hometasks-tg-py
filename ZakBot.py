@@ -85,18 +85,16 @@ def handle_text(message):
     token.send_chat_action(message.chat.id, "typing")
     text = message.text
     id = message.chat.id
-    file = open("fun.txt", "w")
 
     if(send == True):
-        file.write(text)
+        with open('fun.txt', 'w') as file:
+            file.write(text)
         token.send_message(id, "<b>Порция угара была добавлена!Упссс... Слишком много угара. Ахх, снова!11!1</b>",
                            parse_mode="HTML")
     if(text == password):
         token.send_message(id, "<i>Введите угарную фразочку, иначе, воспользуйтесь командой /Назад</i>", parse_mode="HTML")
         send = True
         log("password", "sending = True")
-
-    file.close()
 
 
 token.polling(none_stop=True)
