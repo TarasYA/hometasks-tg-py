@@ -96,11 +96,12 @@ def handle_text(message):
             file.write(text)
         token.send_message(id, "<b>Порция угара была добавлена!Упссс... Слишком много слова угар. Ахх, снова!11!1</b>",
                            parse_mode="HTML")
+        send = False
     if(text == password):
         token.send_message(id, "<i>Введите угарную фразочку, иначе, воспользуйтесь командой /Назад</i>", parse_mode="HTML")
         send = True
         log("password", "sending = True")
-    if(text.lower() == "коломбот"):
+    if(text.lower() == "каламбот"):
         token.send_message(id, "Чё нада:??")
 
 
