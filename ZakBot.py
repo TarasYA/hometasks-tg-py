@@ -28,6 +28,7 @@ def log(message, answer):
 def handle_text(message):
     global string_help
     id = message.chat.id
+    token.send_chat_action(id, "typing")
     menu(message, "Даров")
     token.send_message(id, string_help)
 
@@ -45,6 +46,7 @@ def menu(message, text):
 @token.message_handler(commands=["Автор"])
 def handle_text(message):
     id = message.chat.id
+    token.send_chat_action(id, "typing")
     token.send_message(id, """
 Бот был создан каким-то ноунеймом,ну лан, я короч Лев Вакуленко(@superninjalguy).Ну и юзер-нейм странный, конечно.
 Почта: 
@@ -59,12 +61,14 @@ orbidol@yandex.ru
 def handle_text(message):
     global string_help
     id = message.chat.id
+    token.send_chat_action(id, "typing")
     token.send_message(id, string_help)
 
 
 @token.message_handler(commands=["Угар"])
 def handle_text(message):
     id = message.chat.id
+    token.send_chat_action(id, "typing")
     token.send_message(id, "Список фраз:")
     file = open("fun.txt", "r")
     for s in file:
@@ -75,6 +79,7 @@ def handle_text(message):
 def handle_text(message):
     global send
     id = message.chat.id
+    token.send_chat_action(id, "typing")
     token.send_message(id, "Назад")
     send = False
 
@@ -82,9 +87,9 @@ def handle_text(message):
 @token.message_handler(content_types=["text"])
 def handle_text(message):
     global send
-    token.send_chat_action(message.chat.id, "typing")
     text = message.text
     id = message.chat.id
+    token.send_chat_action(id, "typing")
 
     if(send == True):
         with open('fun.txt', 'w') as file:
@@ -95,6 +100,8 @@ def handle_text(message):
         token.send_message(id, "<i>Введите угарную фразочку, иначе, воспользуйтесь командой /Назад</i>", parse_mode="HTML")
         send = True
         log("password", "sending = True")
+    if(text.lower() == "коломбот"):
+        token.send_message(id, "Чё нада:??")
 
 
 token.polling(none_stop=True)
