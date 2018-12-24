@@ -63,6 +63,7 @@ def menu(message, send):
 def handle_text(message):
     global string_help
     id = message.chat.id
+    token.send_chat_action(id, "typing")
     menu(message, "Добро пожаловать!")
     token.send_message(id, string_help)
 
@@ -70,6 +71,7 @@ def handle_text(message):
 @token.message_handler(commands=["Авторы"])
 def handle_text(message):
     id = message.chat.id
+    token.send_chat_action(id, "typing")
     token.send_message(id, """
 Бот был создан учениками ЛИТа 8-В класса Яицким Тарасом, Антоном Мордаком, Хорсуном Дмитрием.
 Вопросы? 
@@ -102,6 +104,7 @@ def handle_text(message):
 def handle_text(message):
     global get_1, get_2, news_get
     id = message.chat.id
+    token.send_chat_action(id, "typing")
     file_1 = open("week1.txt", "r+")
     file_2 = open("week2.txt", "r+")
     str_default = "|!=--------\---*---#----@--{0} группа--@---#---*---/--------=!|"
@@ -184,6 +187,8 @@ user_markup.row("/rz", "/news")
 @token.message_handler(commands=["Назад"])
 def handle_text(message):
     global send_1, send_2, get_1, get_2, news_get, news_send, photo_get
+    id = message.from_user.id
+    token.send_chat_action(id, "typing")
     menu(message, "Назад")
     # closing all add\deleting actions
     send_1 = False
@@ -194,6 +199,7 @@ def handle_text(message):
 
 def bool_comparision(token,id,text):
     global send_1, send_2, get_1, get_2, news_get, news_send, str_add, photo_get
+    token.send_chat_action(id, "typing")
     if(send_1 is True):
         with open('week1.txt', 'w') as file:
             file.write(text)
@@ -241,9 +247,9 @@ def bool_comparision(token,id,text):
 @token.message_handler(content_types=["text"])
 def handle_text(message):
     global get_1, get_2, news_get, photo_get
-    token.send_chat_action(message.chat.id, "typing")
-    text = message.text
     id = message.chat.id
+    token.send_chat_action(id, "typing")
+    text = message.text
     file_1 = open("week1.txt", "r")
     file_2 = open("week2.txt", "r")
 
@@ -264,8 +270,9 @@ def handle_text(message):
 def photo(message):
     global photo_get
     id = message.chat.id
+    token.send_chat_action(id, "upload_photo")
     file_path = "news"
-    if(photo_get == True):
+    if(photo_get is True):
         if(os.path.exists(file_path + ".jpg")):
             os.remove("news.jpg")
         print('message.photo =', message.photo)
