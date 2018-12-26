@@ -91,14 +91,23 @@ def handle_text(message):
     id = message.chat.id
     token.send_chat_action(id, "typing")
 
-    if(send == True):
+    if(send is True and not text.startwith("delete")):
         with open('fun.txt', 'w') as file:
             file.write(text)
         token.send_message(id, "<b>Порция угара была добавлена!Упссс... Слишком много слова угар. Ахх, снова!11!1</b>",
                            parse_mode="HTML")
         send = False
+    if(send is True and text.startwith("delete")):
+       string = text.split("\n")
+       print(string)
+       final_string = " "
+       f = open('fun.txt', 'r')
+       for line in f:
+           if(line not in != string): final_string += line + "\n"
+       print(final_string)
+  
     if(text == password):
-        token.send_message(id, "<i>Введите угарную фразочку, иначе, воспользуйтесь командой /Back</i>", parse_mode="HTML")
+        token.send_message(id, "<i>Введите угарную фразочку\удалите уже существующую, иначе, воспользуйтесь командой /Back</i>", parse_mode="HTML")
         send = True
         log("password", "sending = True")
     if(text.lower() == "каламбот"):
