@@ -10,9 +10,9 @@ password = os.getenv("PASSWORD4")
 token = telebot.TeleBot(bot)
 # command list
 string_help = """
-/Команды - список команд бота
-/Автор - автор бота
-/Угар - логично?
+/Commands - список команд бота
+/Author - автор бота
+/Fun - логично?
 """
 send = False
 
