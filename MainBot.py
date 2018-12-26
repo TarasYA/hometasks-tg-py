@@ -107,7 +107,7 @@ def handle_text(message):
     token.send_chat_action(id, "typing")
     file_1 = open("week1.txt", "r+")
     file_2 = open("week2.txt", "r+")
-    str_default = "|!=--------\---*---#----@--{0} группа--@---#---*---/--------=!|"
+    str_default = "|!=----{0} группа----=!|"
     if(get_1 is False and get_2 is False and news_get is False):
         token.send_message(id, str_default.format(1))
         for str1 in file_1:
