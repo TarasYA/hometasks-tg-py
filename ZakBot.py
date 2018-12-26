@@ -103,7 +103,7 @@ def handle_text(message):
        final_string = " "
        f = open('fun.txt', 'r')
        for line in f:
-           if(line not in != string): final_string += line + "\n"
+           if not (line in string): final_string += line + "\n"
        print(final_string)
   
     if(text == password):
