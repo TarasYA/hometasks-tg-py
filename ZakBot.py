@@ -92,7 +92,7 @@ def handle_text(message):
     token.send_chat_action(id, "typing")
 
     if(send is True and not text.startswith("delete")):
-        with open('fun.txt', 'w') as file:
+        with open('fun.txt', 'a') as file:
             file.write(text)
         token.send_message(id, "<b>Порция угара была добавлена!Упссс... Слишком много слова угар. Ахх, снова!11!1</b>",
                            parse_mode="HTML")
