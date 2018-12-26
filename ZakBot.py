@@ -99,14 +99,13 @@ def handle_text(message):
         send = False
     if(send is True and text.startswith("delete")):
        string = text.split("\n")
-       print(string)
        final_string = " "
        f = open('fun.txt', 'r')
        for line in f:
            if not (line in string): final_string += line + "\n"
        with open('fun.txt', 'w') as file:
             file.write(final_string)
-       print(final_string)
+       send = False
   
     if(text == password):
         token.send_message(id, "<i>Введите угарную фразочку\удалите уже существующую, иначе, воспользуйтесь командой /Back</i>", parse_mode="HTML")
