@@ -37,13 +37,13 @@ def handle_text(message):
 def menu(message, text):
     id = message.chat.id
     user_markup = telebot.types.ReplyKeyboardMarkup()
-    user_markup.row("/Автор", "/Команды")
-    user_markup.row("/Угар")
+    user_markup.row("/Author", "/Commands")
+    user_markup.row("/Fun")
     token.send_message(id, str(text), reply_markup=user_markup)
 
 
 # authors command
-@token.message_handler(commands=["Автор"])
+@token.message_handler(commands=["Author"])
 def handle_text(message):
     id = message.chat.id
     token.send_chat_action(id, "typing")
@@ -57,7 +57,7 @@ orbidol@yandex.ru
 
 
 # commands info
-@token.message_handler(commands=["Команды"])
+@token.message_handler(commands=["Commands"])
 def handle_text(message):
     global string_help
     id = message.chat.id
@@ -65,7 +65,7 @@ def handle_text(message):
     token.send_message(id, string_help)
 
 
-@token.message_handler(commands=["Угар"])
+@token.message_handler(commands=["Fun"])
 def handle_text(message):
     id = message.chat.id
     token.send_chat_action(id, "typing")
@@ -75,7 +75,7 @@ def handle_text(message):
         token.send_message(id, s)
 
 
-@token.message_handler(commands=["Назад"])
+@token.message_handler(commands=["Back"])
 def handle_text(message):
     global send
     id = message.chat.id
@@ -98,7 +98,7 @@ def handle_text(message):
                            parse_mode="HTML")
         send = False
     if(text == password):
-        token.send_message(id, "<i>Введите угарную фразочку, иначе, воспользуйтесь командой /Назад</i>", parse_mode="HTML")
+        token.send_message(id, "<i>Введите угарную фразочку, иначе, воспользуйтесь командой /Back</i>", parse_mode="HTML")
         send = True
         log("password", "sending = True")
     if(text.lower() == "каламбот"):
