@@ -72,7 +72,10 @@ def handle_text(message):
     token.send_message(id, "Список фраз:")
     file = open("fun.txt", "r")
     for s in file:
-        token.send_message(id, s)
+        try:
+            token.send_message(id, s)
+        except Exception:
+            pass
     file.close()
 
 
@@ -94,28 +97,30 @@ def handle_text(message):
 
     if(send is True and not text.startswith("delete")):
         with open('fun.txt', 'a') as file:
-            file.write(text)
+            file.write(str(text + "\n"))
             print(text)
         token.send_message(id, "<b>Порция угара была добавлена!Упссс... Слишком много слова угар. Ахх, снова!11!1</b>",
                            parse_mode="HTML")
         send = False
     if(send is True and text.startswith("delete")):
-       string = text.split("\n")
-       final_string = ""
-       f = open('fun.txt', 'r')
-       for line in f:
-           if not (line in string): final_string += line + "\n"
-       f.close()
-       print(final_string)
-       print(string)
-       with open('fun.txt', 'w') as file:
+        words = text.split("\n")
+        final_string = ""
+        f = open('fun.txt', 'r', encoding="utf-8")
+        for line in f:
+            line = line.strip()
+            if line not in words and len(line) > 2:
+                final_string += line + "\n"
+        f.close()
+        print(words)
+        with open('fun.txt', 'w') as file:
             file.write(final_string)
-       send = False
-       token.send_message(id, "<b>Килограм угара был убран!Эхх, старые мемы уходят, а им на замен приходят новые.Жестокие реалии нашего мира...</b>",
-                           parse_mode="HTML")
-  
+        send = False
+        token.send_message(id, "<b>Килограм угара был убран!Эхх, старые мемы уходят, а им на замен приходят новые."
+                               "Жестокие реалии нашего мира...</b>", parse_mode="HTML")
+
     if(text == password):
-        token.send_message(id, "<i>Введите угарную фразочку\удалите уже существующую, иначе, воспользуйтесь командой /Back</i>", parse_mode="HTML")
+        token.send_message(id, "<i>Введите угарную фразочку\удалите уже существующую, иначе, воспользуйтесь командой "
+                               "/Back</i>", parse_mode="HTML")
         send = True
         log("password", "sending = True")
     if(text.lower() == "каламбот"):
