@@ -73,6 +73,7 @@ def handle_text(message):
     file = open("fun.txt", "r")
     for s in file:
         token.send_message(id, s)
+    file.close()
 
 
 @token.message_handler(commands=["Back"])
