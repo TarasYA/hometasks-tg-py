@@ -97,7 +97,7 @@ def handle_text(message):
         token.send_message(id, "<b>Порция угара была добавлена!Упссс... Слишком много слова угар. Ахх, снова!11!1</b>",
                            parse_mode="HTML")
         send = False
-    if(send is True and text.startwith("delete")):
+    if(send is True and text.startswith("delete")):
        string = text.split("\n")
        print(string)
        final_string = " "
