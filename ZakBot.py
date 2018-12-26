@@ -106,6 +106,8 @@ def handle_text(message):
        with open('fun.txt', 'w') as file:
             file.write(final_string)
        send = False
+       token.send_message(id, "<b>Килограм угара был убран!Эхх, старые мемы уходят, а им на замен приходят новые.Жестокие реалии нашего мира...</b>",
+                           parse_mode="HTML")
   
     if(text == password):
         token.send_message(id, "<i>Введите угарную фразочку\удалите уже существующую, иначе, воспользуйтесь командой /Back</i>", parse_mode="HTML")
