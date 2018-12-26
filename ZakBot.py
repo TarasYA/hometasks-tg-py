@@ -103,6 +103,7 @@ def handle_text(message):
        f = open('fun.txt', 'r')
        for line in f:
            if not (line in string): final_string += line + "\n"
+       f.close()
        print(final_string)
        print(string)
        with open('fun.txt', 'w') as file:
