@@ -100,7 +100,7 @@ def handle_text(message):
         send = False
     if(send is True and text.startswith("delete")):
        string = text.split("\n")
-       final_string = " "
+       final_string = ""
        f = open('fun.txt', 'r')
        for line in f:
            if not (line in string): final_string += line + "\n"
