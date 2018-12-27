@@ -6,13 +6,15 @@ import os
 
 # environment variables
 bot = os.getenv("TOKEN2")
+bot = "687003910:AAERh6GVo8GuL01yrumPbLYcNUNkKNCl2og"
 password = os.getenv("PASSWORD4")
+password = "lol_kek_orbidol"
 token = telebot.TeleBot(bot)
 # command list
 string_help = """
-/Commands - список команд бота
-/Author - автор бота
-/Fun - логично?
+/commands - список команд бота
+/author - автор бота
+/fun - логично?
 """
 send = False
 
@@ -37,13 +39,13 @@ def handle_text(message):
 def menu(message, text):
     id = message.chat.id
     user_markup = telebot.types.ReplyKeyboardMarkup()
-    user_markup.row("/Author", "/Commands")
-    user_markup.row("/Fun")
+    user_markup.row("/author", "/commands")
+    user_markup.row("/fun")
     token.send_message(id, str(text), reply_markup=user_markup)
 
 
 # authors command
-@token.message_handler(commands=["Author"])
+@token.message_handler(commands=["author"])
 def handle_text(message):
     id = message.chat.id
     token.send_chat_action(id, "typing")
@@ -57,7 +59,7 @@ orbidol@yandex.ru
 
 
 # commands info
-@token.message_handler(commands=["Commands"])
+@token.message_handler(commands=["commands"])
 def handle_text(message):
     global string_help
     id = message.chat.id
@@ -65,7 +67,7 @@ def handle_text(message):
     token.send_message(id, string_help)
 
 
-@token.message_handler(commands=["Fun"])
+@token.message_handler(commands=["fun"])
 def handle_text(message):
     id = message.chat.id
     token.send_chat_action(id, "typing")
@@ -79,7 +81,7 @@ def handle_text(message):
     file.close()
 
 
-@token.message_handler(commands=["Back"])
+@token.message_handler(commands=["back"])
 def handle_text(message):
     global send
     id = message.chat.id
@@ -99,7 +101,7 @@ def handle_text(message):
         with open('fun.txt', 'a') as file:
             file.write(str(text + "\n"))
             print(text)
-        token.send_message(id, "<b>Порция угара была добавлена!Упссс... Слишком много слова угар. Ахх, снова!11!1</b>",
+        token.send_message(id, """<b>Порция угара была добавлена!Упссс... Слишком много слова угар. Ахх, снова!11!1</b>""",
                            parse_mode="HTML")
         send = False
     if(send is True and text.startswith("delete")):
@@ -115,12 +117,12 @@ def handle_text(message):
         with open('fun.txt', 'w') as file:
             file.write(final_string)
         send = False
-        token.send_message(id, "<b>Килограм угара был убран!Эхх, старые мемы уходят, а им на замен приходят новые."
-                               "Жестокие реалии нашего мира...</b>", parse_mode="HTML")
+        token.send_message(id, """<b>Килограм угара был убран!Эхх, старые мемы уходят, а им на замен приходят новые.
+                               Жестокие реалии нашего мира...</b>""", parse_mode="HTML")
 
     if(text == password):
-        token.send_message(id, "<i>Введите угарную фразочку\удалите уже существующую, иначе, воспользуйтесь командой "
-                               "/Back</i>", parse_mode="HTML")
+        token.send_message(id, """<i>Введите угарную фразочку\удалите уже существующую, иначе, воспользуйтесь командой 
+                               /back</i>""", parse_mode="HTML")
         send = True
         log("password", "sending = True")
     if(text.lower() == "каламбот"):
