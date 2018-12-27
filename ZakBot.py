@@ -14,7 +14,7 @@ string_help = """
 /author - автор бота
 /fun - логично?
 """
-# bool sendable variable 
+# bool sendable variable
 send = False
 
 
@@ -49,12 +49,13 @@ def handle_text(message):
     id = message.chat.id
     token.send_chat_action(id, "typing")
     token.send_message(id, """
-Бот был создан каким-то ноунеймом,ну лан, я короч Лев Вакуленко(@superninjalguy).Ну и юзер-нейм странный, конечно.
+Бот был создан каким-то ноунеймом, ну лан, я короч Лев Вакуленко(@superninjalguy).Ну и юзер-нейм странный, конечно.
 Почта: 
 2281337@gmail.com
 lolkekcheburek@yandex.ua
 orbidol@yandex.ru
 """)
+
 
 
 # commands info
@@ -64,6 +65,7 @@ def handle_text(message):
     id = message.chat.id
     token.send_chat_action(id, "typing")
     token.send_message(id, string_help)
+
 
 # fun sending
 @token.message_handler(commands=["fun"])
@@ -79,6 +81,7 @@ def handle_text(message):
             pass
     file.close()
 
+
 # <- back to the default menu
 @token.message_handler(commands=["back"])
 def handle_text(message):
@@ -87,6 +90,7 @@ def handle_text(message):
     token.send_chat_action(id, "typing")
     token.send_message(id, "Назад")
     send = False
+
 
 # another text
 @token.message_handler(content_types=["text"])
@@ -100,9 +104,8 @@ def handle_text(message):
         with open('fun.txt', 'a') as file:
             file.write(str(text + "\n"))
             print(text)
-        token.send_message(id, """<b>Порция угара была добавлена!Упссс... Слишком много слова угар. 
-Ахх, снова!11!1</b>""",
-                           parse_mode="HTML")
+        token.send_message(id, "<b>Порция угара была добавлена!Упссс... Слишком много слова угар."
+                               "Ахх, снова!11!1</b>", parse_mode="HTML")
         send = False
     if(send is True and text.startswith("delete")):
         words = text.split("\n")
@@ -117,13 +120,12 @@ def handle_text(message):
         with open('fun.txt', 'w') as file:
             file.write(final_string)
         send = False
-        token.send_message(id, """<b>Килограм угара был убран!Эхх, старые мемы уходят, а им на замен приходят новые.
-                               Жестокие реалии нашего мира...</b>""", parse_mode="HTML")
+        token.send_message(id, "<b>Килограм угара был убран!Эхх, старые мемы уходят, а им на замен приходят новые."
+                               "Жестокие реалии нашего мира...</b>", parse_mode="HTML")
 
     if(text == password):
-        token.send_message(id, """<i>Введите угарную фразочку\удалите уже существующую, иначе, воспользуйтесь командой 
-/back</i>"""
-                           , parse_mode="HTML")
+        token.send_message(id, "<i>Введите угарную фразочку\удалите уже существующую, иначе, воспользуйтесь командой "
+                               "/back</i>", parse_mode="HTML")
         send = True
         log("password", "sending = True")
     if(text.lower() == "каламбот"):
