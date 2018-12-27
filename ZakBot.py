@@ -6,9 +6,7 @@ import os
 
 # environment variables
 bot = os.getenv("TOKEN2")
-bot = "687003910:AAERh6GVo8GuL01yrumPbLYcNUNkKNCl2og"
 password = os.getenv("PASSWORD4")
-password = "lol_kek_orbidol"
 token = telebot.TeleBot(bot)
 # command list
 string_help = """
@@ -16,6 +14,7 @@ string_help = """
 /author - автор бота
 /fun - логично?
 """
+# bool sendable variable 
 send = False
 
 
@@ -66,7 +65,7 @@ def handle_text(message):
     token.send_chat_action(id, "typing")
     token.send_message(id, string_help)
 
-
+# fun sending
 @token.message_handler(commands=["fun"])
 def handle_text(message):
     id = message.chat.id
@@ -80,7 +79,7 @@ def handle_text(message):
             pass
     file.close()
 
-
+# <- back to the default menu
 @token.message_handler(commands=["back"])
 def handle_text(message):
     global send
@@ -89,7 +88,7 @@ def handle_text(message):
     token.send_message(id, "Назад")
     send = False
 
-
+# another text
 @token.message_handler(content_types=["text"])
 def handle_text(message):
     global send
@@ -101,7 +100,8 @@ def handle_text(message):
         with open('fun.txt', 'a') as file:
             file.write(str(text + "\n"))
             print(text)
-        token.send_message(id, """<b>Порция угара была добавлена!Упссс... Слишком много слова угар. Ахх, снова!11!1</b>""",
+        token.send_message(id, """<b>Порция угара была добавлена!Упссс... Слишком много слова угар. 
+Ахх, снова!11!1</b>""",
                            parse_mode="HTML")
         send = False
     if(send is True and text.startswith("delete")):
@@ -122,7 +122,8 @@ def handle_text(message):
 
     if(text == password):
         token.send_message(id, """<i>Введите угарную фразочку\удалите уже существующую, иначе, воспользуйтесь командой 
-                               /back</i>""", parse_mode="HTML")
+/back</i>"""
+                           , parse_mode="HTML")
         send = True
         log("password", "sending = True")
     if(text.lower() == "каламбот"):
