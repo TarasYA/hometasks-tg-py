@@ -225,6 +225,7 @@ def bool_comparision(token,id,text):
     if(photo_get is True and text == "delete"):
         os.remove("news.jpg")
         token.send_message(id, "<b>Картинка была удалена!</b>", parse_mode="HTML")
+        photo_get = False
     elif(text == pas_1):
         log("password 1", text)
         token.send_message(id, "<i>Введите домашнее задание для 1 группы.</i>", parse_mode="HTML")
