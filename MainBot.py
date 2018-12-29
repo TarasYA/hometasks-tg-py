@@ -23,7 +23,7 @@ photo_get = False
 str_add = ""
 # command list
 string_help = """
-start - начать взаимодействие или же ключить клавиатуру 
+start - начать взаимодействие или включить клавиатуру 
 Авторы - обратная связь 
 Список дз - домашнее задание
 Всё дз - всё домашнее задание 
@@ -90,7 +90,7 @@ antongimnasium@gmail.com
 def handle_text(message):
     global string_help
     id = message.chat.id
-    token.send_message(id,string_help)
+    token.send_message(id, string_help)
 
 # list of homework
 @token.message_handler(commands=["Список_дз"])
