@@ -43,10 +43,12 @@ start - начать взаимодействие
 
 print(token.get_me())
 
+
 # log Heroku messaging
 def log(message, answer):
     from datetime import datetime
     print("Log-message: ", message, "\nLog-datetime: ", datetime.now, "\nLog-user: ", answer)
+
 
 # menu creator
 def menu(message, send):
@@ -58,6 +60,7 @@ def menu(message, send):
     user_markup.row("/Расписание", "/Новости")
     token.send_message(id, str(send), reply_markup=user_markup)
 
+
 # start function
 @token.message_handler(commands=["start"])
 def handle_text(message):
@@ -66,6 +69,7 @@ def handle_text(message):
     token.send_chat_action(id, "typing")
     menu(message, "Добро пожаловать!")
     token.send_message(id, string_help)
+
 
 # authors command
 @token.message_handler(commands=["Авторы"])
@@ -79,6 +83,7 @@ taras2005dn@gmail.com
 frieddimka@gmail.com
 antongimnasium@gmail.com
 """)
+
 
 # commands info
 @token.message_handler(commands=["Команды"])
@@ -107,8 +112,8 @@ def handle_text(message):
     token.send_chat_action(id, "typing")
     file_1 = open("week1.txt", "r+")
     file_2 = open("week2.txt", "r+")
-    str_default = "|!=----{0} группа----=!|"
-    if(get_1 is False and get_2 is False and news_get is False):
+    str_default = "|!=--------\---*---#----@--{0} группа--@---#---*---/--------=!|"
+    if get_1 is False and get_2 is False and news_get is False:
         token.send_message(id, str_default.format(1))
         for str1 in file_1:
             token.send_message(id, str1)
@@ -117,6 +122,7 @@ def handle_text(message):
             token.send_message(id, str2)
     file_1.close()
     file_2.close()
+
 
 # subject list
 @token.message_handler(commands=["Расписание"])
@@ -127,6 +133,7 @@ def handle_text(message):
     Расписание:\n""")
     token.send_photo(chat_id=id, photo=open('8v.png', 'rb'))
 
+
 # lyceum news
 @token.message_handler(commands=["Новости"])
 def handle_text(message):
@@ -135,15 +142,16 @@ def handle_text(message):
     file_path = "news"
     token.send_message(id, """
     Новости:\n """)
-    if(os.path.exists(file_path + ".jpg")):
+    if os.path.exists(file_path + ".jpg"):
         token.send_photo(chat_id=id, photo=open(file_path + ".jpg", 'rb'))
-    if(os.path.exists("news.txt")):
+    if os.path.exists("news.txt"):
         file = open("news.txt", "r")
         for s in file:
             token.send_message(id, s)
         file.close()
     else:
         token.send_message(id, "Новостей нет!")
+
 
 # rating
 @token.message_handler(commands=["Рейтинг"])
@@ -152,6 +160,7 @@ def handle_text(message):
     token.send_chat_action(id, 'upload_photo')
     token.send_message(id, "Рейтинг:\n")
     token.send_photo(chat_id=id, photo=open('Rating.jpg', 'rb'))
+
 
 # duty
 @token.message_handler(commands=["Дежурство"])
@@ -183,6 +192,8 @@ user_markup.row("/list")
 user_markup.row("/duty", "/rating")
 user_markup.row("/rz", "/news")
 """
+
+
 # back<-
 @token.message_handler(commands=["Назад"])
 def handle_text(message):
@@ -197,22 +208,23 @@ def handle_text(message):
     news_send = False
     photo_get = False
 
-def bool_comparision(token,id,text):
+
+def bool_comparision(token, id, text):
     global send_1, send_2, get_1, get_2, news_get, news_send, str_add, photo_get
     token.send_chat_action(id, "typing")
-    if(send_1 is True):
+    if send_1 is True:
         with open('week1.txt', 'w') as file:
             file.write(text)
         send_1 = False
         get_1 = False
         token.send_message(id, "<b>Домашнее задание было добавлено!</b>", parse_mode="HTML")
-    if(send_2 is True):
+    if send_2 is True:
         with open('week2.txt', 'w') as file:
             file.write(text)
         send_2 = False
         get_2 = False
         token.send_message(id, "<b>Домашнее задание было добавлено!</b>", parse_mode="HTML")
-    if(news_send is True):
+    if news_send is True:
         with open('news.txt', 'w') as file:
             file.write(text)
         news_get = False
@@ -222,26 +234,25 @@ def bool_comparision(token,id,text):
         token.send_message(id, """
 <i>Пришлите соответствующую картинку к тексту, иначе, напишите delete, после чего воспользуйтесь командой /Назад.</i>
 """, parse_mode="HTML")
-    if(photo_get is True and text == "delete"):
+    if photo_get is True and text == "delete":
         os.remove("news.jpg")
         token.send_message(id, "<b>Картинка была удалена!</b>", parse_mode="HTML")
-        photo_get = False
-    elif(text == pas_1):
+    elif text == pas_1:
         log("password 1", text)
         token.send_message(id, "<i>Введите домашнее задание для 1 группы.</i>", parse_mode="HTML")
         send_1 = True
         get_2 = True
-    elif(text == pas_2):
+    elif text == pas_2:
         log("password 2", text)
         token.send_message(id, "<i>Введите домашнее задание для 2 группы.</i>", parse_mode="HTML")
         send_2 = True
         get_2 = True
-    elif(text == pas_3):
+    elif text == pas_3:
         log("password 3", text)
         token.send_message(id, "<i>Введите новости лицея.</i>", parse_mode="HTML")
         news_send = True
         news_get = True
-    elif(text == "Дурак"):
+    elif text == "Дурак":
         token.send_message(id, "<b>Сам такой!</b>", parse_mode="HTML")
 
 
@@ -255,13 +266,13 @@ def handle_text(message):
     file_1 = open("week1.txt", "r")
     file_2 = open("week2.txt", "r")
 
-    bool_comparision(token,id,text)
-    if(get_1 is False and get_2 is False and news_get is False and photo_get is False):
+    bool_comparision(token, id, text)
+    if get_1 is False and get_2 is False and news_get is False and photo_get is False:
         for str1 in file_1:
-            if(str1.startswith(text)):
+            if str1.startswith(text):
                 token.send_message(id, str1)
         for str2 in file_2:
-            if(str2.startswith(text)):
+            if str2.startswith(text):
                     token.send_message(id, str2)
     file_1.close()
     file_2.close()
@@ -274,8 +285,8 @@ def photo(message):
     id = message.chat.id
     token.send_chat_action(id, "upload_photo")
     file_path = "news"
-    if(photo_get is True):
-        if(os.path.exists(file_path + ".jpg")):
+    if photo_get is True:
+        if os.path.exists(file_path + ".jpg"):
             os.remove("news.jpg")
         print('message.photo =', message.photo)
         fileID = message.photo[-1].file_id
