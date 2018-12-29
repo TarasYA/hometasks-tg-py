@@ -92,6 +92,7 @@ def handle_text(message):
     id = message.chat.id
     token.send_message(id, string_help)
 
+
 # list of homework
 @token.message_handler(commands=["Список_дз"])
 def handle_text(message):
@@ -104,6 +105,7 @@ def handle_text(message):
     user_markup.row("art", "bio", "/Назад")
     token.send_message(id, "Список предметов", reply_markup=user_markup)
 
+    
 # all homework
 @token.message_handler(commands=["Всё_дз"])
 def handle_text(message):
