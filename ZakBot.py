@@ -10,6 +10,7 @@ password = os.getenv("PASSWORD4")
 token = telebot.TeleBot(bot)
 # command list
 string_help = """
+/start - начать взаимодействие или включить клавиатуру
 /commands - список команд бота
 /author - автор бота
 /fun - логично?
@@ -57,7 +58,6 @@ orbidol@yandex.ru
 """)
 
 
-
 # commands info
 @token.message_handler(commands=["commands"])
 def handle_text(message):
@@ -100,14 +100,14 @@ def handle_text(message):
     id = message.chat.id
     token.send_chat_action(id, "typing")
 
-    if(send is True and not text.startswith("delete")):
+    if send is True and not text.startswith("delete"):
         with open('fun.txt', 'a') as file:
             file.write(str(text + "\n"))
             print(text)
         token.send_message(id, "<b>Порция угара была добавлена!Упссс... Слишком много слова угар."
                                "Ахх, снова!11!1</b>", parse_mode="HTML")
         send = False
-    if(send is True and text.startswith("delete")):
+    if send is True and text.startswith("delete"):
         words = text.split("\n")
         final_string = ""
         f = open('fun.txt', 'r', encoding="utf-8")
@@ -123,12 +123,12 @@ def handle_text(message):
         token.send_message(id, "<b>Килограм угара был убран!Эхх, старые мемы уходят, а им на замен приходят новые."
                                "Жестокие реалии нашего мира...</b>", parse_mode="HTML")
 
-    if(text == password):
+    if text == password:
         token.send_message(id, "<i>Введите угарную фразочку\удалите уже существующую, иначе, воспользуйтесь командой "
                                "/back</i>", parse_mode="HTML")
         send = True
         log("password", "sending = True")
-    if(text.lower() == "каламбот"):
+    if text.lower() == "каламбот":
         token.send_message(id, "Чё нада:??")
 
 
