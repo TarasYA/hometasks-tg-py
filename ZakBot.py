@@ -132,4 +132,4 @@ def handle_text(message):
         token.send_message(id, "Чё нада:??")
 
 
-token.polling(none_stop=True)
+token.infinity_polling(True)
