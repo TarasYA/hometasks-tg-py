@@ -1,3 +1,3 @@
-worker1: python MainBot.py
-worker2: python ZakBot.py
-worker3: python DiscordBotReal.py
+web1: python MainBot.py
+web2: python ZakBot.py
+web3: python DiscordBotReal.py
