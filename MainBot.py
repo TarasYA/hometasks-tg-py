@@ -303,4 +303,4 @@ def photo(message):
     photo_get = False
 
 
-token.polling(none_stop=True)
+bot.infinity_polling(True)
