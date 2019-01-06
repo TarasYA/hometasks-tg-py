@@ -41,10 +41,9 @@ start - начать взаимодействие или включить кла
 print(TOKEN.get_me())
 
 
-# log Heroku messaging
 def log(message, answer):
     """
-    logging function
+    Heroku logging
     """
     from datetime import datetime
     print("Log-message: ", message, "\nLog-datetime: ", datetime.now, "\nLog-user: ", answer)
@@ -77,7 +76,7 @@ def start(message):
 @TOKEN.message_handler(commands=["Авторы"])
 def authors(message):
     """
-    authors command
+    get authors
     """
     message_id = message.chat.id
     TOKEN.send_chat_action(message_id, "typing")
@@ -193,7 +192,7 @@ def duty_list(message):
 @TOKEN.message_handler(commands=["Назад"])
 def back(message):
     """
-    back<-
+    back<- to the default menu
     """
     global SEND_1, SEND_2, NEWS_GET, NEWS_SEND, PHOTO_GET
     message_id = message.from_user.id
