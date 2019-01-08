@@ -3,17 +3,13 @@ DZshnik...
 """
 import os
 import telebot
-from uploading import push_to_github
 
 # environment variables
 BOT = os.getenv("TOKEN")
-GITHUB = os.getenv("GITHUB") #"d0e3e5e65e88dd2c74b4b7ead1112dcebacf5abe"
 PAS_1 = os.getenv("PASSWORD")
 PAS_2 = os.getenv("PASSWORD2")
 PAS_3 = os.getenv("PASSWORD3")
 TOKEN = telebot.TeleBot(BOT)
-REPO = "TarasYA/hometasks-tg-py"
-BRANCH = "master"
 # action send\get bool variables
 GET_1 = False
 GET_2 = False
@@ -234,7 +230,6 @@ def bool_comparision(message_id, text):
         NEWS_GET = False
         NEWS_SEND = False
         PHOTO_GET = True
-        push_to_github("news.txt", REPO, BRANCH, GITHUB)
         TOKEN.send_message(message_id, "<b>Новости былы добавлены!</b>", parse_mode="HTML")
         TOKEN.send_message(message_id, """
 <i>Пришлите соответствующую картинку к тексту, иначе, напишите delete, после чего воспользуйтесь командой /Назад.</i>
