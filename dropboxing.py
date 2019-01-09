@@ -22,7 +22,7 @@ def deleting_file(file_from):
 
 def checking_exist(file_from):
     try:
-        dbx.files_get_metadata(file_from)
+        dbx.files_get_metadata("/"+file_from)
         return True
     except Exception:
         return False
