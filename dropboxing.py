@@ -21,9 +21,9 @@ def deleting_file(file_from):
 
 
 def checking_exist(file_from):
-    response = dbx.files_list_folder(path="")
-
-    if file_from in response:
+    try:
+        dbx.files_get_metadata(file_from)
         return True
-    return False
+    except Exception:
+        return False
 
