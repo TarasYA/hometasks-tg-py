@@ -1,3 +1,6 @@
+"""
+Module for downloading or deleting file from dropbox also supports changing or uploading it
+"""
 import os
 import dropbox
 
@@ -11,6 +14,9 @@ def downloading_file(file_from):
     with open(file_from, "wb") as file:
         metadata, res = DBX.files_download(path="/"+file_from)
         file.write(res.content)
+        
+    del metadata
+    del res
 
 
 def upload_file(file_from):
