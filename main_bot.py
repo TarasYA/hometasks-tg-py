@@ -126,13 +126,13 @@ def all_homework(message):
     file_1 = open("week1.txt", "r+")
     file_2 = open("week2.txt", "r+")
     str_default = "|!=---{0} группа---=!|"
+
     if GET_1 is False and GET_1 is False and NEWS_GET is False:
         TOKEN.send_message(message_id, str_default.format(1))
-        for str1 in file_1:
-            TOKEN.send_message(message_id, str1)
+        list1 = [TOKEN.send_message(message_id, string) for string in file_1]
         TOKEN.send_message(message_id, str_default.format(2))
-        for str2 in file_2:
-            TOKEN.send_message(message_id, str2)
+        list2 = [TOKEN.send_message(message_id, string) for string in file_2]
+
     file_1.close()
     file_2.close()
 
@@ -165,8 +165,7 @@ def news_list(message):
     if os.path.exists("news.txt"):
         downloading_file("news.txt")
         file = open("news.txt", "r")
-        for line in file:
-            TOKEN.send_message(message_id, line)
+        list = [TOKEN.send_message(message_id, line) for line in file]
         file.close()
     else:
         TOKEN.send_message(message_id, "Новостей нет!")
@@ -283,12 +282,11 @@ def handle_text(message):
 
     bool_comparision(message_id, text)
     if GET_1 is False and GET_1 is False and NEWS_GET is False and PHOTO_GET is False:
-        for str1 in file_1:
-            if str1.startswith(text):
-                TOKEN.send_message(message_id, str1)
-        for str2 in file_2:
-            if str2.startswith(text):
-                TOKEN.send_message(message_id, str2)
+        list1 = [TOKEN.send_message(message_id, string) for string in file_1
+                 if string.startswith(text) is True]
+        list2 = [TOKEN.send_message(message_id, string) for string in file_2
+                 if string.startswith(text) is True]
+
     file_1.close()
     file_2.close()
 
@@ -319,3 +317,4 @@ def get_photo(message):
 
 
 TOKEN.infinity_polling(True)
+
