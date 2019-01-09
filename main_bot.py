@@ -3,6 +3,7 @@ DZshnik...
 """
 import os
 import telebot
+from dropboxing import downloading_file, upload_file, deleting_file, checking_exist
 
 # environment variables
 BOT = os.getenv("TOKEN")
@@ -120,6 +121,8 @@ def all_homework(message):
     """
     message_id = message.chat.id
     TOKEN.send_chat_action(message_id, "typing")
+    downloading_file("week1.txt")
+    downloading_file("week2.txt")
     file_1 = open("week1.txt", "r+")
     file_2 = open("week2.txt", "r+")
     str_default = "|!=---{0} группа---=!|"
@@ -156,9 +159,11 @@ def news_list(message):
     file_path = "news"
     TOKEN.send_message(message_id, """
     Новости:\n """)
-    if os.path.exists(file_path + ".jpg"):
+    if checking_exist(file_path + ".jpg"):
+        downloading_file(file_path + ".jpg")
         TOKEN.send_photo(chat_id=message_id, photo=open(file_path + ".jpg", 'rb'))
     if os.path.exists("news.txt"):
+        downloading_file("news.txt")
         file = open("news.txt", "r")
         for line in file:
             TOKEN.send_message(message_id, line)
@@ -217,12 +222,14 @@ def bool_comparision(message_id, text):
             file.write(text)
         SEND_1 = False
         GET_1 = False
+        upload_file("week1.txt")
         TOKEN.send_message(message_id, "<b>Домашнее задание было добавлено!</b>", parse_mode="HTML")
     if SEND_2 is True:
         with open('week2.txt', 'w') as file:
             file.write(text)
         SEND_2 = False
         GET_1 = False
+        upload_file("week2.txt")
         TOKEN.send_message(message_id, "<b>Домашнее задание было добавлено!</b>", parse_mode="HTML")
     if NEWS_SEND is True:
         with open('news.txt', 'w') as file:
@@ -230,12 +237,14 @@ def bool_comparision(message_id, text):
         NEWS_GET = False
         NEWS_SEND = False
         PHOTO_GET = True
+        upload_file("news.txt")
         TOKEN.send_message(message_id, "<b>Новости былы добавлены!</b>", parse_mode="HTML")
         TOKEN.send_message(message_id, """
 <i>Пришлите соответствующую картинку к тексту, иначе, напишите delete, после чего воспользуйтесь командой /Назад.</i>
 """, parse_mode="HTML")
     if PHOTO_GET is True and text == "delete":
         os.remove("news.jpg")
+        deleting_file("news.jpg")
         TOKEN.send_message(message_id, "<b>Картинка была удалена!</b>", parse_mode="HTML")
         PHOTO_GET = False
     elif text == PAS_1:
@@ -267,6 +276,8 @@ def handle_text(message):
     message_id = message.chat.id
     TOKEN.send_chat_action(message_id, "typing")
     text = message.text
+    downloading_file("week1.txt")
+    downloading_file("week2.txt")
     file_1 = open("week1.txt", "r")
     file_2 = open("week2.txt", "r")
 
