@@ -213,7 +213,7 @@ def back(message):
     back<- to the default menu
     """
     global SEND_1, SEND_2, NEWS_SEND, PHOTO_GET
-    message_id = message.from_user.id
+    message_id = message.chat.id
     TOKEN.send_chat_action(message_id, "typing")
 
     if SEND_1 is False and SEND_2 is False and NEWS_SEND is False and PHOTO_GET is False:
