@@ -240,6 +240,7 @@ def bool_comparision(message_id, text):
                "воспользуйтесь командой /Назад.</i>"
     home_got = "<b>Домашнее задание было добавлено!</b>"
     news_got = "<i>Введите новости лицея, иначе, воспользуйтесь командой /Назад.</i>"
+    admin_pr = "<b>Админская панель</b>"
     TOKEN.send_chat_action(message_id, "typing")
 
     if GET_1 is True and text == "Добавить дз":
@@ -282,11 +283,11 @@ def bool_comparision(message_id, text):
     elif text == PAS_1:
         log("password 1", text)
         GET_1 = True
-        admin(message_id, "Админская панель")
+        admin(message_id, admin_pr)
     elif text == PAS_2:
         log("password 2", text)
         GET_2 = True
-        admin(message_id, "Админская панель")
+        admin(message_id, admin_pr)
     elif text == "Дурак":
         TOKEN.send_message(message_id, "<b>Сам такой!</b>", parse_mode="HTML")
 
