@@ -212,7 +212,7 @@ def back(message):
     """
     back<- to the default menu
     """
-    global SEND_1, SEND_2, NEWS_SEND, PHOTO_GET
+    global SEND_1, GET_1, GET_2, SEND_2, NEWS_SEND, PHOTO_GET
     message_id = message.chat.id
     TOKEN.send_chat_action(message_id, "typing")
 
@@ -225,6 +225,8 @@ def back(message):
     # closing all add\deleting actions
     SEND_1 = False
     SEND_2 = False
+    GET_1 = False
+    GET_2 = False
     NEWS_SEND = False
     PHOTO_GET = False
 
@@ -237,26 +239,28 @@ def bool_comparision(message_id, text):
     home_add = "<i>Введите домашнее задание для {0} группы, иначе, " \
                "воспользуйтесь командой /Назад.</i>"
     home_got = "<b>Домашнее задание было добавлено!</b>"
+    news_got = "<i>Введите новости лицея, иначе, воспользуйтесь командой /Назад.</i>"
     TOKEN.send_chat_action(message_id, "typing")
 
     if GET_1 is True and text == "Добавить дз":
+        TOKEN.send_message(message_id, home_add.format(1), parse_mode="HTML")
         SEND_1 = True
     if GET_2 is True and text == "Добавить дз":
+        TOKEN.send_message(message_id, home_add.format(2), parse_mode="HTML")
         SEND_2 = True
     if (GET_1 is True or GET_2 is True) and text == "Добавить новости":
+        TOKEN.send_message(message_id, news_got, parse_mode="HTML")
         NEWS_SEND = True
     if SEND_1 is True and text != "Добавить дз":
         with open('week1.txt', 'w') as file:
             file.write(text)
         SEND_1 = False
-        GET_1 = False
         upload_file("week1.txt")
         TOKEN.send_message(message_id, home_got, parse_mode="HTML")
     if SEND_2 is True and text != "Добавить дз":
         with open('week2.txt', 'w') as file:
             file.write(text)
         SEND_2 = False
-        GET_1 = False
         upload_file("week2.txt")
         TOKEN.send_message(message_id, home_got, parse_mode="HTML")
     if NEWS_SEND is True and text != "Добавить новости":
