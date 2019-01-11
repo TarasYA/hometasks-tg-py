@@ -243,7 +243,7 @@ def bool_comparision(message_id, text):
         SEND_1 = True
     if GET_2 is True and text == "Добавить дз":
         SEND_2 = True
-    if GET_1 is True or GET_2 is True and text == "Добавить новости":
+    if (GET_1 is True or GET_2 is True) and text == "Добавить новости":
         NEWS_SEND = True
     if SEND_1 is True and text != "Добавить дз":
         with open('week1.txt', 'w') as file:
