@@ -49,10 +49,11 @@ def log(message, answer):
     print("Log-message: ", message, "\nLog-datetime: ", datetime.now, "\nLog-user: ", answer)
 
 
-def admin(message_id, send, parse="HTML"):
+def admin(message, send, parse="HTML"):
     """
     default menu
     """
+    message_id = message.chat.id
     user_markup = telebot.types.ReplyKeyboardMarkup()
     user_markup.row("Добавить дз", "Добавить новости")
     user_markup.row("/Назад")
@@ -237,21 +238,21 @@ def bool_comparision(message_id, text):
     home_got = "<b>Домашнее задание было добавлено!</b>"
     TOKEN.send_chat_action(message_id, "typing")
 
-    if SEND_1 is True and text == "Добавить дз":
+    if SEND_1 is True and text != "Добавить дз":
         with open('week1.txt', 'w') as file:
             file.write(text)
         SEND_1 = False
         GET_1 = False
         upload_file("week1.txt")
         TOKEN.send_message(message_id, home_got, parse_mode="HTML")
-    if SEND_2 is True and text == "Добавить дз":
+    if SEND_2 is True and text != "Добавить дз":
         with open('week2.txt', 'w') as file:
             file.write(text)
         SEND_2 = False
         GET_1 = False
         upload_file("week2.txt")
         TOKEN.send_message(message_id, home_got, parse_mode="HTML")
-    if NEWS_SEND is True and text == "Добавить новости ":
+    if NEWS_SEND is True and text != "Добавить новости ":
         with open('news.txt', 'w') as file:
             file.write(text)
         NEWS_GET = False
@@ -273,7 +274,6 @@ def bool_comparision(message_id, text):
         GET_1 = True
         admin(message_id, home_add.format(1))
     elif text == PAS_2:
-
         log("password 2", text)
         SEND_2 = True
         GET_1 = True
