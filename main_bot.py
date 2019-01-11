@@ -9,7 +9,6 @@ from dropboxing import downloading_file, upload_file, deleting_file, checking_ex
 BOT = os.getenv("TOKEN")
 PAS_1 = os.getenv("PASSWORD")
 PAS_2 = os.getenv("PASSWORD2")
-PAS_3 = os.getenv("PASSWORD3")
 TOKEN = telebot.TeleBot(BOT)
 # action send\get bool variables
 GET_1 = False
@@ -50,9 +49,20 @@ def log(message, answer):
     print("Log-message: ", message, "\nLog-datetime: ", datetime.now, "\nLog-user: ", answer)
 
 
+def admin(message, send, parse="HTML"):
+    """
+    default menu
+    """
+    message_id = message.chat.id
+    user_markup = telebot.types.ReplyKeyboardMarkup()
+    user_markup.row("Добавить дз", "Добавить новости")
+    user_markup.row("/Назад")
+    TOKEN.send_message(message_id, str(send), reply_markup=user_markup, parse_mode=parse)
+
+
 def menu(message, send):
     """
-    start function
+    admin menu
     """
     message_id = message.chat.id
     user_markup = telebot.types.ReplyKeyboardMarkup()
@@ -70,7 +80,8 @@ def start(message):
     """
     message_id = message.chat.id
     TOKEN.send_chat_action(message_id, "typing")
-    menu(message, "Добро пожаловать!")
+    menu(message, "Вас приветствует лицейский бот 8-В класса."
+                  " Используя команды ниже, узнайте нужную Вам информацию. Удачи!")
     TOKEN.send_message(message_id, STR_HELP)
 
 
@@ -130,8 +141,10 @@ def all_homework(message):
     if GET_1 is False and GET_1 is False and NEWS_GET is False:
         TOKEN.send_message(message_id, str_default.format(1))
         list1 = [TOKEN.send_message(message_id, string) for string in file_1]
+        del list1
         TOKEN.send_message(message_id, str_default.format(2))
         list2 = [TOKEN.send_message(message_id, string) for string in file_2]
+        del list2
 
     file_1.close()
     file_2.close()
@@ -159,13 +172,15 @@ def news_list(message):
     file_path = "news"
     TOKEN.send_message(message_id, """
     Новости:\n """)
+
     if checking_exist(file_path + ".jpg"):
         downloading_file(file_path + ".jpg")
         TOKEN.send_photo(chat_id=message_id, photo=open(file_path + ".jpg", 'rb'))
     if os.path.exists("news.txt"):
         downloading_file("news.txt")
         file = open("news.txt", "r")
-        list = [TOKEN.send_message(message_id, line) for line in file]
+        list_news = [TOKEN.send_message(message_id, line) for line in file]
+        del list_news
         file.close()
     else:
         TOKEN.send_message(message_id, "Новостей нет!")
@@ -198,14 +213,17 @@ def back(message):
     """
     back<- to the default menu
     """
-    global SEND_1, SEND_2, NEWS_GET, NEWS_SEND, PHOTO_GET
+    global SEND_1, SEND_2, NEWS_SEND, PHOTO_GET
     message_id = message.from_user.id
     TOKEN.send_chat_action(message_id, "typing")
-    menu(message, "Назад")
+
+    if SEND_1 is True or SEND_2 is True or NEWS_SEND is True or PHOTO_GET is True:
+        menu(message, "Назад")
+    else:
+        admin(message, "<i>Нажмите назад ещё раз, если Вы хотите выйте из админской панели.</i>")
     # closing all add\deleting actions
     SEND_1 = False
     SEND_2 = False
-    NEWS_GET = False
     NEWS_SEND = False
     PHOTO_GET = False
 
@@ -215,22 +233,26 @@ def bool_comparision(message_id, text):
     bool comparision
     """
     global SEND_1, SEND_2, GET_1, GET_1, NEWS_GET, NEWS_SEND, PHOTO_GET
+    home_add = "<i>Введите домашнее задание для {0} группы, иначе, " \
+               "воспользуйтесь командой /Назад.</i>"
+    home_got = "<b>Домашнее задание было добавлено!</b>"
     TOKEN.send_chat_action(message_id, "typing")
-    if SEND_1 is True:
+
+    if SEND_1 is True and text == "Добавить дз":
         with open('week1.txt', 'w') as file:
             file.write(text)
         SEND_1 = False
         GET_1 = False
         upload_file("week1.txt")
-        TOKEN.send_message(message_id, "<b>Домашнее задание было добавлено!</b>", parse_mode="HTML")
-    if SEND_2 is True:
+        TOKEN.send_message(message_id, home_got, parse_mode="HTML")
+    if SEND_2 is True and text == "Добавить дз":
         with open('week2.txt', 'w') as file:
             file.write(text)
         SEND_2 = False
         GET_1 = False
         upload_file("week2.txt")
-        TOKEN.send_message(message_id, "<b>Домашнее задание было добавлено!</b>", parse_mode="HTML")
-    if NEWS_SEND is True:
+        TOKEN.send_message(message_id, home_got, parse_mode="HTML")
+    if NEWS_SEND is True and text == "Добавить новости ":
         with open('news.txt', 'w') as file:
             file.write(text)
         NEWS_GET = False
@@ -248,21 +270,15 @@ def bool_comparision(message_id, text):
         PHOTO_GET = False
     elif text == PAS_1:
         log("password 1", text)
-        TOKEN.send_message(message_id, "<i>Введите домашнее задание для 1 группы.</i>",
-                           parse_mode="HTML")
         SEND_1 = True
         GET_1 = True
+        admin(message_id, home_add.format(1))
     elif text == PAS_2:
+
         log("password 2", text)
-        TOKEN.send_message(message_id, "<i>Введите домашнее задание для 2 группы.</i>",
-                           parse_mode="HTML")
         SEND_2 = True
         GET_1 = True
-    elif text == PAS_3:
-        log("password 3", text)
-        TOKEN.send_message(message_id, "<i>Введите новости лицея.</i>", parse_mode="HTML")
-        NEWS_SEND = True
-        NEWS_GET = True
+        admin(message_id, home_add.format(2))
     elif text == "Дурак":
         TOKEN.send_message(message_id, "<b>Сам такой!</b>", parse_mode="HTML")
 
@@ -284,8 +300,10 @@ def handle_text(message):
     if GET_1 is False and GET_1 is False and NEWS_GET is False and PHOTO_GET is False:
         list1 = [TOKEN.send_message(message_id, string) for string in file_1
                  if string.startswith(text) is True]
+        del list1
         list2 = [TOKEN.send_message(message_id, string) for string in file_2
                  if string.startswith(text) is True]
+        del list2
 
     file_1.close()
     file_2.close()
@@ -301,6 +319,7 @@ def get_photo(message):
     message_id = message.chat.id
     TOKEN.send_chat_action(message_id, "upload_photo")
     file_path = "news"
+
     if PHOTO_GET is True:
         if os.path.exists(file_path + ".jpg"):
             os.remove("news.jpg")
@@ -317,4 +336,3 @@ def get_photo(message):
 
 
 TOKEN.infinity_polling(True)
-
