@@ -53,7 +53,6 @@ def admin(message_id, send, parse="HTML"):
     """
     default menu
     """
-    message_id = message.chat.id
     user_markup = telebot.types.ReplyKeyboardMarkup()
     user_markup.row("Добавить дз", "Добавить новости")
     user_markup.row("/Назад")
@@ -219,8 +218,10 @@ def back(message):
 
     if SEND_1 is False and SEND_2 is False and NEWS_SEND is False and PHOTO_GET is False:
         menu(message, "Назад")
+        log("menu", "menu")
     else:
         admin(message, "<i>Нажмите назад ещё раз, если Вы хотите выйте из админской панели.</i>")
+        log("admin menu", "admin menu")
     # closing all add\deleting actions
     SEND_1 = False
     SEND_2 = False
@@ -252,7 +253,7 @@ def bool_comparision(message_id, text):
         GET_1 = False
         upload_file("week2.txt")
         TOKEN.send_message(message_id, home_got, parse_mode="HTML")
-    if NEWS_SEND is True and text != "Добавить новости":
+    if NEWS_SEND is True and text != "Добавить новости ":
         with open('news.txt', 'w') as file:
             file.write(text)
         NEWS_GET = False
