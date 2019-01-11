@@ -49,7 +49,7 @@ def log(message, answer):
     print("Log-message: ", message, "\nLog-datetime: ", datetime.now, "\nLog-user: ", answer)
 
 
-def admin(message, send, parse="HTML"):
+def admin(message_id, send, parse="HTML"):
     """
     default menu
     """
