@@ -220,7 +220,7 @@ def back(message):
         menu(message, "Назад")
         log("menu", "menu")
     else:
-        admin(message, "<i>Нажмите назад ещё раз, если Вы хотите выйте из админской панели.</i>")
+        admin(message_id, "<i>Нажмите назад ещё раз, если Вы хотите выйте из админской панели.</i>")
         log("admin menu", "admin menu")
     # closing all add\deleting actions
     SEND_1 = False
