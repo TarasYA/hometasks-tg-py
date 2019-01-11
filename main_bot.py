@@ -233,12 +233,18 @@ def bool_comparision(message_id, text):
     """
     bool comparision
     """
-    global SEND_1, SEND_2, GET_1, GET_1, NEWS_GET, NEWS_SEND, PHOTO_GET
+    global SEND_1, SEND_2, GET_1, GET_2, NEWS_GET, NEWS_SEND, PHOTO_GET
     home_add = "<i>Введите домашнее задание для {0} группы, иначе, " \
                "воспользуйтесь командой /Назад.</i>"
     home_got = "<b>Домашнее задание было добавлено!</b>"
     TOKEN.send_chat_action(message_id, "typing")
 
+    if GET_1 is True and text == "Добавить дз":
+        SEND_1 = True
+    if GET_2 is True and text == "Добавить дз":
+        SEND_2 = True
+    if GET_1 is True or GET_2 is True and text == "Добавить новости":
+        NEWS_SEND = True
     if SEND_1 is True and text != "Добавить дз":
         with open('week1.txt', 'w') as file:
             file.write(text)
@@ -271,14 +277,12 @@ def bool_comparision(message_id, text):
         PHOTO_GET = False
     elif text == PAS_1:
         log("password 1", text)
-        SEND_1 = True
         GET_1 = True
-        admin(message_id, home_add.format(1))
+        admin(message_id, "Админская панель")
     elif text == PAS_2:
         log("password 2", text)
-        SEND_2 = True
-        GET_1 = True
-        admin(message_id, home_add.format(2))
+        GET_2 = True
+        admin(message_id, "Админская панель")
     elif text == "Дурак":
         TOKEN.send_message(message_id, "<b>Сам такой!</b>", parse_mode="HTML")
 
