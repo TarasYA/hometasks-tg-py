@@ -259,7 +259,7 @@ def bool_comparision(message_id, text):
         GET_1 = False
         upload_file("week2.txt")
         TOKEN.send_message(message_id, home_got, parse_mode="HTML")
-    if NEWS_SEND is True and text != "Добавить новости ":
+    if NEWS_SEND is True and text != "Добавить новости":
         with open('news.txt', 'w') as file:
             file.write(text)
         NEWS_GET = False
