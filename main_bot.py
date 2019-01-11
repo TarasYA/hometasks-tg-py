@@ -217,7 +217,7 @@ def back(message):
     message_id = message.from_user.id
     TOKEN.send_chat_action(message_id, "typing")
 
-    if SEND_1 is True or SEND_2 is True or NEWS_SEND is True or PHOTO_GET is True:
+    if SEND_1 is False or SEND_2 is False or NEWS_SEND is False or PHOTO_GET is False:
         menu(message, "Назад")
     else:
         admin(message, "<i>Нажмите назад ещё раз, если Вы хотите выйте из админской панели.</i>")
