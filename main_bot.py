@@ -49,11 +49,10 @@ def log(message, answer):
     print("Log-message: ", message, "\nLog-datetime: ", datetime.now, "\nLog-user: ", answer)
 
 
-def admin(message, send, parse="HTML"):
+def admin(message_id, send, parse="HTML"):
     """
     default menu
     """
-    message_id = message.chat.id
     user_markup = telebot.types.ReplyKeyboardMarkup()
     user_markup.row("Добавить дз", "Добавить новости")
     user_markup.row("/Назад")
