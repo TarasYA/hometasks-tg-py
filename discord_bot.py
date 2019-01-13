@@ -1,5 +1,5 @@
 """
-Personal by me.
+Discorder...
 """
 import os
 from discord.ext import commands
