@@ -116,11 +116,11 @@ def list_homework(message):
     """
     message_id = message.chat.id
     user_markup = telebot.types.ReplyKeyboardMarkup()
-    user_markup.row("ukr.lit", "for.lit")
-    user_markup.row("urk.m", "rus.m", "en.m")
-    user_markup.row("math", "physics", "informatics")
-    user_markup.row("chemistry", "geography", "history")
-    user_markup.row("art", "bio", "/Назад")
+    user_markup.row("урк.л", "зар.л")
+    user_markup.row("укр.м", "рус.м", "англ.м")
+    user_markup.row("мат-ка", "физика", "инфор")
+    user_markup.row("химия", "гео", "история")
+    user_markup.row("искусство", "био", "/Назад")
     TOKEN.send_message(message_id, "Список предметов", reply_markup=user_markup)
 
 
@@ -231,7 +231,7 @@ def back(message):
     PHOTO_GET = False
 
 
-def bool_comparision(message_id, text):
+def bool_compare(message_id, text):
     """
     bool comparision
     """
@@ -305,7 +305,7 @@ def handle_text(message):
     file_1 = open("week1.txt", "r")
     file_2 = open("week2.txt", "r")
 
-    bool_comparision(message_id, text)
+    bool_compare(message_id, text)
     if GET_1 is False and GET_1 is False and NEWS_GET is False and PHOTO_GET is False:
         list1 = [TOKEN.send_message(message_id, string) for string in file_1
                  if string.startswith(text) is True]
