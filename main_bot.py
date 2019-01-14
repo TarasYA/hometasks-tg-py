@@ -116,7 +116,7 @@ def list_homework(message):
     """
     message_id = message.chat.id
     user_markup = telebot.types.ReplyKeyboardMarkup()
-    user_markup.row("урк.л", "зар.л")
+    user_markup.row("укр.л", "зар.л")
     user_markup.row("укр.м", "рус.м", "англ.м")
     user_markup.row("мат-ка", "физика", "инфор")
     user_markup.row("химия", "гео", "история")
